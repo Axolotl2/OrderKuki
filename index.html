@@ -133,7 +133,8 @@
 								var sMeal     = oOrdersFromPreferences.rows[i].cells[2].innerText;
 								var sAddition = oOrdersFromPreferences.rows[i].cells[3].innerText;
 								if (sChecked && sMeal && sAddition) {
-									sText += sUrlNewLine + i + '. ' + sMeal + ' ' + sAddition;
+									// sText += sUrlNewLine + i + '. ' + sMeal + ' ' + sAddition;
+									sText += `${sUrlNewLine} ${i}. ${sMeal} ${sAddition}`;//added by @slipknot94
 								}
 							}
 							
