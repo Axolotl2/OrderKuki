@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<meta charset="utf-8"/>
 	<html dir="rtl">
 		<head>
 			<style>
@@ -10,21 +11,26 @@
 				}
 				.center {
 				margin: auto;
-				width: 20%;
+				width: 50%;
 				padding: 10px;
 				}
 				.buttonCenter {
 				margin: auto;
-				width: 20%;
+				width: 10%;
 				padding: 10px;
 				}
 				.tableCenter {
 				margin: auto;
 				width: 100%;
 				padding: 10px;
+				} 
+				.outer {
+				  display:flex;
+				  justify-content: center;
+				  padding: 3px;
 				}
-				.gay {
-				width: 30%;
+				.outer > div {
+				  margin:2px;
 				}
 			</style>
 			<div class="center">
@@ -33,39 +39,109 @@
 			<body>
 				<h1>קוקי - תפריט והזמנות</h1>
 				<br>
+				<table id="peoplePreferences" class="tableCenter">
+					<thead>
+						<tr>
+							<th>כלול בהזמנה</th>
+							<th>מזמין</th>
+							<th>הגשה</th>
+							<th>מנה</th>
+							<th>תוספות</th>
+							<th>משקאות</th>
+							<th>הערות</th>
+						</tr>
+					</thead>
+				</table>
+					<br>
+						<div class="buttonCenter outer">
+							<button id="savePeoplePreferences" onclick="savePeoplePreferences()" type="button">שמור העדפות</button>
+							<button id="order" onclick="order()" type="button">הזמן קוקי</button>
+						</div>
+						<hr>
+							<h1>תפריט</h1>
+				<div id="container" class ="outer">
+				    <div>
+				<table id="types" class="tableCenter">
+					<thead>
+						<tr>
+							<th>סוגים</th>
+						</tr>
+					</thead>
+				</table>
+					</div>
+				    <div>
+				<table id="meals" class="tableCenter">
+					<thead>
+						<tr>
+							<th>מנות</th>
+						</tr>
+					</thead>
+				</table>
+					</div>
+				    <div>
+				<table id="additions" class="tableCenter">
+					<thead>
+						<tr>
+							<th>תוספות</th>
+						</tr>
+					</thead>
+				</table>
+					</div>
+				    <div>
+				<table id="drinks" class="tableCenter">
+					<thead>
+						<tr>
+							<th>משקאות</th>
+						</tr>
+					</thead>
+				</table>
+					</div>
+				</div>
+				<script>
+				/*
 					<table id="peoplePreferences" class="tableCenter">
 					<thead>
 						<tr>
 							<th>כלול בהזמנה</th>
 							<th>מזמין</th>
+							<th>הגשה</th>
 							<th>מנה</th>
-							<th>תוספת</th>
+							<th>תוספות</th>
+							<th>הערות</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
 							<td><input type="checkbox"/></td>
 							<td>יאיר</td>
-							<td>שניצל בבאגט</td>
-							<td>צ'יפס</td>
+							<td>באגט</td>
+							<td>שניצל צ'ילי</td>
+							<td>חומוס, טחינה, סלט ירקות, רוטב פסטו</td>
+							<td></td>
 						</tr>
 						<tr>
 							<td><input type="checkbox"/></td>
 							<td>אסף</td>
-							<td>שניצל בבאגט</td>
-							<td>צ'יפס</td>
+							<td>באגט</td>
+							<td>שניצל שום</td>
+							<td>חומוס, טחינה, סלט ירקות, רוטב פסטו</td>
+							<td></td>
 						</tr>
 						<tr>
 							<td><input type="checkbox"/></td>
 							<td>לירז</td>
-							<td>שניצל בבאגט</td>
-							<td>צ'יפס</td>
+							<td>באגט</td>
+							<td>שניצל פיקנטי</td>
+							<td>צ'יפס, שעועית ירוקה</td>
+							<td></td>
 						</tr>
 						<tr>
 							<td><input type="checkbox"/></td>
 							<td>שקד</td>
-							<td>שניצל בבאגט</td>
-							<td>צ'יפס</td>
+							<td>באגט</td>
+							<td>שניצל שום</td>
+							<td>סלט, טחינה, בצל</td>
+							<td></td>
 						</tr>
 					<tbody>
 					</table>
@@ -120,27 +196,253 @@
 									<td>צ'יפס</td>
 								</tr>
 							</table>
-						</div>
+					*/
+						</script>
 						<script>
+						// separate js file and json file by this url: https://stackoverflow.com/questions/19706046/how-to-read-an-external-local-json-file-in-javascript
 							function order(event) {
-							const sUrlNewLine = '%0A';
-							var sText = 'היי, אני רוצה להזמין בבקשה:';
+								const sUrlNewLine = '%0A';
+								const sKukiPhone = '+972525585252', sTestPhone = '+972526241919';
+								const iName = 0, iMeal = 2, iAdditions = 3;
+								var sText = 'היי, אני רוצה להזמין בבקשה:';
+								debugger;
+								var oOrdersFromPreferences = document.getElementById('peoplePreferences');
+								
+								for (var i = 1; i < oOrdersFromPreferences.rows.length; i++) {
+									var sChecked   = oOrdersFromPreferences.rows[i].cells[0].children[0].checked;
+									var sName      = oOrdersFromPreferences.rows[i].cells[1].innerText;
+									var sType      = oOrdersFromPreferences.rows[i].cells[2].innerText;
+									var sMeal      = oOrdersFromPreferences.rows[i].cells[3].innerText;
+									var sAdditions = oOrdersFromPreferences.rows[i].cells[4].innerText;
+									var sDrinks    = oOrdersFromPreferences.rows[i].cells[5].innerText;
+									var sNotes     = oOrdersFromPreferences.rows[i].cells[6].innerText;
+
+									if (sDrinks) sDrinks = `, ${sDrinks}`;
+									if (sNotes) sNotes = `, ${sNotes}`;
+									if (sChecked && sMeal) {
+										sText += `${sUrlNewLine} ${i}. *${sType}* ${sMeal}, ${sAdditions} ${sDrinks} ${sNotes} (${sName})`;
+									}
+							}
+							
+							var sUrl = `https://api.whatsapp.com/send?phone=${sTestPhone}&text=${sText}`;
+							window.open(sUrl);
+							}
+
+							const types = [
+							{
+								"index" : "0",
+								"description" : "באגט"
+							},
+							{
+								"index" : "1",
+								"description" : "חמגשית"
+							},
+							{
+								"index" : "2",
+								"description" : "חלה מתוקה"
+							}
+							];
+
+							const meals = [
+							{
+								"index" : "0",
+								"description" : "שניצל צ'ילי"
+							},
+							{
+								"index" : "1",
+								"description" : "שניצל שום"
+							},
+							{
+								"index" : "2",
+								"description" : "שניצל עשבי תיבול"
+							},
+							{
+								"index" : "3",
+								"description" : "שניצל פיקנטי"
+							},
+							{
+								"index" : "4",
+								"description" : "שניצל שומשום"
+							},
+							{
+								"index" : "5",
+								"description" : "חזה עוף"
+							}
+							];
+
+							const additions = [
+							{
+								"index" : "0",
+								"description" : "סלט ירקות"
+							},
+							{
+								"index" : "1",
+								"description" : "חסה"
+							},
+							{
+								"index" : "2",
+								"description" : "חמוצים"
+							},
+							{
+								"index" : "3",
+								"description" : "קטשופ"
+							},
+							{
+								"index" : "4",
+								"description" : "שעועית ירוקה"
+							},
+							{
+								"index" : "5",
+								"description" : "צ'יפס"
+							},
+							{
+								"index" : "6",
+								"description" : "תפוח אדמה"
+							},
+							{
+								"index" : "7",
+								"description" : "אורז"
+							},
+							{
+								"index" : "8",
+								"description" : "טחינה"
+							},
+							{
+								"index" : "9",
+								"description" : "בטטה"
+							},
+							{
+								"index" : "10",
+								"description" : "בצל"
+							},
+							{
+								"index" : "11",
+								"description" : "חומוס"
+							},
+							{
+								"index" : "12",
+								"description" : "רוטב פסטו"
+							},
+							{
+								"index" : "13",
+								"description" : "חציל במיונז"
+							},
+							{
+								"index" : "14",
+								"description" : "מטבוחה"
+							},
+							{
+								"index" : "15",
+								"description" : "כרוב סגול"
+							},
+							{
+								"index" : "16",
+								"description" : "מיונז שום"
+							}
+							];
+
+							const drinks = [
+							{
+								"index" : "0",
+								"description" : "זירו"
+							}
+							];
+
+							const peoplePreferences = [
+							{
+								"name" : "יאיר",
+								"type" : "0",
+								"meal" : "0",
+								"additions" : ["11","8","1","12"],
+								"drinks" : [],
+								"notes" : ""
+							},
+							{
+								"name" : "דולב",
+								"type" : "0",
+								"meal" : "0",
+								"additions" : ["11","8","1","12"],
+								"drinks" : [],
+								"notes" : ""
+							},
+							{
+								"name" : "אסף",
+								"type" : "1",
+								"meal" : "1",
+								"additions" : ["1","8","10"],
+								"drinks" : [],
+								"notes" : ""
+							}
+							];
+
+							function getArrayDescriptionAsString(json, keys){
+								var resultString = "";
+
+								keys.forEach(function(object, i) {
+								    if (resultString) resultString += ', ';
+									resultString += json[i].description;
+								})
+
+								return resultString;
+							}
 							debugger;
-							var oOrdersFromPreferences = document.getElementById('peoplePreferences');
-							
-							for (var i = 1; i < oOrdersFromPreferences.rows.length; i++) {
-								var sChecked  = oOrdersFromPreferences.rows[i].cells[0].children[0].checked;
-								var sMeal     = oOrdersFromPreferences.rows[i].cells[2].innerText;
-								var sAddition = oOrdersFromPreferences.rows[i].cells[3].innerText;
-								if (sChecked && sMeal && sAddition) {
-									// sText += sUrlNewLine + i + '. ' + sMeal + ' ' + sAddition;
-									sText += `${sUrlNewLine} ${i}. ${sMeal} ${sAddition}`;//added by @slipknot94
-								}
+							function fillPeoplePreferencesTable(){
+								var peoplePreferencesTable = document.getElementById('peoplePreferences');
+								peoplePreferences.forEach(function(object) {
+								    var tr = document.createElement('tr');
+									var typeDesc = types[object.type].description;
+									var mealDesc = meals[object.meal].description;
+									var additionsString = getArrayDescriptionAsString(additions, object.additions);
+									var drinksString = getArrayDescriptionAsString(drinks, object.drinks);
+
+								    tr.innerHTML = '<td>' + '<input type="checkbox"/>' + '</td>' +
+								        '<td>' + object.name + '</td>' +
+								        '<td>' + typeDesc + '</td>' +
+								        '<td>' + mealDesc + '</td>' +
+								        '<td>' + additionsString + '</td>' +
+								        '<td>' + drinksString + '</td>' +
+								        '<td>' + object.notes + '</td>';
+								    peoplePreferencesTable.appendChild(tr);
+									//<option value="volvo">Volvo XC90</option>
+								})
 							}
-							
-							var sUrl = 'https://api.whatsapp.com/send?phone=+972526241919&text=' + sText; //525585252
-							window.location.replace(sUrl)
+							function fillTypesTable(){
+								var typesTable = document.getElementById('types');
+								types.forEach(function(object, i) {
+								    var tr = document.createElement('tr');
+								    tr.innerHTML = '<td>' + types[i].description + '</td>';
+								    typesTable.appendChild(tr);
+								})
 							}
+							function fillMealsTable(){
+								var mealsTable = document.getElementById('meals');
+								meals.forEach(function(object, i) {
+								    var tr = document.createElement('tr');
+								    tr.innerHTML = '<td>' + meals[i].description + '</td>';
+								    mealsTable.appendChild(tr);
+								})
+							}
+							function fillAdditionsTable(){
+								var additionsTable = document.getElementById('additions');
+								additions.forEach(function(object, i) {
+								    var tr = document.createElement('tr');
+								    tr.innerHTML = '<td>' + additions[i].description + '</td>';
+								    additionsTable.appendChild(tr);
+								})
+							}
+							function fillDrinksTable(){
+								var drinksTable = document.getElementById('drinks');
+								drinks.forEach(function(object, i) {
+								    var tr = document.createElement('tr');
+								    tr.innerHTML = '<td>' + drinks[i].description + '</td>';
+								    drinksTable.appendChild(tr);
+								})
+							}
+							fillPeoplePreferencesTable();
+							fillTypesTable();
+							fillMealsTable();
+							fillAdditionsTable();
+							fillDrinksTable();
 						</script>
 					</body>
 				</html>
