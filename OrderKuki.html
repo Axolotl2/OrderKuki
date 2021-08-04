@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+h1 {
+  text-align: center;
+}
+tr {
+  text-align: center;
+}
+.center {
+  margin: auto;
+  width: 20%;
+  padding: 10px;
+}
+.buttonCenter {
+  margin: auto;
+  width: 20%;
+  padding: 10px;
+}
+.tableCenter {
+  margin: auto;
+  width: 40%;
+  padding: 10px;
+}
+</style>
+
+<div class="center" >
+
+	<title>קוקי - תפריט והזמנות</title>
+	</head>
+	<body>
+	<h1>קוקי - תפריט והזמנות</h1>
+	
+	<div class="buttonCenter">
+		<button id="order" onclick="order()" type="button">הזמן קוקי</button>
+	</div>
+	<hr>
+	
+	<h1>תפריט</h1>
+	
+	<table id="meals" class="tableCenter">
+	<tr>
+		<th>מנה</th>
+	</tr>
+	<tr>
+		<td>שניצל בבאגט</td>
+	</tr>
+	<tr>
+		<td>שניצל בחמגשית</td>
+	</tr>
+	<tr>
+		<td>שניצל בחלה מתוקה</td>
+	</tr>
+	<tr>
+		<td>צ'יפס גדול</td>
+	</tr>
+	</table>
+	
+	<table id="hamgashitToppings" class="center">
+	<tr>
+		<th>תוספת</th>
+	</tr>
+	<tr>
+		<td>אורז</td>
+	</tr>
+	<tr>
+		<td>תפוח אדמה</td>
+	</tr>
+	<tr>
+		<td>בטטה</td>
+	</tr>
+	</table>
+	
+	<table id="bagetToppings" class="center">
+	<tr>
+		<th>תוספת</th>
+	</tr>
+	<tr>
+		<td>סלט</td>
+	</tr>
+	<tr>
+		<td>חומוס</td>
+	</tr>
+	<tr>
+		<td>צ'יפס</td>
+	</tr>
+	</table>
+
+</div>
+
+<script>
+function order(event) {
+const sUrlNewLine = '%0A';
+var sText = 'היי, אני רוצה להזמין בבקשה:' + sUrlNewLine;
+// read selected table and add lines
+
+var sUrl = 'https://api.whatsapp.com/send?phone=+972525585252&text=' + sText;
+window.location.replace(sUrl)
+}
+</script>
+</body>
+</html>
