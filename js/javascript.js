@@ -43,12 +43,12 @@ function getArrayDescriptionAsString(json, keys){
 debugger;
 function fillPeoplePreferencesTable(){
 	var peoplePreferencesTable = document.getElementById('peoplePreferences');
-	peoplePreferences.forEach(function(object) {
+	data.peoplePreferences.forEach(function(object) {
 	    var tr = document.createElement('tr');
-		var typeDesc = types[object.type].description;
-		var mealDesc = meals[object.meal].description;
-		var additionsString = getArrayDescriptionAsString(additions, object.additions);
-		var drinksString = getArrayDescriptionAsString(drinks, object.drinks);
+		var typeDesc = data.types[object.type].description;
+		var mealDesc = data.meals[object.meal].description;
+		var additionsString = getArrayDescriptionAsString(data.additions, object.additions);
+		var drinksString = getArrayDescriptionAsString(data.drinks, object.drinks);
 
 	    tr.innerHTML = '<td>' + '<input type="checkbox"/>' + '</td>' +
 	        '<td>' + object.name + '</td>' +
@@ -63,33 +63,33 @@ function fillPeoplePreferencesTable(){
 }
 function fillTypesTable(){
 	var typesTable = document.getElementById('types');
-	types.forEach(function(object, i) {
+	data.types.forEach(function(object, i) {
 	    var tr = document.createElement('tr');
-	    tr.innerHTML = '<td>' + types[i].description + '</td>';
+	    tr.innerHTML = '<td>' + data.types[i].description + '</td>';
 	    typesTable.appendChild(tr);
 	})
 }
 function fillMealsTable(){
 	var mealsTable = document.getElementById('meals');
-	meals.forEach(function(object, i) {
+	data.meals.forEach(function(object, i) {
 	    var tr = document.createElement('tr');
-	    tr.innerHTML = '<td>' + meals[i].description + '</td>';
+	    tr.innerHTML = '<td>' + data.meals[i].description + '</td>';
 	    mealsTable.appendChild(tr);
 	})
 }
 function fillAdditionsTable(){
 	var additionsTable = document.getElementById('additions');
-	additions.forEach(function(object, i) {
+	data.additions.forEach(function(object, i) {
 	    var tr = document.createElement('tr');
-	    tr.innerHTML = '<td>' + additions[i].description + '</td>';
+	    tr.innerHTML = '<td>' + data.additions[i].description + '</td>';
 	    additionsTable.appendChild(tr);
 	})
 }
 function fillDrinksTable(){
 	var drinksTable = document.getElementById('drinks');
-	drinks.forEach(function(object, i) {
+	data.drinks.forEach(function(object, i) {
 	    var tr = document.createElement('tr');
-	    tr.innerHTML = '<td>' + drinks[i].description + '</td>';
+	    tr.innerHTML = '<td>' + data.drinks[i].description + '</td>';
 	    drinksTable.appendChild(tr);
 	})
 }
