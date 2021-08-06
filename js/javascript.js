@@ -88,6 +88,8 @@ function fillTypesTable() {
   data.types.forEach(function (object, i) {
     var tr = document.createElement("tr");
     tr.innerHTML = "<td>" + data.types[i].description + "</td>";
+    // tr.innerHTML = `<td> <img class="imageContainer" src = ${data.types[i].img}> ${data.types[i].description} </td>`;
+    // tr.innerHTML = `<td> <img class="img-fluid of img-thumbnail" src = ${data.types[i].img} <div> ${data.types[i].description} </div> </td>`;
     typesTable.appendChild(tr);
   });
 }

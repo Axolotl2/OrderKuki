@@ -37,3 +37,12 @@ tr {
 h1 {
   font-family: 'Karantina', cursive;
 }
+
+.imageContainer {
+  position: relative;
+  width: 100%;
+}
+
+#section1 {
+  background: linear-gradient(110deg, #fdcd3b 70%, #ffed4b 35%);
+}
