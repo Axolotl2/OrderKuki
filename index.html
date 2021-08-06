@@ -1,219 +1,233 @@
 <!DOCTYPE html>
-<meta charset="utf-8"/>
-	<html dir="rtl">
-		<head>
-			<div class="center">
-				<title>קוקי - תפריט והזמנות</title>
-			</head>
-			<body>
-				<h1>קוקי - תפריט והזמנות</h1>
-				<br>
-				<table id="peoplePreferences" class="tableCenter">
-					<thead>
-						<tr>
-							<th>כלול בהזמנה</th>
-							<th>מזמין</th>
-							<th>הגשה</th>
-							<th>מנה</th>
-							<th>תוספות</th>
-							<th>משקאות</th>
-							<th>הערות</th>
-						</tr>
-					</thead>
-				</table>
-					<br>
-						<div class="buttonCenter outer">
-							<button id="savePeoplePreferences" onclick="savePeoplePreferences()" type="button">שמור העדפות</button>
-							<button id="order" onclick="order()" type="button">הזמן קוקי</button>
-						</div>
-						<hr>
-							<h1>תפריט</h1>
-				<div id="container" class ="outer">
-				    <div>
-				<table id="types" class="tableCenter">
-					<thead>
-						<tr>
-							<th>סוגים</th>
-						</tr>
-					</thead>
-				</table>
-					</div>
-				    <div>
-				<table id="meals" class="tableCenter">
-					<thead>
-						<tr>
-							<th>מנות</th>
-						</tr>
-					</thead>
-				</table>
-					</div>
-				    <div>
-				<table id="additions" class="tableCenter">
-					<thead>
-						<tr>
-							<th>תוספות</th>
-						</tr>
-					</thead>
-				</table>
-					</div>
-				    <div>
-				<table id="drinks" class="tableCenter">
-					<thead>
-						<tr>
-							<th>משקאות</th>
-						</tr>
-					</thead>
-				</table>
-					</div>
-				</div>
-					</body>
+<meta charset="utf-8" />
+<html dir="rtl">
 
-	<script>
-	{	
-		var data = { "types":[
-		{
-			"index" : "0",
-			"description" : "באגט"
-		},
-		{
-			"index" : "1",
-			"description" : "חמגשית"
-		},
-		{
-			"index" : "2",
-			"description" : "חלה מתוקה"
-		}
-		],
-		"meals":[
-		{
-			"index" : "0",
-			"description" : "שניצל צ'ילי"
-		},
-		{
-			"index" : "1",
-			"description" : "שניצל שום"
-		},
-		{
-			"index" : "2",
-			"description" : "שניצל עשבי תיבול"
-		},
-		{
-			"index" : "3",
-			"description" : "שניצל פיקנטי"
-		},
-		{
-			"index" : "4",
-			"description" : "שניצל שומשום"
-		},
-		{
-			"index" : "5",
-			"description" : "חזה עוף"
-		}
-		],
-		"additions":[
-		{
-			"index" : "0",
-			"description" : "סלט ירקות"
-		},
-		{
-			"index" : "1",
-			"description" : "חסה"
-		},
-		{
-			"index" : "2",
-			"description" : "חמוצים"
-		},
-		{
-			"index" : "3",
-			"description" : "קטשופ"
-		},
-		{
-			"index" : "4",
-			"description" : "שעועית ירוקה"
-		},
-		{
-			"index" : "5",
-			"description" : "צ'יפס"
-		},
-		{
-			"index" : "6",
-			"description" : "תפוח אדמה"
-		},
-		{
-			"index" : "7",
-			"description" : "אורז"
-		},
-		{
-			"index" : "8",
-			"description" : "טחינה"
-		},
-		{
-			"index" : "9",
-			"description" : "בטטה"
-		},
-		{
-			"index" : "10",
-			"description" : "בצל"
-		},
-		{
-			"index" : "11",
-			"description" : "חומוס"
-		},
-		{
-			"index" : "12",
-			"description" : "רוטב פסטו"
-		},
-		{
-			"index" : "13",
-			"description" : "חציל במיונז"
-		},
-		{
-			"index" : "14",
-			"description" : "מטבוחה"
-		},
-		{
-			"index" : "15",
-			"description" : "כרוב סגול"
-		},
-		{
-			"index" : "16",
-			"description" : "מיונז שום"
-		}
-		],
-		"drinks":[
-		{
-			"index" : "0",
-			"description" : "זירו"
-		}
-		],
-		"peoplePreferences":[
-		{
-			"name" : "יאיר",
-			"type" : "0",
-			"meal" : "0",
-			"additions" : ["11","8","1","12"],
-			"drinks" : [],
-			"notes" : ""
-		},
-		{
-			"name" : "דולב",
-			"type" : "0",
-			"meal" : "0",
-			"additions" : ["11","8","1","12"],
-			"drinks" : [],
-			"notes" : ""
-		},
-		{
-			"name" : "אסף",
-			"type" : "1",
-			"meal" : "1",
-			"additions" : ["1","8","10"],
-			"drinks" : [],
-			"notes" : ""
-		}
-		]};
-	}
+<head>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Karantina:wght@700&display=swap" rel="stylesheet">
+	<div class="center">
+		<title>קוקי - תפריט והזמנות</title>
+</head>
+
+<body>
+	<h1>קוקי - תפריט והזמנות</h1>
+	<br>
+	<!-- <table id="peoplePreferences" class="tableCenter table"> -->
+	<table id="peoplePreferences" class="table table-bordered">
+		<thead>
+			<tr class="table-dark">
+				<th>כלול בהזמנה</th>
+				<th>מזמין</th>
+				<th>הגשה</th>
+				<th>מנה</th>
+				<th>תוספות</th>
+				<th>משקאות</th>
+				<th>הערות</th>
+			</tr>
+		</thead>
+	</table>
+	<br>
+	<div class=" buttonCenter outer">
+		<button class="btn btn btn-light" id="savePeoplePreferences" onclick="savePeoplePreferences()"
+			type="button">שמור העדפות</button>
+		<button class="btn btn-outline-primary" id="order" onclick="order()" type="button">הזמן
+			קוקי</button>
+	</div>
+	<hr>
+	<h1>תפריט</h1>
+	<div id="container" class="outer">
+		<div>
+			<table id="types" class="tableCenter">
+				<thead>
+					<tr>
+						<th>סוגים</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+		<div>
+			<table id="meals" class="tableCenter">
+				<thead>
+					<tr>
+						<th>מנות</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+		<div>
+			<table id="additions" class="tableCenter">
+				<thead>
+					<tr>
+						<th>תוספות</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+		<div>
+			<table id="drinks" class="tableCenter">
+				<thead>
+					<tr>
+						<th>משקאות</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
+		integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous">
 	</script>
-	<link rel="stylesheet" href="css/style.css">
-	<script type="text/javascript" src="js/javascript.js" charset="utf-8" class="json"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"
+		integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous">
+	</script>
+
+</body>
+
+<script>
+	{
+		var data = {
+			"types": [{
+					"index": "0",
+					"description": "באגט"
+				},
+				{
+					"index": "1",
+					"description": "חמגשית"
+				},
+				{
+					"index": "2",
+					"description": "חלה מתוקה"
+				}
+			],
+			"meals": [{
+					"index": "0",
+					"description": "שניצל צ'ילי"
+				},
+				{
+					"index": "1",
+					"description": "שניצל שום"
+				},
+				{
+					"index": "2",
+					"description": "שניצל עשבי תיבול"
+				},
+				{
+					"index": "3",
+					"description": "שניצל פיקנטי"
+				},
+				{
+					"index": "4",
+					"description": "שניצל שומשום"
+				},
+				{
+					"index": "5",
+					"description": "חזה עוף"
+				}
+			],
+			"additions": [{
+					"index": "0",
+					"description": "סלט ירקות"
+				},
+				{
+					"index": "1",
+					"description": "חסה"
+				},
+				{
+					"index": "2",
+					"description": "חמוצים"
+				},
+				{
+					"index": "3",
+					"description": "קטשופ"
+				},
+				{
+					"index": "4",
+					"description": "שעועית ירוקה"
+				},
+				{
+					"index": "5",
+					"description": "צ'יפס"
+				},
+				{
+					"index": "6",
+					"description": "תפוח אדמה"
+				},
+				{
+					"index": "7",
+					"description": "אורז"
+				},
+				{
+					"index": "8",
+					"description": "טחינה"
+				},
+				{
+					"index": "9",
+					"description": "בטטה"
+				},
+				{
+					"index": "10",
+					"description": "בצל"
+				},
+				{
+					"index": "11",
+					"description": "חומוס"
+				},
+				{
+					"index": "12",
+					"description": "רוטב פסטו"
+				},
+				{
+					"index": "13",
+					"description": "חציל במיונז"
+				},
+				{
+					"index": "14",
+					"description": "מטבוחה"
+				},
+				{
+					"index": "15",
+					"description": "כרוב סגול"
+				},
+				{
+					"index": "16",
+					"description": "מיונז שום"
+				}
+			],
+			"drinks": [{
+				"index": "0",
+				"description": "זירו"
+			}],
+			"peoplePreferences": [{
+					"name": "יאיר",
+					"type": "0",
+					"meal": "0",
+					"additions": ["11", "8", "1", "12"],
+					"drinks": [],
+					"notes": ""
+				},
+				{
+					"name": "דולב",
+					"type": "0",
+					"meal": "0",
+					"additions": ["11", "8", "1", "12"],
+					"drinks": [],
+					"notes": ""
+				},
+				{
+					"name": "אסף",
+					"type": "1",
+					"meal": "1",
+					"additions": ["1", "8", "10"],
+					"drinks": [],
+					"notes": ""
+				}
+			]
+		};
+	}
+</script>
+<link rel="stylesheet" href="css/style.css">
+<script type="text/javascript" src="js/javascript.js" charset="utf-8" class="json"></script>
+
 </html>

@@ -1,29 +1,39 @@
 h1 {
-text-align: center;
+  text-align: center;
 }
+
 tr {
-text-align: center;
+  text-align: center;
 }
+
 .center {
-margin: auto;
-width: 50%;
-padding: 10px;
+  margin: auto;
+  width: 50%;
+  padding: 10px;
 }
+
 .buttonCenter {
-margin: auto;
-width: 10%;
-padding: 10px;
+  margin: auto;
+  width: 10%;
+  padding: 10px;
 }
+
 .tableCenter {
-margin: auto;
-width: 100%;
-padding: 10px;
-} 
+  margin: auto;
+  width: 100%;
+  padding: 10px;
+}
+
 .outer {
-  display:flex;
+  display: flex;
   justify-content: center;
   padding: 3px;
 }
-.outer > div {
-  margin:2px;
+
+.outer>div {
+  margin: 2px;
+}
+
+h1 {
+  font-family: 'Karantina', cursive;
 }
