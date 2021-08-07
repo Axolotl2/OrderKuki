@@ -1,18 +1,26 @@
 // separate js file and json file by this url: https://stackoverflow.com/questions/19706046/how-to-read-an-external-local-json-file-in-javascript
 debugger;
-
-function order(event) {
+function initializeDB() {
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyDdYpByfCXzQ6Kzn922r7mkCy-aCNAs6w4",
+      authDomain: "orderkuki-c5aea.firebaseapp.com",
+      databaseURL: "https://orderkuki-c5aea-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "orderkuki-c5aea",
+      storageBucket: "orderkuki-c5aea.appspot.com",
+      messagingSenderId: "31281277899",
+      appId: "1:31281277899:web:e7f3d1c4f15133a12a244e"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+}
+function prepareOrderMessage() {
   const sUrlNewLine = "%0A";
-  const sKukiPhone = "+972525585252",
-    sTestPhone = "+972526241919";
-  const iName = 0,
-    iMeal = 2,
-    iAdditions = 3;
   // var sText = '���, ��� ���� ������ �����:';
   var sText = "מה קורה אבאלה אני רוצה להזמין:";
-  debugger;
+  const iName = 0, iMeal = 2, iAdditions = 3;
   var oOrdersFromPreferences = document.getElementById("peoplePreferences");
-
+  
   for (var i = 1; i < oOrdersFromPreferences.rows.length; i++) {
     var sChecked = oOrdersFromPreferences.rows[i].cells[0].children[0].checked;
     var sName = oOrdersFromPreferences.rows[i].cells[1].innerText;
@@ -29,10 +37,32 @@ function order(event) {
     }
   }
 
+  return sText;
+}
+function saveOrderToDB() {
+    var databaseRef = firebase.database().ref();
+    
+    var oOrdersFromPreferences = document.getElementById("peoplePreferences");
+
+    var orderData = {
+		"name": "אסף",
+		"type": "1",
+		"meal": "1",
+		"additions": ["1", "8", "10"],
+		"drinks": [],
+		"notes": ""
+	};
+    databaseRef.update(orderData);
+}
+function order(event) {
+  const sKukiPhone = "+972525585252",
+    sTestPhone = "+972526241919";
+
+  sText = prepareOrderMessage();
+  saveOrderToDB();
   var sUrl = `https://api.whatsapp.com/send?phone=${sTestPhone}&text=${sText}`;
   window.open(sUrl);
 }
-
 function getArrayDescriptionAsString(json, keys) {
   var resultString = "";
 
@@ -43,7 +73,6 @@ function getArrayDescriptionAsString(json, keys) {
 
   return resultString;
 }
-debugger;
 function fillPeoplePreferencesTable() {
   var peoplePreferencesTable = document.getElementById("peoplePreferences");
   data.peoplePreferences.forEach(function (object) {
@@ -116,8 +145,13 @@ function fillDrinksTable() {
     drinksTable.appendChild(tr);
   });
 }
-fillPeoplePreferencesTable();
-fillTypesTable();
-fillMealsTable();
-fillAdditionsTable();
-fillDrinksTable();
+function initialize() {
+    initializeDB();
+    fillPeoplePreferencesTable();
+    fillTypesTable();
+    fillMealsTable();
+    fillAdditionsTable();
+    fillDrinksTable();
+}
+
+initialize();
