@@ -43,16 +43,21 @@ function saveOrderToDB() {
     var databaseRef = firebase.database().ref();
     
     var oOrdersFromPreferences = document.getElementById("peoplePreferences");
-
     var orderData = {
 		"name": "אסף",
 		"type": "1",
 		"meal": "1",
 		"additions": ["1", "8", "10"],
 		"drinks": [],
-		"notes": ""
+		"notes": "",
+        "date" : new Date()
 	};
-    databaseRef.update(orderData);
+
+    var newOrderKey = databaseRef.child('orders').push().key;
+    var updates = {};
+    updates['/orders' + newOrderKey] = orderData;
+
+    return databaseRef.update(updates);
 }
 function order(event) {
   const sKukiPhone = "+972525585252",
@@ -111,47 +116,88 @@ function fillPeoplePreferencesTable() {
     peoplePreferencesTable.appendChild(tr);
   });
 }
-function fillTypesTable() {
-  var typesTable = document.getElementById("types");
-  data.types.forEach(function (object, i) {
-    var tr = document.createElement("tr");
-    tr.innerHTML = "<td>" + data.types[i].description + "</td>";
-    // tr.innerHTML = `<td> <img class="imageContainer" src = ${data.types[i].img}> ${data.types[i].description} </td>`;
-    // tr.innerHTML = `<td> <img class="img-fluid of img-thumbnail" src = ${data.types[i].img} <div> ${data.types[i].description} </div> </td>`;
-    typesTable.appendChild(tr);
-  });
+function fillTableFromDB(tableName) {
+  firebase.database().ref().child(tableName).get().then((data) => {
+      if (data.exists()) {
+        var table = document.getElementById(tableName);
+        data.val().forEach(function (object, i) {
+          var tr = document.createElement("tr");
+          tr.innerHTML = "<td>" + data.val()[i].description + "</td>";
+          // tr.innerHTML = `<td> <img class="imageContainer" src = ${data.types[i].img}> ${data.types[i].description} </td>`;
+          // tr.innerHTML = `<td> <img class="img-fluid of img-thumbnail" src = ${data.types[i].img} <div> ${data.types[i].description} </div> </td>`;
+          table.appendChild(tr);
+        });
+      } else {
+        console.log(`No ${tableName} available`);
+      }
+    }).catch((error) => {
+      console.error(error);
+    });
 }
-function fillMealsTable() {
-  var mealsTable = document.getElementById("meals");
-  data.meals.forEach(function (object, i) {
-    var tr = document.createElement("tr");
-    tr.innerHTML = "<td>" + data.meals[i].description + "</td>";
-    mealsTable.appendChild(tr);
-  });
+function fillRecentPeopleOrders() {
+
 }
-function fillAdditionsTable() {
-  var additionsTable = document.getElementById("additions");
-  data.additions.forEach(function (object, i) {
-    var tr = document.createElement("tr");
-    tr.innerHTML = "<td>" + data.additions[i].description + "</td>";
-    additionsTable.appendChild(tr);
-  });
-}
-function fillDrinksTable() {
-  var drinksTable = document.getElementById("drinks");
-  data.drinks.forEach(function (object, i) {
-    var tr = document.createElement("tr");
-    tr.innerHTML = "<td>" + data.drinks[i].description + "</td>";
-    drinksTable.appendChild(tr);
-  });
-}
+//function fillTypesTable() {
+//  firebase.database().ref().child("types").get().then((types) => {
+//      if (types.exists()) {
+//        var typesTable = document.getElementById("types");
+//        types.val().forEach(function (object, i) {
+//          var tr = document.createElement("tr");
+//          tr.innerHTML = "<td>" + types.val()[i].description + "</td>";
+//          // tr.innerHTML = `<td> <img class="imageContainer" src = ${data.types[i].img}> ${data.types[i].description} </td>`;
+//          // tr.innerHTML = `<td> <img class="img-fluid of img-thumbnail" src = ${data.types[i].img} <div> ${data.types[i].description} </div> </td>`;
+//          typesTable.appendChild(tr);
+//        });
+//      } else {
+//        console.log("No types available");
+//      }
+//    }).catch((error) => {
+//      console.error(error);
+//    });
+//
+//  //data.types.forEach(function (object, i) {
+//  //  var tr = document.createElement("tr");
+//  //  tr.innerHTML = "<td>" + data.types[i].description + "</td>";
+//  //  // tr.innerHTML = `<td> <img class="imageContainer" src = ${data.types[i].img}> ${data.types[i].description} </td>`;
+//  //  // tr.innerHTML = `<td> <img class="img-fluid of img-thumbnail" src = ${data.types[i].img} <div> ${data.types[i].description} </div> </td>`;
+//  //  typesTable.appendChild(tr);
+//  //});
+//}
+//function fillMealsTable() {
+//  var mealsTable = document.getElementById("meals");
+//  data.meals.forEach(function (object, i) {
+//    var tr = document.createElement("tr");
+//    tr.innerHTML = "<td>" + data.meals[i].description + "</td>";
+//    mealsTable.appendChild(tr);
+//  });
+//}
+//function fillAdditionsTable() {
+//  var additionsTable = document.getElementById("additions");
+//  data.additions.forEach(function (object, i) {
+//    var tr = document.createElement("tr");
+//    tr.innerHTML = "<td>" + data.additions[i].description + "</td>";
+//    additionsTable.appendChild(tr);
+//  });
+//}
+//function fillDrinksTable() {
+//  var drinksTable = document.getElementById("drinks");
+//  data.drinks.forEach(function (object, i) {
+//    var tr = document.createElement("tr");
+//    tr.innerHTML = "<td>" + data.drinks[i].description + "</td>";
+//    drinksTable.appendChild(tr);
+//  });
+//}
 function initialize() {
     initializeDB();
     fillPeoplePreferencesTable();
-    fillTypesTable();
-    fillMealsTable();
-    fillAdditionsTable();
-    fillDrinksTable();
+    fillTableFromDB("types");
+    fillTableFromDB("meals");
+    fillTableFromDB("additions");
+    fillTableFromDB("drinks");
+    //fillTypesTable();
+    //fillMealsTable();
+    //fillAdditionsTable();
+    //fillDrinksTable();
 }
 
 initialize();
