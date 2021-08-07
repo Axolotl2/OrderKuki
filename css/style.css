@@ -6,11 +6,11 @@ tr {
   text-align: center;
 }
 
-.center {
+/* .center {
   margin: auto;
   width: 50%;
   padding: 10px;
-}
+} */
 
 .buttonCenter {
   margin: auto;
@@ -45,4 +45,16 @@ h1 {
 
 #section1 {
   background: linear-gradient(110deg, #fdcd3b 70%, #ffed4b 35%);
+}
+
+body::-webkit-scrollbar {
+  width: 0.35rem;
+}
+
+body::-webkit-scrollbar-track {
+  background: #1e1e24;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: #ffb835;
 }
