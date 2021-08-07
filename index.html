@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <meta charset="utf-8" />
 <html dir="rtl">
-
+<div>
+<div>
 <head>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -10,18 +11,15 @@
 	<link href="https://fonts.googleapis.com/css2?family=Karantina:wght@700&display=swap" rel="stylesheet">
 	<title>קוקי - תפריט והזמנות</title>
 </head>
-
+</div>
+<div>
 <body>
-
-
 	<section id="section1">
 		<h1>קוקי - תפריט והזמנות</h1>
 
 		<br>
 		<!-- <table id="peoplePreferences" class="tableCenter table"> -->
 	</section>
-
-
 
 	<table id="peoplePreferences" class="table table-bordered">
 		<thead>
@@ -37,7 +35,10 @@
 		</thead>
 	</table>
 	<br>
-	<div class=" buttonCenter outer">
+	<div name="buildOrderLine">
+	</div>
+	<br>
+	<div name="orderLines" class=" buttonCenter outer">
 		<button class="btn btn btn-light" id="savePeoplePreferences" onclick="savePeoplePreferences()"
 			type="button">שמור העדפות</button>
 		<button class="btn btn-outline-primary" id="order" onclick="order()" type="button">הזמן
@@ -89,9 +90,8 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
 	</script>
-
-
 </body>
+</div>
 
 <script>
 	{
@@ -241,4 +241,5 @@
 <link rel="stylesheet" href="css/style.css">
 <script type="text/javascript" src="js/javascript.js" charset="utf-8" class="json"></script>
 
+</div>
 </html>

@@ -80,7 +80,6 @@ function fillPeoplePreferencesTable() {
       "</td>";
 
     peoplePreferencesTable.appendChild(tr);
-    //<option value="volvo">Volvo XC90</option>
   });
 }
 function fillTypesTable() {
