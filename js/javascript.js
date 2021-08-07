@@ -68,13 +68,27 @@ function order(event) {
   var sUrl = `https://api.whatsapp.com/send?phone=${sTestPhone}&text=${sText}`;
   window.open(sUrl);
 }
-function getArrayDescriptionAsString(json, keys) {
+function getArrayDescriptionAsString(tableName, keys) {
   var resultString = "";
+  
+  firebase.database().ref().child(tableName).get().then((data) => {
+      if (data.exists()) {
+        var table = document.getElementById(tableName);
+        data.val().forEach(function (object, i) {
+            if (resultString) resultString += ", ";
+            resultString += data.val()[i].description;
+        });
+      } else {
+        console.log(`No ${tableName} available`);
+      }
+    }).catch((error) => {
+      console.error(error);
+    });
 
-  keys.forEach(function (object, i) {
-    if (resultString) resultString += ", ";
-    resultString += json[i].description;
-  });
+  //keys.forEach(function (object, i) {
+  //  if (resultString) resultString += ", ";
+  //  resultString += json[i].description;
+  //});
 
   return resultString;
 }
@@ -82,13 +96,13 @@ function fillPeoplePreferencesTable() {
   var peoplePreferencesTable = document.getElementById("peoplePreferences");
   data.peoplePreferences.forEach(function (object) {
     var tr = document.createElement("tr");
-    var typeDesc = data.types[object.type].description;
-    var mealDesc = data.meals[object.meal].description;
+    var typeDesc = "" //data.types[object.type].description;
+    var mealDesc = "" //data.meals[object.meal].description;
     var additionsString = getArrayDescriptionAsString(
-      data.additions,
+      "additions", //data.additions,
       object.additions
     );
-    var drinksString = getArrayDescriptionAsString(data.drinks, object.drinks);
+    var drinksString = getArrayDescriptionAsString( "drinks", object.drinks );//data.drinks, object.drinks);
 
     tr.innerHTML =
       "<td>" +
