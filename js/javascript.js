@@ -55,7 +55,7 @@ function saveOrderToDB() {
 
     var newOrderKey = databaseRef.child('orders').push().key;
     var updates = {};
-    updates['/orders' + newOrderKey] = orderData;
+    updates['orders/' + newOrderKey] = orderData;
 
     return databaseRef.update(updates);
 }
@@ -148,8 +148,41 @@ function fillTableFromDB(tableName) {
       console.error(error);
     });
 }
-function fillRecentPeopleOrders() {
+function fillPeopleRecentOrdersTable() {
+  firebase.database().ref().child("orders").get().then((data) => {
+      if (data.exists()) {
+        var table = document.getElementById("peopleRecentOrders");
+        var orders = [];
+        debugger;
+        for (orderKey in data.toJSON()) {
+            orders.push( data.toJSON()[orderKey] );
+        }
+        orders.sort((a,b) => {
+            if (a["name"] === b["name"] && a["date"] === b["date"]) {
+                return 0;
+            } else if (a["name"] === b["name"]) {
+                return (a["date"] > b["date"]) ? -1 : 1;
+            } else {
+                return (a["name"] < b["name"]) ? -1 : 1;
+            }
+        });
+        orders.reduce((order, val) => {
+            if (Object.keys(order).includes(val.name)) return order;
 
+            order[val.group] = orders.filter(g => g.name === val.name); 
+            return order;
+        }, {});
+        //peopleRecentOrders = _.mapValues(_.groupBy(orders, 'name'));
+        orders.filter((order, index, orders) => {
+        // filter non-max date per user
+        });
+        debugger;
+      } else {
+        console.log(`No orders available`);
+      }
+    }).catch((error) => {
+      console.error(error);
+    });
 }
 //function fillTypesTable() {
 //  firebase.database().ref().child("types").get().then((types) => {
@@ -203,7 +236,7 @@ function fillRecentPeopleOrders() {
 //}
 function initialize() {
     initializeDB();
-    fillPeoplePreferencesTable();
+    fillPeopleRecentOrdersTable();
     fillTableFromDB("types");
     fillTableFromDB("meals");
     fillTableFromDB("additions");
