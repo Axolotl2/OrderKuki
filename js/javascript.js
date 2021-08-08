@@ -62,15 +62,16 @@ function saveOrderToDB() {
 
     for (orderKey in oOrder) {
         var orderLine = oOrder[orderKey];
-        var orderData = {
-	    	"name": orderLine.name, 
-	    	"type": orderLine.type, 
-	    	"meal": orderLine.meal, 
-	    	"additions": orderLine.additions,
-	    	"drinks": orderLine.drinks,
-	    	"notes": orderLine.notes,
-            "date" : new Date()
-	    };
+        orderLine["date"] = new Date();
+        //var orderData = {
+	    //	"name": orderLine.name, 
+	    //	"type": orderLine.type, 
+	    //	"meal": orderLine.meal, 
+	    //	"additions": orderLine.additions,
+	    //	"drinks": orderLine.drinks,
+	    //	"notes": orderLine.notes,
+        //    "date" : new Date()
+	    //};
 
         var newOrderKey = databaseRef.child('orders').push().key;
         updates['orders/' + newOrderKey] = orderLine;
