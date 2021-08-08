@@ -397,10 +397,14 @@ function fillPeopleRecentOrdersTable() {
 //    drinksTable.appendChild(tr);
 //  });
 //}
+function createCollapsibleMenu() {
+    
+}
 async function initialize() {
     initializeDB();
     await loadJSONFromDB();
     fillPeopleRecentOrdersTable();
+    createCollapsibleMenu();
     fillTableFromDB("types");
     fillTableFromDB("meals");
     fillTableFromDB("additions");
