@@ -102,7 +102,7 @@ function order(event) {
   window.open(sUrl);
 }
 function addLineToOrder(orderLine) {
-    var orderTable = document.getElementById("orderLines");
+    var orderTableBody = document.getElementById("orderLines").children[1];
     var tr = document.createElement("tr");
     var typeDesc = oDB["types"][orderLine.type]; //data.types[object.type].description;
     var mealDesc = oDB["meals"][orderLine.meal]; //data.meals[object.meal].description;
@@ -135,14 +135,14 @@ function addLineToOrder(orderLine) {
 
     // create\replace order line
     if (oOrder[orderLine.name]) {
-        for ( var i = 1; i < orderTable.children.length; i++) {
-            if (orderTable.children[i].children[0].innerHTML == orderLine.name) {
-                orderTable.replaceChild(tr, orderTable.children[i]);
+        for ( var i = 1; i < orderTableBody.children.length; i++) {
+            if (orderTableBody.children[i].children[0].innerHTML == orderLine.name) {
+                orderTableBody.replaceChild(tr, orderTableBody.children[i]);
                 break;
             }
         }
     } else {
-        orderTable.appendChild(tr);  
+        orderTableBody.appendChild(tr);  
     }  
     oOrder[orderLine.name] = orderLine;
 }
@@ -296,7 +296,7 @@ function getRecentOrderPerName(ordersFromDB) {
     return peopleRecentOrders;
 }
 function preparePeopleRecentOrdersTable(orders) {
-    var recentOrdersTable = document.getElementById("peopleRecentOrders");
+    var recentOrdersTableBody = document.getElementById("peopleRecentOrders").children[1];
 
     orders.forEach(function (object) {
         var tr = document.createElement("tr");
@@ -332,7 +332,7 @@ function preparePeopleRecentOrdersTable(orders) {
           '<button class="btn btn btn-light" id="addRecentOrderLineToOrder" onclick="addRecentOrderLineToOrder(this)" type="button">הוספה</button>' +
           "</td>";
 
-        recentOrdersTable.appendChild(tr);
+        recentOrdersTableBody.appendChild(tr);
     });
 }
 function fillPeopleRecentOrdersTable() {
