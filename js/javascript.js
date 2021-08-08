@@ -148,33 +148,73 @@ function fillTableFromDB(tableName) {
       console.error(error);
     });
 }
+function getRecentOrderPerName(json) {
+    var orders = [], peopleRecentOrders = [];
+    debugger;
+    for (orderKey in json) {
+        orders.push( json[orderKey] );
+    }
+    orders.sort((a,b) => {
+        if (a["name"] === b["name"] && a["date"] === b["date"]) {
+            return 0;
+        } else if (a["name"] === b["name"]) {
+            return (a["date"] > b["date"]) ? -1 : 1;
+        } else {
+            return (a["name"] < b["name"]) ? -1 : 1;
+        }
+    });
+    orders = orders.reduce((order, val) => {
+        if (Object.keys(order).includes(val.name)) return order;
+    
+        order[val.name] = orders.filter(g => g.name === val.name); 
+        return order;
+    }, {});
+    for (name in orders) {
+        peopleRecentOrders.push( orders[name][0] );
+    }
+    
+    return peopleRecentOrders;
+}
+function preparePeopleRecentOrdersTable(orders) {
+    var recentOrdersTable = document.getElementById("peopleRecentOrders");
+    debugger;
+    orders.forEach(function (object) {
+        var tr = document.createElement("tr");
+        var typeDesc = ""; //data.types[object.type].description;
+        var mealDesc = ""; //data.meals[object.meal].description;
+        var additionsString = ""; //getArrayDescriptionAsString("additions", //data.additions, object.additions );
+        var drinksString = ""; //getArrayDescriptionAsString( "drinks", object.drinks );//data.drinks, object.drinks);
+
+        tr.innerHTML =
+          "<td>" +
+          '<input type="checkbox"/>' +
+          "</td>" +
+          "<td>" +
+          object.name +
+          "</td>" +
+          "<td>" +
+          typeDesc +
+          "</td>" +
+          "<td>" +
+          mealDesc +
+          "</td>" +
+          "<td>" +
+          additionsString +
+          "</td>" +
+          "<td>" +
+          drinksString +
+          "</td>" +
+          "<td>" +
+          object.notes +
+          "</td>";
+
+        recentOrdersTable.appendChild(tr);
+    });
+}
 function fillPeopleRecentOrdersTable() {
   firebase.database().ref().child("orders").get().then((data) => {
       if (data.exists()) {
-        var table = document.getElementById("peopleRecentOrders");
-        var orders = [], peopleRecentOrders = [];
-        debugger;
-        for (orderKey in data.toJSON()) {
-            orders.push( data.toJSON()[orderKey] );
-        }
-        orders.sort((a,b) => {
-            if (a["name"] === b["name"] && a["date"] === b["date"]) {
-                return 0;
-            } else if (a["name"] === b["name"]) {
-                return (a["date"] > b["date"]) ? -1 : 1;
-            } else {
-                return (a["name"] < b["name"]) ? -1 : 1;
-            }
-        });
-        orders = orders.reduce((order, val) => {
-            if (Object.keys(order).includes(val.name)) return order;
-
-            order[val.name] = orders.filter(g => g.name === val.name); 
-            return order;
-        }, {});
-        for (name in orders) {
-            peopleRecentOrders.push( orders[name][0] );
-        }
+        preparePeopleRecentOrdersTable(getRecentOrderPerName(data.toJSON()));
       } else {
         console.log(`No orders available`);
       }
