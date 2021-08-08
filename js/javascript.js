@@ -152,7 +152,7 @@ function fillPeopleRecentOrdersTable() {
   firebase.database().ref().child("orders").get().then((data) => {
       if (data.exists()) {
         var table = document.getElementById("peopleRecentOrders");
-        var orders = [];
+        var orders = [], peopleRecentOrders = [];
         debugger;
         for (orderKey in data.toJSON()) {
             orders.push( data.toJSON()[orderKey] );
@@ -166,17 +166,15 @@ function fillPeopleRecentOrdersTable() {
                 return (a["name"] < b["name"]) ? -1 : 1;
             }
         });
-        orders.reduce((order, val) => {
+        orders = orders.reduce((order, val) => {
             if (Object.keys(order).includes(val.name)) return order;
 
-            order[val.group] = orders.filter(g => g.name === val.name); 
+            order[val.name] = orders.filter(g => g.name === val.name); 
             return order;
         }, {});
-        //peopleRecentOrders = _.mapValues(_.groupBy(orders, 'name'));
-        orders.filter((order, index, orders) => {
-        // filter non-max date per user
-        });
-        debugger;
+        for (name in orders) {
+            peopleRecentOrders.push( orders[name][0] );
+        }
       } else {
         console.log(`No orders available`);
       }
