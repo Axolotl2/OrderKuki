@@ -43,9 +43,52 @@ h1 {
   width: 100%;
 }
 
-#section1 {
-  background: linear-gradient(110deg, #fdcd3b 70%, #ffed4b 35%);
+.table-container {
+  display: flex;
+  justify-content: flex-end;
+  /* width: 100%; */
+  background-color: blueviolet;
 }
+
+.table {
+  width: 50%;
+}
+
+.recentOrdersContainer {
+
+  padding-top: 30px;
+  /* background-color: #f0693e; */
+  height: 15rem;
+  /* background: linear-gradient(110deg, #fdcd3b 70%, #f0693e 35%); */
+}
+
+.kukiLogo {
+  margin-right: 100px;
+  width: 100px;
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+  float: right;
+  background-image: url("https://raw.githubusercontent.com/ggomaeng/react-native-svg-chicken/master/inspiration.gif");
+
+}
+
+
+.test-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+  width: 100%;
+  height: 100%;
+}
+
+.gradient {
+  background: linear-gradient(110deg, #fdcd3b 75%, #f0693e 30%);
+}
+
+/* #section1 {
+  background: linear-gradient(110deg, #fdcd3b 72.7%, #f0693e 35%);
+} */
 
 body::-webkit-scrollbar {
   width: 0.35rem;
