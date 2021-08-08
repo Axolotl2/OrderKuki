@@ -1,7 +1,20 @@
 // separate js file and json file by this url: https://stackoverflow.com/questions/19706046/how-to-read-an-external-local-json-file-in-javascript
 debugger;
+var oDB = {};
 var oOrder = {};
 
+async function loadJSONFromDB() {
+debugger;
+  await firebase.database().ref().get().then((data) => {
+      if (data.exists()) {
+        oDB = data.val();
+      } else {
+        console.log(`No data available`);
+      }
+    }).catch((error) => {
+      console.error(error);
+    });
+}
 function initializeDB() {
     // Your web app's Firebase configuration
     var firebaseConfig = {
@@ -44,22 +57,40 @@ function prepareOrderMessage() {
 function saveOrderToDB() {
     var databaseRef = firebase.database().ref();
     var updates = {};
-    var oOrderRows = document.getElementById("orderLines").rows;
-    
-    for ( var i = 1; i < oOrderRows.length ; i++ ) {
+    //var oOrderRows = document.getElementById("orderLines").rows;
+    debugger;
+
+    for (orderKey in oOrder) {
+        var orderLine = oOrder[orderKey];
         var orderData = {
-	    	"name": oOrderRows[i].children[0].innerHTML,
-	    	"type": oOrderRows[i].children[1].innerHTML,
-	    	"meal": oOrderRows[i].children[2].innerHTML,
-	    	"additions": ["1", "8", "10"],
-	    	"drinks": [],
-	    	"notes": oOrderRows[i].children[5].innerHTML,
+	    	"name": orderLine.name, 
+	    	"type": orderLine.type, 
+	    	"meal": orderLine.meal, 
+	    	"additions": orderLine.additions,
+	    	"drinks": orderLine.drinks,
+	    	"notes": orderLine.notes,
             "date" : new Date()
 	    };
-    
+
         var newOrderKey = databaseRef.child('orders').push().key;
-        updates['orders/' + newOrderKey] = orderData;
+        updates['orders/' + newOrderKey] = orderLine;
     }
+    //for ( var i = 1; i < oOrderRows.length ; i++ ) {
+    //    var rowID = oOrderRows[i].children[0].innerHTML;
+    //    var row = oDB["orders"][rowID];
+    //    var orderData = {
+	//    	"name": row.name, //oOrderRows[i].children[0].innerHTML,
+	//    	"type": row.type, //oOrderRows[i].children[1].innerHTML,
+	//    	"meal": row.meal, //oOrderRows[i].children[2].innerHTML,
+	//    	"additions": row.additions,
+	//    	"drinks": row.drinks,
+	//    	"notes": row.notes, //oOrderRows[i].children[5].innerHTML,
+    //        "date" : new Date()
+	//    };
+    //
+    //    var newOrderKey = databaseRef.child('orders').push().key;
+    //    updates['orders/' + newOrderKey] = orderData;
+    //}
     
     return databaseRef.update(updates);
 }
@@ -75,10 +106,10 @@ function order(event) {
 function addLineToOrder(orderLine) {
     var orderTable = document.getElementById("orderLines");
     var tr = document.createElement("tr");
-    var typeDesc = ""; //data.types[object.type].description;
-    var mealDesc = ""; //data.meals[object.meal].description;
-    var additionsString = ""; //getArrayDescriptionAsString("additions", //data.additions, object.additions );
-    var drinksString = ""; //getArrayDescriptionAsString( "drinks", object.drinks );//data.drinks, object.drinks);
+    var typeDesc = oDB["types"][orderLine.type]; //data.types[object.type].description;
+    var mealDesc = oDB["meals"][orderLine.meal]; //data.meals[object.meal].description;
+    var additionsString = getArrayDescriptionAsString(oDB["additions"], orderLine.additions );
+    var drinksString = getArrayDescriptionAsString(oDB["drinks"], orderLine.drinks );
 
     tr.innerHTML =
       "<td>" +
@@ -101,39 +132,48 @@ function addLineToOrder(orderLine) {
       "</td>";
 
     orderTable.appendChild(tr);    
+    oOrder[orderLine.name] = orderLine;
 }
 function addRecentOrderLineToOrder(event) {
     debugger;
-    var row = event.parentElement.parentElement.cells;
+    var rowID = event.parentElement.parentElement.cells[0].outerText;
+    var row = oDB["orders"][rowID];
 
-    // get order items index
     var orderLine = {
-		"name": row[0].outerText,
-		"type": row[1].outerText,
-		"meal": row[2].outerText,
-		"additions": ["1", "8", "10"],
-		"drinks": [],
-		"notes": row[5].outerText
+		"name": row.name,
+		"type": row.type,
+		"meal": row.meal,
+		"additions": (row.additions != null) ? row.additions : [],
+		"drinks": (row.drinks != null) ? row.drinks : [],
+		"notes": row.notes
 	};
 
     addLineToOrder(orderLine);
 }
 function getArrayDescriptionAsString(tableName, keys) {
   var resultString = "";
-  
-  firebase.database().ref().child(tableName).get().then((data) => {
-      if (data.exists()) {
-        var table = document.getElementById(tableName);
-        data.val().forEach(function (object, i) {
-            if (resultString) resultString += ", ";
-            resultString += data.val()[i].description;
-        });
-      } else {
-        console.log(`No ${tableName} available`);
-      }
-    }).catch((error) => {
-      console.error(error);
-    });
+  debugger;
+
+  if (keys == null) return resultString;
+
+  keys.forEach(function (object) {
+    if (resultString) resultString += ", ";
+    resultString += tableName[object];    
+  });
+
+  //firebase.database().ref().child(tableName).get().then((data) => {
+  //    if (data.exists()) {
+  //      var table = document.getElementById(tableName);
+  //      data.val().forEach(function (object, i) {
+  //          if (resultString) resultString += ", ";
+  //          resultString += data.val()[i].description;
+  //      });
+  //    } else {
+  //      console.log(`No ${tableName} available`);
+  //    }
+  //  }).catch((error) => {
+  //    console.error(error);
+  //  });
 
   //keys.forEach(function (object, i) {
   //  if (resultString) resultString += ", ";
@@ -181,28 +221,40 @@ function getArrayDescriptionAsString(tableName, keys) {
 //  });
 //}
 function fillTableFromDB(tableName) {
-  firebase.database().ref().child(tableName).get().then((data) => {
-      if (data.exists()) {
-        var table = document.getElementById(tableName);
-        data.val().forEach(function (object, i) {
-          var tr = document.createElement("tr");
-          tr.innerHTML = "<td>" + data.val()[i].description + "</td>";
-          // tr.innerHTML = `<td> <img class="imageContainer" src = ${data.types[i].img}> ${data.types[i].description} </td>`;
-          // tr.innerHTML = `<td> <img class="img-fluid of img-thumbnail" src = ${data.types[i].img} <div> ${data.types[i].description} </div> </td>`;
-          table.appendChild(tr);
-        });
-      } else {
-        console.log(`No ${tableName} available`);
-      }
-    }).catch((error) => {
-      console.error(error);
+    var rows = oDB[tableName];
+    var table = document.getElementById(tableName);
+    rows.forEach(function (object, i) {
+        var tr = document.createElement("tr");
+        tr.innerHTML = "<td>" + rows[i] + "</td>";
+        // tr.innerHTML = `<td> <img class="imageContainer" src = ${data.types[i].img}> ${data.types[i].description} </td>`;
+        // tr.innerHTML = `<td> <img class="img-fluid of img-thumbnail" src = ${data.types[i].img} <div> ${data.types[i].description} </div> </td>`;
+        table.appendChild(tr);
     });
+
+  //firebase.database().ref().child(tableName).get().then((data) => {
+  //    if (data.exists()) {
+  //      var table = document.getElementById(tableName);
+  //      data.val().forEach(function (object, i) {
+  //        var tr = document.createElement("tr");
+  //        tr.innerHTML = "<td>" + data.val()[i].description + "</td>";
+  //        // tr.innerHTML = `<td> <img class="imageContainer" src = ${data.types[i].img}> ${data.types[i].description} </td>`;
+  //        // tr.innerHTML = `<td> <img class="img-fluid of img-thumbnail" src = ${data.types[i].img} <div> ${data.types[i].description} </div> </td>`;
+  //        table.appendChild(tr);
+  //      });
+  //    } else {
+  //      console.log(`No ${tableName} available`);
+  //    }
+  //  }).catch((error) => {
+  //    console.error(error);
+  //  });
 }
 function getRecentOrderPerName(json) {
     var orders = [], peopleRecentOrders = [];
     debugger;
     for (orderKey in json) {
-        orders.push( json[orderKey] );
+        var order = json[orderKey];
+        order["id"] = orderKey;
+        orders.push( order );
     }
     orders.sort((a,b) => {
         if (a["name"] === b["name"] && a["date"] === b["date"]) {
@@ -230,12 +282,15 @@ function preparePeopleRecentOrdersTable(orders) {
     debugger;
     orders.forEach(function (object) {
         var tr = document.createElement("tr");
-        var typeDesc = ""; //data.types[object.type].description;
+        var typeDesc = oDB["types"][object.type]; //data.types[object.type].description;
         var mealDesc = ""; //data.meals[object.meal].description;
         var additionsString = ""; //getArrayDescriptionAsString("additions", //data.additions, object.additions );
         var drinksString = ""; //getArrayDescriptionAsString( "drinks", object.drinks );//data.drinks, object.drinks);
 
         tr.innerHTML =
+          '<td style="display:none;">' +
+          object.id +
+          "</td>" +
           "<td>" +
           object.name +
           "</td>" +
@@ -323,8 +378,9 @@ function fillPeopleRecentOrdersTable() {
 //    drinksTable.appendChild(tr);
 //  });
 //}
-function initialize() {
+async function initialize() {
     initializeDB();
+    await loadJSONFromDB();
     fillPeopleRecentOrdersTable();
     fillTableFromDB("types");
     fillTableFromDB("meals");

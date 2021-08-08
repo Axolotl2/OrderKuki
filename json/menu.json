@@ -1,116 +1,32 @@
 {
-	"types": [{
-			"index": "0",
-			"description": "αΰβθ",
-			"img": "https://static.hashulchan.co.il/www/uploads/terms-images/ingredient/%D7%91%D7%92%D7%98-2-medium.jpg"
-		},
-		{
-			"index": "1",
-			"description": "ηξβωιϊ",
-			"img": "",
-		},
-		{
-			"index": "2",
-			"description": "ημδ ξϊεχδ",
-			"img": ""
-		}
+	"types": ["Χ‘ΧΧ’Χ"
+		,"Χ—ΧΧ’Χ©Χ™Χª"
+		,"Χ—ΧΧ” ΧΧªΧ•Χ§Χ”"
 	],
-	"meals": [{
-			"index": "0",
-			"description": "ωπιφμ φ'ιμι"
-		},
-		{
-			"index": "1",
-			"description": "ωπιφμ ωεν"
-		},
-		{
-			"index": "2",
-			"description": "ωπιφμ ςωαι ϊιαεμ"
-		},
-		{
-			"index": "3",
-			"description": "ωπιφμ τιχπθι"
-		},
-		{
-			"index": "4",
-			"description": "ωπιφμ ωεξωεν"
-		},
-		{
-			"index": "5",
-			"description": "ηζδ ςεσ"
-		}
+	"meals": ["Χ©Χ Χ™Χ¦Χ Χ¦'Χ™ΧΧ™"
+		,"Χ©Χ Χ™Χ¦Χ Χ©Χ•Χ"
+		,"Χ©Χ Χ™Χ¦Χ ΧΆΧ©Χ‘Χ™ ΧªΧ™Χ‘Χ•Χ"
+		,"Χ©Χ Χ™Χ¦Χ Χ¤Χ™Χ§Χ ΧΧ™"
+		,"Χ©Χ Χ™Χ¦Χ Χ©Χ•ΧΧ©Χ•Χ"
+		,"Χ—Χ–Χ” ΧΆΧ•Χ£"
 	],
-	"additions": [{
-			"index": "0",
-			"description": "ρμθ ιψχεϊ"
-		},
-		{
-			"index": "1",
-			"description": "ηρδ"
-		},
-		{
-			"index": "2",
-			"description": "ηξεφιν"
-		},
-		{
-			"index": "3",
-			"description": "χθωετ"
-		},
-		{
-			"index": "4",
-			"description": "ωςεςιϊ ιψεχδ"
-		},
-		{
-			"index": "5",
-			"description": "φ'ιτρ"
-		},
-		{
-			"index": "6",
-			"description": "ϊτεη ΰγξδ"
-		},
-		{
-			"index": "7",
-			"description": "ΰεψζ"
-		},
-		{
-			"index": "8",
-			"description": "θηιπδ"
-		},
-		{
-			"index": "9",
-			"description": "αθθδ"
-		},
-		{
-			"index": "10",
-			"description": "αφμ"
-		},
-		{
-			"index": "11",
-			"description": "ηεξερ"
-		},
-		{
-			"index": "12",
-			"description": "ψεθα τρθε"
-		},
-		{
-			"index": "13",
-			"description": "ηφιμ αξιεπζ"
-		},
-		{
-			"index": "14",
-			"description": "ξθαεηδ"
-		},
-		{
-			"index": "15",
-			"description": "λψεα ρβεμ"
-		},
-		{
-			"index": "16",
-			"description": "ξιεπζ ωεν"
-		}
+	"additions": ["Χ΅ΧΧ Χ™Χ¨Χ§Χ•Χª"
+		,"Χ—Χ΅Χ”"
+		,"Χ—ΧΧ•Χ¦Χ™Χ"
+		,"Χ§ΧΧ©Χ•Χ¤"
+		,"Χ©ΧΆΧ•ΧΆΧ™Χª Χ™Χ¨Χ•Χ§Χ”"
+		,"Χ¦'Χ™Χ¤Χ΅"
+		,"ΧªΧ¤Χ•Χ— ΧΧ“ΧΧ”"
+		,"ΧΧ•Χ¨Χ–"
+		,"ΧΧ—Χ™Χ Χ”"
+		,"Χ‘ΧΧΧ”"
+		,"Χ‘Χ¦Χ"
+		,"Χ—Χ•ΧΧ•Χ΅"
+		,"Χ¨Χ•ΧΧ‘ Χ¤Χ΅ΧΧ•"
+		,"Χ—Χ¦Χ™Χ Χ‘ΧΧ™Χ•Χ Χ–"
+		,"ΧΧΧ‘Χ•Χ—Χ”"
+		,"Χ›Χ¨Χ•Χ‘ Χ΅Χ’Χ•Χ"
+		,"ΧΧ™Χ•Χ Χ– Χ©Χ•Χ"
 	],
-	"drinks": [{
-		"index": "0",
-		"description": "ζιψε"
-	}]
+	"drinks": ["Χ–Χ™Χ¨Χ•"]
 }
