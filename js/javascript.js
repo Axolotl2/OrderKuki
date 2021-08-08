@@ -248,11 +248,11 @@ function fillTableFromDB(tableName) {
   //    console.error(error);
   //  });
 }
-function getRecentOrderPerName(json) {
+function getRecentOrderPerName(ordersFromDB) {
     var orders = [], peopleRecentOrders = [];
     debugger;
-    for (orderKey in json) {
-        var order = json[orderKey];
+    for (orderKey in ordersFromDB) {
+        var order = ordersFromDB[orderKey];
         order["id"] = orderKey;
         orders.push( order );
     }
@@ -283,9 +283,9 @@ function preparePeopleRecentOrdersTable(orders) {
     orders.forEach(function (object) {
         var tr = document.createElement("tr");
         var typeDesc = oDB["types"][object.type]; //data.types[object.type].description;
-        var mealDesc = ""; //data.meals[object.meal].description;
-        var additionsString = ""; //getArrayDescriptionAsString("additions", //data.additions, object.additions );
-        var drinksString = ""; //getArrayDescriptionAsString( "drinks", object.drinks );//data.drinks, object.drinks);
+        var mealDesc = oDB["meals"][object.meal]; //data.meals[object.meal].description;
+        var additionsString = getArrayDescriptionAsString(oDB["additions"], object.additions );
+        var drinksString = getArrayDescriptionAsString(oDB["drinks"], object.drinks );
 
         tr.innerHTML =
           '<td style="display:none;">' +
@@ -318,15 +318,16 @@ function preparePeopleRecentOrdersTable(orders) {
     });
 }
 function fillPeopleRecentOrdersTable() {
-  firebase.database().ref().child("orders").get().then((data) => {
-      if (data.exists()) {
-        preparePeopleRecentOrdersTable(getRecentOrderPerName(data.toJSON()));
-      } else {
-        console.log(`No orders available`);
-      }
-    }).catch((error) => {
-      console.error(error);
-    });
+  preparePeopleRecentOrdersTable(getRecentOrderPerName(oDB["orders"]));
+  //firebase.database().ref().child("orders").get().then((data) => {
+  //    if (data.exists()) {
+  //      preparePeopleRecentOrdersTable(getRecentOrderPerName(data.toJSON()));
+  //    } else {
+  //      console.log(`No orders available`);
+  //    }
+  //  }).catch((error) => {
+  //    console.error(error);
+  //  });
 }
 //function fillTypesTable() {
 //  firebase.database().ref().child("types").get().then((types) => {
