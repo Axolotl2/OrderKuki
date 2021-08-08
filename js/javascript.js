@@ -1,10 +1,8 @@
 // separate js file and json file by this url: https://stackoverflow.com/questions/19706046/how-to-read-an-external-local-json-file-in-javascript
-debugger;
 var oDB = {};
 var oOrder = {};
 
 async function loadJSONFromDB() {
-debugger;
   await firebase.database().ref().get().then((data) => {
       if (data.exists()) {
         oDB = data.val();
@@ -58,7 +56,6 @@ function saveOrderToDB() {
     var databaseRef = firebase.database().ref();
     var updates = {};
     //var oOrderRows = document.getElementById("orderLines").rows;
-    debugger;
 
     for (orderKey in oOrder) {
         var orderLine = oOrder[orderKey];
@@ -111,6 +108,7 @@ function addLineToOrder(orderLine) {
     var mealDesc = oDB["meals"][orderLine.meal]; //data.meals[object.meal].description;
     var additionsString = getArrayDescriptionAsString(oDB["additions"], orderLine.additions );
     var drinksString = getArrayDescriptionAsString(oDB["drinks"], orderLine.drinks );
+    debugger;
 
     tr.innerHTML =
       "<td>" +
@@ -130,13 +128,33 @@ function addLineToOrder(orderLine) {
       "</td>" +
       "<td>" +
       orderLine.notes +
+      "</td>" +
+      "<td>" +
+      '<button class="btn btn btn-light" id="removeLineFromOrder" onclick="removeLineFromOrder(this)" type="button">הסרה</button>' +
       "</td>";
 
-    orderTable.appendChild(tr);    
+    // create\replace order line
+    if (oOrder[orderLine.name]) {
+        for ( var i = 1; i < orderTable.children.length; i++) {
+            if (orderTable.children[i].children[0].innerHTML == orderLine.name) {
+                orderTable.replaceChild(tr, orderTable.children[i]);
+                break;
+            }
+        }
+    } else {
+        orderTable.appendChild(tr);  
+    }  
     oOrder[orderLine.name] = orderLine;
 }
+function removeLineFromOrder(event) {
+    var orderTable = document.getElementById("orderLines");
+    var row = event.parentElement.parentElement;
+    var rowID = row.cells[0].outerText;
+
+    row.remove();
+    delete oOrder[rowID];
+}
 function addRecentOrderLineToOrder(event) {
-    debugger;
     var rowID = event.parentElement.parentElement.cells[0].outerText;
     var row = oDB["orders"][rowID];
 
@@ -153,7 +171,6 @@ function addRecentOrderLineToOrder(event) {
 }
 function getArrayDescriptionAsString(tableName, keys) {
   var resultString = "";
-  debugger;
 
   if (keys == null) return resultString;
 
@@ -251,7 +268,7 @@ function fillTableFromDB(tableName) {
 }
 function getRecentOrderPerName(ordersFromDB) {
     var orders = [], peopleRecentOrders = [];
-    debugger;
+
     for (orderKey in ordersFromDB) {
         var order = ordersFromDB[orderKey];
         order["id"] = orderKey;
@@ -280,7 +297,7 @@ function getRecentOrderPerName(ordersFromDB) {
 }
 function preparePeopleRecentOrdersTable(orders) {
     var recentOrdersTable = document.getElementById("peopleRecentOrders");
-    debugger;
+
     orders.forEach(function (object) {
         var tr = document.createElement("tr");
         var typeDesc = oDB["types"][object.type]; //data.types[object.type].description;
