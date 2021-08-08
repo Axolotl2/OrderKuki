@@ -1,5 +1,7 @@
 // separate js file and json file by this url: https://stackoverflow.com/questions/19706046/how-to-read-an-external-local-json-file-in-javascript
 debugger;
+var oOrder = {};
+
 function initializeDB() {
     // Your web app's Firebase configuration
     var firebaseConfig = {
@@ -19,20 +21,20 @@ function prepareOrderMessage() {
   // var sText = '���, ��� ���� ������ �����:';
   var sText = "מה קורה אבאלה אני רוצה להזמין:";
   const iName = 0, iMeal = 2, iAdditions = 3;
-  var oOrdersFromPreferences = document.getElementById("peoplePreferences");
+  var oOrderRows = document.getElementById("orderLines").rows;
   
-  for (var i = 1; i < oOrdersFromPreferences.rows.length; i++) {
-    var sChecked = oOrdersFromPreferences.rows[i].cells[0].children[0].checked;
-    var sName = oOrdersFromPreferences.rows[i].cells[1].innerText;
-    var sType = oOrdersFromPreferences.rows[i].cells[2].innerText;
-    var sMeal = oOrdersFromPreferences.rows[i].cells[3].innerText;
-    var sAdditions = oOrdersFromPreferences.rows[i].cells[4].innerText;
-    var sDrinks = oOrdersFromPreferences.rows[i].cells[5].innerText;
-    var sNotes = oOrdersFromPreferences.rows[i].cells[6].innerText;
+  for (var i = 1; i < oOrderRows.length; i++) {
+    //var sChecked = oOrderRows[i].cells[0].children[0].checked;
+    var sName = oOrderRows[i].cells[0].innerText;
+    var sType = oOrderRows[i].cells[1].innerText;
+    var sMeal = oOrderRows[i].cells[2].innerText;
+    var sAdditions = oOrderRows[i].cells[3].innerText;
+    var sDrinks = oOrderRows[i].cells[4].innerText;
+    var sNotes = oOrderRows[i].cells[5].innerText;
 
     if (sDrinks) sDrinks = `, ${sDrinks}`;
     if (sNotes) sNotes = `, ${sNotes}`;
-    if (sChecked && sMeal) {
+    if (sMeal) {
       sText += `${sUrlNewLine} ${i}. *${sType}* ${sMeal}, ${sAdditions} ${sDrinks} ${sNotes} (${sName})`;
     }
   }
@@ -41,22 +43,24 @@ function prepareOrderMessage() {
 }
 function saveOrderToDB() {
     var databaseRef = firebase.database().ref();
-    
-    var oOrdersFromPreferences = document.getElementById("peoplePreferences");
-    var orderData = {
-		"name": "אסף",
-		"type": "1",
-		"meal": "1",
-		"additions": ["1", "8", "10"],
-		"drinks": [],
-		"notes": "",
-        "date" : new Date()
-	};
-
-    var newOrderKey = databaseRef.child('orders').push().key;
     var updates = {};
-    updates['orders/' + newOrderKey] = orderData;
-
+    var oOrderRows = document.getElementById("orderLines").rows;
+    
+    for ( var i = 1; i < oOrderRows.length ; i++ ) {
+        var orderData = {
+	    	"name": oOrderRows[i].children[0].innerHTML,
+	    	"type": oOrderRows[i].children[1].innerHTML,
+	    	"meal": oOrderRows[i].children[2].innerHTML,
+	    	"additions": ["1", "8", "10"],
+	    	"drinks": [],
+	    	"notes": oOrderRows[i].children[5].innerHTML,
+            "date" : new Date()
+	    };
+    
+        var newOrderKey = databaseRef.child('orders').push().key;
+        updates['orders/' + newOrderKey] = orderData;
+    }
+    
     return databaseRef.update(updates);
 }
 function order(event) {
@@ -67,6 +71,52 @@ function order(event) {
   saveOrderToDB();
   var sUrl = `https://api.whatsapp.com/send?phone=${sTestPhone}&text=${sText}`;
   window.open(sUrl);
+}
+function addLineToOrder(orderLine) {
+    var orderTable = document.getElementById("orderLines");
+    var tr = document.createElement("tr");
+    var typeDesc = ""; //data.types[object.type].description;
+    var mealDesc = ""; //data.meals[object.meal].description;
+    var additionsString = ""; //getArrayDescriptionAsString("additions", //data.additions, object.additions );
+    var drinksString = ""; //getArrayDescriptionAsString( "drinks", object.drinks );//data.drinks, object.drinks);
+
+    tr.innerHTML =
+      "<td>" +
+      orderLine.name +
+      "</td>" +
+      "<td>" +
+      typeDesc +
+      "</td>" +
+      "<td>" +
+      mealDesc +
+      "</td>" +
+      "<td>" +
+      additionsString +
+      "</td>" +
+      "<td>" +
+      drinksString +
+      "</td>" +
+      "<td>" +
+      orderLine.notes +
+      "</td>";
+
+    orderTable.appendChild(tr);    
+}
+function addRecentOrderLineToOrder(event) {
+    debugger;
+    var row = event.parentElement.parentElement.cells;
+
+    // get order items index
+    var orderLine = {
+		"name": row[0].outerText,
+		"type": row[1].outerText,
+		"meal": row[2].outerText,
+		"additions": ["1", "8", "10"],
+		"drinks": [],
+		"notes": row[5].outerText
+	};
+
+    addLineToOrder(orderLine);
 }
 function getArrayDescriptionAsString(tableName, keys) {
   var resultString = "";
@@ -89,47 +139,47 @@ function getArrayDescriptionAsString(tableName, keys) {
   //  if (resultString) resultString += ", ";
   //  resultString += json[i].description;
   //});
-
+  
   return resultString;
 }
-function fillPeoplePreferencesTable() {
-  var peoplePreferencesTable = document.getElementById("peoplePreferences");
-  data.peoplePreferences.forEach(function (object) {
-    var tr = document.createElement("tr");
-    var typeDesc = "" //data.types[object.type].description;
-    var mealDesc = "" //data.meals[object.meal].description;
-    var additionsString = getArrayDescriptionAsString(
-      "additions", //data.additions,
-      object.additions
-    );
-    var drinksString = getArrayDescriptionAsString( "drinks", object.drinks );//data.drinks, object.drinks);
-
-    tr.innerHTML =
-      "<td>" +
-      '<input type="checkbox"/>' +
-      "</td>" +
-      "<td>" +
-      object.name +
-      "</td>" +
-      "<td>" +
-      typeDesc +
-      "</td>" +
-      "<td>" +
-      mealDesc +
-      "</td>" +
-      "<td>" +
-      additionsString +
-      "</td>" +
-      "<td>" +
-      drinksString +
-      "</td>" +
-      "<td>" +
-      object.notes +
-      "</td>";
-
-    peoplePreferencesTable.appendChild(tr);
-  });
-}
+//function fillPeoplePreferencesTable() {
+//  var peoplePreferencesTable = document.getElementById("peoplePreferences");
+//  data.peoplePreferences.forEach(function (object) {
+//    var tr = document.createElement("tr");
+//    var typeDesc = "" //data.types[object.type].description;
+//    var mealDesc = "" //data.meals[object.meal].description;
+//    var additionsString = getArrayDescriptionAsString(
+//      "additions", //data.additions,
+//      object.additions
+//    );
+//    var drinksString = getArrayDescriptionAsString( "drinks", object.drinks );//data.drinks, object.drinks);
+//
+//    tr.innerHTML =
+//      "<td>" +
+//      '<input type="checkbox"/>' +
+//      "</td>" +
+//      "<td>" +
+//      object.name +
+//      "</td>" +
+//      "<td>" +
+//      typeDesc +
+//      "</td>" +
+//      "<td>" +
+//      mealDesc +
+//      "</td>" +
+//      "<td>" +
+//      additionsString +
+//      "</td>" +
+//      "<td>" +
+//      drinksString +
+//      "</td>" +
+//      "<td>" +
+//      object.notes +
+//      "</td>";
+//
+//    peoplePreferencesTable.appendChild(tr);
+//  });
+//}
 function fillTableFromDB(tableName) {
   firebase.database().ref().child(tableName).get().then((data) => {
       if (data.exists()) {
@@ -187,9 +237,6 @@ function preparePeopleRecentOrdersTable(orders) {
 
         tr.innerHTML =
           "<td>" +
-          '<input type="checkbox"/>' +
-          "</td>" +
-          "<td>" +
           object.name +
           "</td>" +
           "<td>" +
@@ -206,6 +253,10 @@ function preparePeopleRecentOrdersTable(orders) {
           "</td>" +
           "<td>" +
           object.notes +
+          "</td>" + 
+          "<td>" +
+          //'<input type="checkbox"/>' +
+          '<button class="btn btn btn-light" id="addRecentOrderLineToOrder" onclick="addRecentOrderLineToOrder(this)" type="button">הוספה</button>' +
           "</td>";
 
         recentOrdersTable.appendChild(tr);

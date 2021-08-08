@@ -14,6 +14,13 @@
 </div>
 <div>
 <body>
+	<!-- The core Firebase JS SDK is always required and must be listed first -->
+	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.8.1/firebase.js"></script>
+	<!-- TODO: Add SDKs for Firebase products that you want to use https://firebase.google.com/docs/web/setup#available-libraries -->
+	<link rel="stylesheet" href="css/style.css">
+	<script type="text/javascript" src="js/javascript.js" charset="utf-8" class="json"></script>
 	<section id="section1">
 		<h1>קוקי - תפריט והזמנות</h1>
 
@@ -24,13 +31,13 @@
 	<table id="peopleRecentOrders" class="table table-bordered">
 		<thead>
 			<tr class="table-dark">
-				<th>כלול בהזמנה</th>
 				<th>מזמין</th>
 				<th>הגשה</th>
 				<th>מנה</th>
 				<th>תוספות</th>
 				<th>משקאות</th>
 				<th>הערות</th>
+				<th></th>
 			</tr>
 		</thead>
 	</table>
@@ -52,10 +59,7 @@
 				</tr>
 			</thead>
 		</table>
-		<button class="btn btn btn-light" id="savePeoplePreferences" onclick="savePeoplePreferences()"
-			type="button">שמור העדפות</button>
-		<button class="btn btn-outline-primary" id="order" onclick="order()" type="button">הזמן
-			קוקי</button>
+		<button class="btn btn-outline-primary" id="order" onclick="order(this)" type="button">הזמן קוקי</button>
 	</div>
 	<hr>
 
@@ -137,12 +141,6 @@
 		};
 	}
 </script>
-<!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.8.1/firebase.js"></script>
-<!-- TODO: Add SDKs for Firebase products that you want to use https://firebase.google.com/docs/web/setup#available-libraries -->
-<link rel="stylesheet" href="css/style.css">
-<script type="text/javascript" src="js/javascript.js" charset="utf-8" class="json"></script>
 </div>
 
 </html>
