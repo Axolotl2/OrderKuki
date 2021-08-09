@@ -26,146 +26,155 @@
 			<script type="text/javascript" src="js/javascript.js" charset="utf-8" class="json"></script>
 
 
-			<div class="gradient">
-				<section id="section1">
-					<h1>קוקי - מה להשים לך</h1>
+
+			<main>
+				<div class="header-container">
+					<!-- <div class="kukiLogo"></div> -->
+					<div id="logo-container"><a href="http://www.zerocarbonfood.co.uk/test"><img
+								src="https://raw.githubusercontent.com/ggomaeng/react-native-svg-chicken/master/inspiration.gif"
+								alt="" /></a></div>
+					<h1 class="header-title">שניצל קוקי</h1>
 
 					<br>
-				</section>
+					<div class="main-container">
+						<div class="recentOrdersContainer">
 
-				<div class="recentOrdersContainer">
+							<!-- <div class="innerContainer d-flex justify-content-center"> -->
+							<table id="peopleRecentOrders" class="table table-bordered">
+								<thead>
+									<tr class="table-dark">
+										<th style="display:none;">rowID</th>
+										<th>מזמין</th>
+										<th>הגשה</th>
+										<th>מנה</th>
+										<th>תוספות</th>
+										<th>משקאות</th>
+										<th>הערות</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
 
-					<div class="kukiLogo"></div>
-					<div class="d-flex justify-content-center">
-						<!-- <table id="peopleRecentOrders" class="table table-bordered"> -->
-						<table id="peopleRecentOrders" class="table table-bordered">
-							<thead>
-								<tr class="table-dark">
-									<th style="display:none;">rowID</th>
-									<th>מזמין</th>
-									<th>הגשה</th>
-									<th>מנה</th>
-									<th>תוספות</th>
-									<th>משקאות</th>
-									<th>הערות</th>
-									<th></th>
-								</tr>
-							</thead>
-							<tbody>
+								</tbody>
+							</table>
+							<!-- </div> -->
+						</div>
+						<br>
+						<br>
 
-							</tbody>
-						</table>
+
 					</div>
-				</div>
-			</div>
-			<br>
-			<div name="buildOrderLine">
+					<!-- </section> -->
 
-			</div>
-			<br>
-			<div id="container" name="orderLines" class=" buttonCenter outer">
-				<table id="orderLines" class="table table-bordered">
-					<thead>
-						<tr class="table-dark">
-							<th>מזמין</th>
-							<th>הגשה</th>
-							<th>מנה</th>
-							<th>תוספות</th>
-							<th>משקאות</th>
-							<th>הערות</th>
-							<th></th>
-						</tr>
-					</thead>
-					<tbody></tbody>
-				</table>
-				<br>
-				<button class="btn btn-outline-primary" id="order" onclick="order(this)" type="button">הזמן
-					קוקי</button>
-			</div>
-			<hr>
-
-			<div id="menu">
-				<h1>תפריט</h1>
-
-			</div>
-			<div id="container" class="outer">
-				<div>
-					<table id="types" class="tableCenter">
-						<thead>
-							<tr>
-								<th>סוגים</th>
-							</tr>
-						</thead>
-					</table>
 				</div>
-				<div>
-					<table id="meals" class="tableCenter">
+
+
+				<div class="order-summary-container">
+					<h1 class="order-summary-title">סיכום הזמנה</h1>
+					<!-- <div id="container" name="orderLines" class=" buttonCenter outer"> -->
+					<table id="orderLines" class="table table-bordered">
 						<thead>
-							<tr>
-								<th>מנות</th>
-							</tr>
-						</thead>
-					</table>
-				</div>
-				<div>
-					<table id="additions" class="tableCenter">
-						<thead>
-							<tr>
+							<tr class="table-dark">
+								<th>מזמין</th>
+								<th>הגשה</th>
+								<th>מנה</th>
 								<th>תוספות</th>
-							</tr>
-						</thead>
-					</table>
-				</div>
-				<div>
-					<table id="drinks" class="tableCenter">
-						<thead>
-							<tr>
 								<th>משקאות</th>
+								<th>הערות</th>
+								<th></th>
 							</tr>
 						</thead>
+						<tbody></tbody>
 					</table>
+					<br>
+					<button class="btn btn-outline-primary" id="order" onclick="order(this)" type="button">הזמן
+						קוקי</button>
 				</div>
-			</div>
+				<hr>
 
+	</div>
+	<div id="menu">
+		<h1>תפריט</h1>
 
-			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-				integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-				crossorigin="anonymous">
-			</script>
-		</body>
+	</div>
+	<div id="container" class="outer">
+		<div>
+			<table id="types" class="tableCenter">
+				<thead>
+					<tr>
+						<th>סוגים</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+		<div>
+			<table id="meals" class="tableCenter">
+				<thead>
+					<tr>
+						<th>מנות</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+		<div>
+			<table id="additions" class="tableCenter">
+				<thead>
+					<tr>
+						<th>תוספות</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+		<div>
+			<table id="drinks" class="tableCenter">
+				<thead>
+					<tr>
+						<th>משקאות</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
 	</div>
 
-	<script>
-		{
-			var data = {
-				"peoplePreferences": [{
-						"name": "יאיר",
-						"type": "0",
-						"meal": "0",
-						"additions": ["11", "8", "1", "12"],
-						"drinks": [],
-						"notes": ""
-					},
-					{
-						"name": "דולב",
-						"type": "0",
-						"meal": "0",
-						"additions": ["11", "8", "1", "12"],
-						"drinks": [],
-						"notes": ""
-					},
-					{
-						"name": "אסף",
-						"type": "1",
-						"meal": "1",
-						"additions": ["1", "8", "10"],
-						"drinks": [],
-						"notes": ""
-					}
-				]
-			};
-		}
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
 	</script>
+	</body>
+</div>
+</main>
+
+<script>
+	{
+		var data = {
+			"peoplePreferences": [{
+					"name": "יאיר",
+					"type": "0",
+					"meal": "0",
+					"additions": ["11", "8", "1", "12"],
+					"drinks": [],
+					"notes": ""
+				},
+				{
+					"name": "דולב",
+					"type": "0",
+					"meal": "0",
+					"additions": ["11", "8", "1", "12"],
+					"drinks": [],
+					"notes": ""
+				},
+				{
+					"name": "אסף",
+					"type": "1",
+					"meal": "1",
+					"additions": ["1", "8", "10"],
+					"drinks": [],
+					"notes": ""
+				}
+			]
+		};
+	}
+</script>
 </div>
 
 </html>
