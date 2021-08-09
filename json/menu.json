@@ -1,7 +1,7 @@
 {
-	"types": ["באגט"
-		,"חמגשית"
-		,"חלה מתוקה"
+	"types": [ { name: "באגט, meals: ["0","1","2","3","4","5"], additions: [], drinks: [] }
+		,{ name: "חמגשית", meals: [], additions: [], drinks: [] }
+		,{ name: "חלה מתוקה", meals: [], additions: [], drinks: [] }
 	],
 	"meals": ["שניצל צ'ילי"
 		,"שניצל שום"

@@ -169,14 +169,14 @@ function addRecentOrderLineToOrder(event) {
 
     addLineToOrder(orderLine);
 }
-function getArrayDescriptionAsString(tableName, keys) {
+function getArrayDescriptionAsString(descriptionList, keys) {
   var resultString = "";
 
   if (keys == null) return resultString;
 
   keys.forEach(function (object) {
     if (resultString) resultString += ", ";
-    resultString += tableName[object];    
+    resultString += descriptionList[object];    
   });
 
   //firebase.database().ref().child(tableName).get().then((data) => {
@@ -398,36 +398,40 @@ function fillPeopleRecentOrdersTable() {
 //  });
 //}
 function createCollapsibleMenu() {
+	
     var menuDiv = document.getElementById("menu");
-    var headerDiv = document.createElement("div");
-    headerDiv.class = "collapsible";
-    var contentDiv = document.createElement("div");
-    contentDiv.class = "content";
-    var testH1 = document.createElement("h1");
-    testH1.textContent = "ani collapsible kuki";
-    var test2H1 = document.createElement("h2");
-    test2H1.textContent = "collapse me";
-    var button = document.createElement("button");
-    button.class = "btn btn btn-light";
-    button.onclick = "addMenuItemToOrder(button)";
-    button.type = "button";
-    button.textContent = "הוספה";
-    
-    headerDiv.appendChild(testH1);
-    headerDiv.appendChild(button);
-    contentDiv.appendChild(test2H1);
+	
+	for ( type in oDB["types"] ) {
+		var headerDiv = document.createElement("div");
+		headerDiv.class = "collapsible";
+		var contentDiv = document.createElement("div");
+		contentDiv.class = "content";
+		var testH1 = document.createElement("h1");
+		testH1.textContent = oDB["types"][type];
+		var test2H1 = document.createElement("h2");
+		test2H1.textContent = "collapse me";
+		var button = document.createElement("button");
+		button.class = "btn btn btn-light";
+		button.onclick = "addMenuItemToOrder(button)";
+		button.type = "button";
+		button.textContent = "הוספה";
+		
+		headerDiv.appendChild(testH1);
+		headerDiv.appendChild(button);
+		contentDiv.appendChild(test2H1);
 
-    headerDiv.addEventListener("click", function() {
-        this.classList.toggle("active");
-        var content = this.nextElementSibling;
-        if (content.style.display === "block") {
-          content.style.display = "none";
-        } else {
-          content.style.display = "block";
-        }
-    });
-    menuDiv.appendChild(headerDiv);    
-    menuDiv.appendChild(contentDiv);    
+		headerDiv.addEventListener("click", function() {
+			this.classList.toggle("active");
+			var content = this.nextElementSibling;
+			if (content.style.display === "block") {
+			content.style.display = "none";
+			} else {
+			content.style.display = "block";
+			}
+		});
+		menuDiv.appendChild(headerDiv);    
+		menuDiv.appendChild(contentDiv);    
+	}
 }
 async function initialize() {
     initializeDB();
