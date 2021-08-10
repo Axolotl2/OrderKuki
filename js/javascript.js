@@ -401,37 +401,37 @@ function createCollapsibleMenu() {
 	
     var menuDiv = document.getElementById("menu");
 	
-	for ( type in oDB["types"] ) {
-		var headerDiv = document.createElement("div");
-		headerDiv.class = "collapsible";
-		var contentDiv = document.createElement("div");
-		contentDiv.class = "content";
-		var testH1 = document.createElement("h1");
-		testH1.textContent = oDB["types"][type];
-		var test2H1 = document.createElement("h2");
-		test2H1.textContent = "collapse me";
-		var button = document.createElement("button");
-		button.class = "btn btn btn-light";
-		button.onclick = "addMenuItemToOrder(button)";
-		button.type = "button";
-		button.textContent = "הוספה";
-		
-		headerDiv.appendChild(testH1);
-		headerDiv.appendChild(button);
-		contentDiv.appendChild(test2H1);
-
-		headerDiv.addEventListener("click", function() {
-			this.classList.toggle("active");
-			var content = this.nextElementSibling;
-			if (content.style.display === "block") {
-			content.style.display = "none";
-			} else {
-			content.style.display = "block";
-			}
-		});
-		menuDiv.appendChild(headerDiv);    
-		menuDiv.appendChild(contentDiv);    
-	}
+	//for ( type in oDB["types"] ) {
+	//	var headerDiv = document.createElement("div");
+	//	headerDiv.class = "collapsible";
+	//	var contentDiv = document.createElement("div");
+	//	contentDiv.class = "content";
+	//	var testH1 = document.createElement("h1");
+	//	testH1.textContent = oDB["types"][type];
+	//	var test2H1 = document.createElement("h2");
+	//	test2H1.textContent = "collapse me";
+	//	var button = document.createElement("button");
+	//	button.class = "btn btn btn-light";
+	//	button.onclick = "addMenuItemToOrder(button)";
+	//	button.type = "button";
+	//	button.textContent = "הוספה";
+	//	
+	//	headerDiv.appendChild(testH1);
+	//	headerDiv.appendChild(button);
+	//	contentDiv.appendChild(test2H1);
+    //
+	//	headerDiv.addEventListener("click", function() {
+	//		this.classList.toggle("active");
+	//		var content = this.nextElementSibling;
+	//		if (content.style.display === "block") {
+	//		content.style.display = "none";
+	//		} else {
+	//		content.style.display = "block";
+	//		}
+	//	});
+	//	menuDiv.appendChild(headerDiv);    
+	//	menuDiv.appendChild(contentDiv);    
+	//}
 }
 async function initialize() {
     initializeDB();
