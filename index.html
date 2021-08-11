@@ -183,6 +183,36 @@
 	</body>
 </div>
 </main>
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+      				<div class="popuptext order-summary-container" id="myPopup">
+					<h1 class="order-summary-title">סיכום הזמנה</h1>
+					<!-- <div id="container" name="orderLines" class=" buttonCenter outer"> -->
+					<table id="olderOrders" class="table table-bordered">
+						<thead>
+							<tr class="table-dark">
+								<th>מזמין</th>
+								<th>הגשה</th>
+								<th>מנה</th>
+								<th>תוספות</th>
+								<th>משקאות</th>
+								<th>הערות</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+					<br>
+					<button class="btn btn-outline-primary" id="order" onclick="order(this)" type="button">הזמן
+						קוקי</button>
+				</div>
+  </div>
+
+</div>
 
 <script>
 	{

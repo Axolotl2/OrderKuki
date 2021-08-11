@@ -108,7 +108,6 @@ function addLineToOrder(orderLine) {
     var mealDesc = oDB["meals"][orderLine.meal]; //data.meals[object.meal].description;
     var additionsString = getArrayDescriptionAsString(oDB["additions"], orderLine.additions );
     var drinksString = getArrayDescriptionAsString(oDB["drinks"], orderLine.drinks );
-    debugger;
 
     tr.innerHTML =
       "<td>" +
@@ -147,7 +146,14 @@ function addLineToOrder(orderLine) {
     oOrder[orderLine.name] = orderLine;
 }
 function showOlderOrdersForName(event) {
+    var orders = [];
+    var modal = document.getElementById("myModal");
     debugger;
+    //popup with table
+    modal.style.display = "block";
+    orders = getOrdersForName(oDB["orders"], event.innerHTML, true);
+    prepareOlderOrdersTable(orders);
+    document.getElementById("olderOrders").deleteRow(1);
 }
 function removeLineFromOrder(event) {
     var orderTable = document.getElementById("orderLines");
@@ -241,17 +247,17 @@ function getArrayDescriptionAsString(descriptionList, keys) {
 //    peoplePreferencesTable.appendChild(tr);
 //  });
 //}
-function fillTableFromDB(tableName) {
-    var rows = oDB[tableName];
-    var table = document.getElementById(tableName);
-    rows.forEach(function (object, i) {
-        var tr = document.createElement("tr");
-        tr.innerHTML = "<td>" + rows[i] + "</td>";
-        // tr.innerHTML = `<td> <img class="imageContainer" src = ${data.types[i].img}> ${data.types[i].description} </td>`;
-        // tr.innerHTML = `<td> <img class="img-fluid of img-thumbnail" src = ${data.types[i].img} <div> ${data.types[i].description} </div> </td>`;
-        table.appendChild(tr);
-    });
-
+//function fillTableFromDB(tableName) {
+//    var rows = oDB[tableName];
+//    var table = document.getElementById(tableName);
+//    rows.forEach(function (object, i) {
+//        var tr = document.createElement("tr");
+//        tr.innerHTML = "<td>" + rows[i] + "</td>";
+//        // tr.innerHTML = `<td> <img class="imageContainer" src = ${data.types[i].img}> ${data.types[i].description} </td>`;
+//        // tr.innerHTML = `<td> <img class="img-fluid of img-thumbnail" src = ${data.types[i].img} <div> ${data.types[i].description} </div> </td>`;
+//        table.appendChild(tr);
+//    });
+//
   //firebase.database().ref().child(tableName).get().then((data) => {
   //    if (data.exists()) {
   //      var table = document.getElementById(tableName);
@@ -268,7 +274,7 @@ function fillTableFromDB(tableName) {
   //  }).catch((error) => {
   //    console.error(error);
   //  });
-}
+//}
 function parseOrdersFromDBToArray(ordersFromDB) {
     var orders = [];
 
@@ -293,11 +299,49 @@ function sortOrdersByNameAndDate(orders) {
 
     return orders;
 }
+function isObjectsEqualsByData(obj1, obj2) {
+        const obj1Length = Object.keys(obj1).length;
+        const obj2Length = Object.keys(obj2).length;
+  
+        if (obj1Length === obj2Length) {
+            return Object.keys(obj1).every(
+                key => obj2.hasOwnProperty(key)
+                    && obj2[key] === obj1[key]);
+        }
+        return false;
+}
+function isOrdersEqualsByData(order1, order2) {
+    var order1Data = order1, order2Data = order2;
+
+    delete order1Data.id;
+    delete order1Data.date;
+    delete order2Data.id;
+    delete order2Data.date;
+
+    return isObjectsEqualsByData(order1Data, order2Data);
+}
+function isOrderMostRecentDuplicate(order1, order2) {
+
+    var equals = isOrdersEqualsByData(order1, order2);
+
+    return (equals && order1.date > order2) || !equals;
+
+}
 function groupOrdersByName(orders) {
     orders = orders.reduce((order, val) => {
         if (Object.keys(order).includes(val.name)) return order;
     
         order[val.name] = orders.filter(g => g.name === val.name); 
+        return order;
+    }, {});
+
+    return orders;
+}
+function groupOrdersByDataEquality(orders) {
+    orders = orders.reduce((order, val) => {
+        if (Object.keys(order).includes(val.name)) return order;
+    
+        order[val.date] = orders.filter(g => isOrderMostRecentDuplicate(g, val)); 
         return order;
     }, {});
 
@@ -315,6 +359,75 @@ function getLastOrderPerName(ordersFromDB) {
     }
     
     return peopleLastOrders;
+}
+function filterOrdersByName(orders, name) {
+    var filteredOrders = [];
+
+    for (orderKey in orders) {
+        if ( orders[orderKey]["name"] === name ) filteredOrders.push(orders[orderKey]);
+    }
+
+    return filteredOrders;
+}
+function getOrdersForName(ordersFromDB, name, uniqueFlag) {
+    var orders = [], ordersOfName = [];
+    debugger;
+
+    orders = parseOrdersFromDBToArray(ordersFromDB);
+    orders = filterOrdersByName(orders, name);
+    orders = sortOrdersByNameAndDate(orders);
+
+    if (uniqueFlag) {
+        orders = groupOrdersByDataEquality(orders);
+        delete orders.undefined;
+
+        for (date in orders) {
+        ordersOfName.push( orders[date][0] );
+        }
+    } else {
+        ordersOfName = orders;
+    }
+
+    return ordersOfName;
+}
+function prepareOlderOrdersTable(orders) {
+    var olderOrders = document.getElementById("olderOrders").children[1];
+
+    orders.forEach(function (object) {
+        var tr = document.createElement("tr");
+        var typeDesc = oDB["types"][object.type]; //data.types[object.type].description;
+        var mealDesc = oDB["meals"][object.meal]; //data.meals[object.meal].description;
+        var additionsString = getArrayDescriptionAsString(oDB["additions"], object.additions );
+        var drinksString = getArrayDescriptionAsString(oDB["drinks"], object.drinks );
+
+        tr.innerHTML =
+          '<td style="display:none;">' +
+          object.id +
+          "</td>" +
+          "<td>" +
+          object.name +
+          "</td>" +
+          "<td>" +
+          typeDesc +
+          "</td>" +
+          "<td>" +
+          mealDesc +
+          "</td>" +
+          "<td>" +
+          additionsString +
+          "</td>" +
+          "<td>" +
+          drinksString +
+          "</td>" +
+          "<td>" +
+          object.notes +
+          "</td>" + 
+          "<td>" +
+          '<button class="btn btn btn-light" id="addRecentOrderLineToOrder" onclick="addRecentOrderLineToOrder(this)" type="button">הוספה</button>' +
+          "</td>";
+
+        olderOrders.appendChild(tr);
+    });
 }
 function preparePeopleRecentOrdersTable(orders) {
     var recentOrdersTableBody = document.getElementById("peopleRecentOrders").children[1];
@@ -357,7 +470,6 @@ function preparePeopleRecentOrdersTable(orders) {
     });
 }
 function fillPeopleRecentOrdersTable() {
-  debugger;
   preparePeopleRecentOrdersTable(getLastOrderPerName(oDB["orders"]));
   //firebase.database().ref().child("orders").get().then((data) => {
   //    if (data.exists()) {
@@ -460,10 +572,10 @@ async function initialize() {
     await loadJSONFromDB();
     fillPeopleRecentOrdersTable();
     createCollapsibleMenu();
-    fillTableFromDB("types");
-    fillTableFromDB("meals");
-    fillTableFromDB("additions");
-    fillTableFromDB("drinks");
+    //fillTableFromDB("types");
+    //fillTableFromDB("meals");
+    //fillTableFromDB("additions");
+    //fillTableFromDB("drinks");
     //fillTypesTable();
     //fillMealsTable();
     //fillAdditionsTable();
