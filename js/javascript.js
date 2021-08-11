@@ -160,6 +160,9 @@ function addLineToOrder(orderLine) {
   }
   oOrder[orderLine.name] = orderLine;
 }
+function showOlderOrdersForName(event) {
+  debugger;
+}
 function removeLineFromOrder(event) {
   var orderTable = document.getElementById("orderLines");
   var row = event.parentElement.parentElement;
@@ -280,15 +283,18 @@ function fillTableFromDB(tableName) {
   //    console.error(error);
   //  });
 }
-function getRecentOrderPerName(ordersFromDB) {
-  var orders = [],
-    peopleRecentOrders = [];
+function parseOrdersFromDBToArray(ordersFromDB) {
+  var orders = [];
 
   for (orderKey in ordersFromDB) {
     var order = ordersFromDB[orderKey];
     order["id"] = orderKey;
     orders.push(order);
   }
+
+  return orders;
+}
+function sortOrdersByNameAndDate(orders) {
   orders.sort((a, b) => {
     if (a["name"] === b["name"] && a["date"] === b["date"]) {
       return 0;
@@ -298,17 +304,32 @@ function getRecentOrderPerName(ordersFromDB) {
       return a["name"] < b["name"] ? -1 : 1;
     }
   });
+
+  return orders;
+}
+function groupOrdersByName(orders) {
   orders = orders.reduce((order, val) => {
     if (Object.keys(order).includes(val.name)) return order;
 
     order[val.name] = orders.filter((g) => g.name === val.name);
     return order;
   }, {});
+
+  return orders;
+}
+function getLastOrderPerName(ordersFromDB) {
+  var orders = [],
+    peopleLastOrders = [];
+
+  orders = parseOrdersFromDBToArray(ordersFromDB);
+  orders = sortOrdersByNameAndDate(orders);
+  orders = groupOrdersByName(orders);
+
   for (name in orders) {
-    peopleRecentOrders.push(orders[name][0]);
+    peopleLastOrders.push(orders[name][0]);
   }
 
-  return peopleRecentOrders;
+  return peopleLastOrders;
 }
 function preparePeopleRecentOrdersTable(orders) {
   var recentOrdersTableBody =
@@ -332,7 +353,7 @@ function preparePeopleRecentOrdersTable(orders) {
       object.id +
       "</td>" +
       "<td class='bg-light'>" +
-      object.name +
+      `<button class="btn btn btn-light" id="removeLineFromOrder" onclick="showOlderOrdersForName(this)" type="button">${object.name}</button>` +
       "</td>" +
       "<td class='bg-light'>" +
       typeDesc +
@@ -358,7 +379,8 @@ function preparePeopleRecentOrdersTable(orders) {
   });
 }
 function fillPeopleRecentOrdersTable() {
-  preparePeopleRecentOrdersTable(getRecentOrderPerName(oDB["orders"]));
+  debugger;
+  preparePeopleRecentOrdersTable(getLastOrderPerName(oDB["orders"]));
   //firebase.database().ref().child("orders").get().then((data) => {
   //    if (data.exists()) {
   //      preparePeopleRecentOrdersTable(getRecentOrderPerName(data.toJSON()));
