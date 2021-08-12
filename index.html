@@ -6,8 +6,8 @@
 
 		<head>
 			<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-				integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-				crossorigin="anonymous">
+				  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+				  crossorigin="anonymous">
 			<link rel="preconnect" href="https://fonts.googleapis.com">
 			<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 			<link href="https://fonts.googleapis.com/css2?family=Karantina:wght@700&display=swap" rel="stylesheet">
@@ -30,9 +30,12 @@
 			<main>
 				<div class="header-container">
 					<!-- <div class="kukiLogo"></div> -->
-					<div id="logo-container"><a href="http://www.zerocarbonfood.co.uk/test"><img
-								src="https://raw.githubusercontent.com/ggomaeng/react-native-svg-chicken/master/inspiration.gif"
-								alt="" /></a></div>
+					<div id="logo-container">
+						<a href="http://www.zerocarbonfood.co.uk/test">
+							<img src="https://raw.githubusercontent.com/ggomaeng/react-native-svg-chicken/master/inspiration.gif"
+								 alt="" />
+						</a>
+					</div>
 					<h1 class="header-title">שניצל קוקי</h1>
 
 					<br>
@@ -45,7 +48,7 @@
 					<div class="recentOrdersContainer">
 						<h1 class="order-summary-title">הזמנות אחרונות</h1>
 						<table id="peopleRecentOrders"
-							class="table table-bordered table-hover shadow p-3 mb-5 bg-white rounded">
+							   class="table table-bordered table-hover shadow p-3 mb-5 bg-white rounded">
 							<thead>
 								<tr class="table-dark">
 									<th style="display:none;">rowID</th>
@@ -59,7 +62,6 @@
 								</tr>
 							</thead>
 							<tbody>
-
 							</tbody>
 						</table>
 						<!-- </div> -->
@@ -72,7 +74,7 @@
 						<h1 class="order-summary-title">סיכום הזמנה</h1>
 						<!-- <div id="container" name="orderLines" class=" buttonCenter outer"> -->
 						<table id="orderLines"
-							class="table table-bordered table-hover shadow p-3 mb-5 bg-white rounded">
+							   class="table table-bordered table-hover shadow p-3 mb-5 bg-white rounded">
 							<thead>
 								<tr class="table-dark">
 									<th>מזמין</th>
@@ -87,8 +89,10 @@
 							<tbody></tbody>
 						</table>
 						<!-- <br> -->
-						<button class="btn btn-primary btn-lg" id="order" onclick="order(this)" type="button">הזמן
-							קוקי</button>
+						<button class="btn btn-primary btn-lg" id="order" onclick="order(this)" type="button">
+							הזמן
+							קוקי
+						</button>
 					</div>
 
 				</div>
@@ -183,7 +187,7 @@
 
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+			integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
 	</script>
 	</body>
 </div>
@@ -191,31 +195,33 @@
 <!-- The Modal -->
 <div id="myModal" class="modal">
 
-  <!-- Modal content -->
-  <div class="modal-content">
-    <span class="close">&times;</span>
-      				<div class="popuptext order-summary-container" id="myPopup">
-					<h1 class="order-summary-title">סיכום הזמנה</h1>
-					<!-- <div id="container" name="orderLines" class=" buttonCenter outer"> -->
-					<table id="olderOrders" class="table table-bordered">
-						<thead>
-							<tr class="table-dark">
-								<th>מזמין</th>
-								<th>הגשה</th>
-								<th>מנה</th>
-								<th>תוספות</th>
-								<th>משקאות</th>
-								<th>הערות</th>
-								<th></th>
-							</tr>
-						</thead>
-						<tbody></tbody>
-					</table>
-					<br>
-					<button class="btn btn-outline-primary" id="order" onclick="order(this)" type="button">הזמן
-						קוקי</button>
-				</div>
-  </div>
+	<!-- Modal content -->
+	<div class="modal-content">
+		<span class="close">&times;</span>
+		<div class="popuptext order-summary-container" id="myPopup">
+			<h1 class="order-summary-title">סיכום הזמנה</h1>
+			<!-- <div id="container" name="orderLines" class=" buttonCenter outer"> -->
+			<table id="olderOrders" class="table table-bordered">
+				<thead>
+					<tr class="table-dark">
+						<th>מזמין</th>
+						<th>הגשה</th>
+						<th>מנה</th>
+						<th>תוספות</th>
+						<th>משקאות</th>
+						<th>הערות</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+			<br>
+			<button class="btn btn-outline-primary" id="order" onclick="order(this)" type="button">
+				הזמן
+				קוקי
+			</button>
+		</div>
+	</div>
 
 </div>
 
@@ -223,29 +229,29 @@
 	{
 		var data = {
 			"peoplePreferences": [{
-					"name": "יאיר",
-					"type": "0",
-					"meal": "0",
-					"additions": ["11", "8", "1", "12"],
-					"drinks": [],
-					"notes": ""
-				},
-				{
-					"name": "דולב",
-					"type": "0",
-					"meal": "0",
-					"additions": ["11", "8", "1", "12"],
-					"drinks": [],
-					"notes": ""
-				},
-				{
-					"name": "אסף",
-					"type": "1",
-					"meal": "1",
-					"additions": ["1", "8", "10"],
-					"drinks": [],
-					"notes": ""
-				}
+				"name": "יאיר",
+				"type": "0",
+				"meal": "0",
+				"additions": ["11", "8", "1", "12"],
+				"drinks": [],
+				"notes": ""
+			},
+			{
+				"name": "דולב",
+				"type": "0",
+				"meal": "0",
+				"additions": ["11", "8", "1", "12"],
+				"drinks": [],
+				"notes": ""
+			},
+			{
+				"name": "אסף",
+				"type": "1",
+				"meal": "1",
+				"additions": ["1", "8", "10"],
+				"drinks": [],
+				"notes": ""
+			}
 			]
 		};
 	}
