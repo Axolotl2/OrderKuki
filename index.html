@@ -36,60 +36,65 @@
 					<h1 class="header-title">שניצל קוקי</h1>
 
 					<br>
-					<div class="main-container">
-						<div class="recentOrdersContainer">
 
-							<!-- <div class="innerContainer d-flex justify-content-center"> -->
-							<table id="peopleRecentOrders" class="table table-bordered">
-								<thead>
-									<tr class="table-dark">
-										<th style="display:none;">rowID</th>
-										<th>מזמין</th>
-										<th>הגשה</th>
-										<th>מנה</th>
-										<th>תוספות</th>
-										<th>משקאות</th>
-										<th>הערות</th>
-										<th></th>
-									</tr>
-								</thead>
-								<tbody>
-
-								</tbody>
-							</table>
-							<!-- </div> -->
-						</div>
-						<br>
-						<br>
-
-
-					</div>
 					<!-- </section> -->
 
 				</div>
 
+				<div class="main-container gradient">
+					<div class="recentOrdersContainer">
+						<h1 class="order-summary-title">הזמנות אחרונות</h1>
+						<table id="peopleRecentOrders"
+							class="table table-bordered table-hover shadow p-3 mb-5 bg-white rounded">
+							<thead>
+								<tr class="table-dark">
+									<th style="display:none;">rowID</th>
+									<th>מזמין</th>
+									<th>הגשה</th>
+									<th>מנה</th>
+									<th>תוספות</th>
+									<th>משקאות</th>
+									<th>הערות</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
 
-				<div class="order-summary-container">
-					<h1 class="order-summary-title">סיכום הזמנה</h1>
-					<!-- <div id="container" name="orderLines" class=" buttonCenter outer"> -->
-					<table id="orderLines" class="table table-bordered">
-						<thead>
-							<tr class="table-dark">
-								<th>מזמין</th>
-								<th>הגשה</th>
-								<th>מנה</th>
-								<th>תוספות</th>
-								<th>משקאות</th>
-								<th>הערות</th>
-								<th></th>
-							</tr>
-						</thead>
-						<tbody></tbody>
-					</table>
+							</tbody>
+						</table>
+						<!-- </div> -->
+					</div>
 					<br>
-					<button class="btn btn-outline-primary" id="order" onclick="order(this)" type="button">הזמן
-						קוקי</button>
+					<br>
+
+
+					<div class="order-summary-container">
+						<h1 class="order-summary-title">סיכום הזמנה</h1>
+						<!-- <div id="container" name="orderLines" class=" buttonCenter outer"> -->
+						<table id="orderLines"
+							class="table table-bordered table-hover shadow p-3 mb-5 bg-white rounded">
+							<thead>
+								<tr class="table-dark">
+									<th>מזמין</th>
+									<th>הגשה</th>
+									<th>מנה</th>
+									<th>תוספות</th>
+									<th>משקאות</th>
+									<th>הערות</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
+						<!-- <br> -->
+						<button class="btn btn-primary btn-lg" id="order" onclick="order(this)" type="button">הזמן
+							קוקי</button>
+					</div>
+
 				</div>
+
+
+
 				<hr>
 
 	</div>
@@ -100,9 +105,9 @@
 			<button class="btn btn btn-light" onclick="addMenuItemToOrder(this)" type="button">הוספה</button>
 		</div>
 		<div class="content">
-			<h3>סוג שניצל (עד 2)</h3> 
-			<h3>תוספות (עד 2)</h3> 
-			<h3>רטבים בצד</h3> 
+			<h3>סוג שניצל (עד 2)</h3>
+			<h3>תוספות (עד 2)</h3>
+			<h3>רטבים בצד</h3>
 			<label for="name">שם:</label>
 			<input type="text" id="name" name="name"> </input>
 			</br>
@@ -114,10 +119,10 @@
 			<button class="btn btn btn-light" onclick="addMenuItemToOrder(this)" type="button">הוספה</button>
 		</div>
 		<div class="content">
-			<h3>סוג לחם (1 בלבד)</h3> 
-			<h3>סוג שניצל (עד 2)</h3> 
-			<h3>תוספות (ללא הגבלה)</h3> 
-			<h3>רטבים (ללא הגבלה)</h3> 
+			<h3>סוג לחם (1 בלבד)</h3>
+			<h3>סוג שניצל (עד 2)</h3>
+			<h3>תוספות (ללא הגבלה)</h3>
+			<h3>רטבים (ללא הגבלה)</h3>
 			<label for="name">שם:</label>
 			<input type="text" id="name" name="name"> </input>
 			</br>

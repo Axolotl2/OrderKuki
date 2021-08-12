@@ -1,7 +1,7 @@
 main {
   /* margin: 0;
   padding: 0; */
-  max-width: 90rem;
+  /* max-width: 90rem; */
   margin: 0 auto;
 }
 
@@ -15,7 +15,7 @@ tr {
 }
 
 body {
-  margin-top: 100px;
+  /* margin-top: 100px; */
 }
 
 body::-webkit-scrollbar {
@@ -32,6 +32,16 @@ body::-webkit-scrollbar-thumb {
 
 #peopleRecentOrders {
   /* width: 800px; */
+}
+
+.header-container {
+  display: flex;
+  justify-content: center;
+  /* justify-content: flex-start; */
+  align-items: center;
+  height: 400px;
+  background: linear-gradient(rgba(99, 99, 99, 0.5), rgba(20, 20, 20, 0.5)), url(https://cdn.wallpapersafari.com/49/21/Sjxz2Y.jpg);
+  background-size: cover;
 }
 
 .buttonCenter {
@@ -80,10 +90,12 @@ body::-webkit-scrollbar-thumb {
   /* border-radius: 120px; */
   display: flex;
   justify-content: center;
+  align-content: center;
+  flex-direction: column;
   /* margin-left: 250px; */
-  padding-top: 30px;
+  margin-top: 30px;
   /* background-color: #f0693e; */
-  height: 15rem;
+  /* height: 15rem; */
   /* background: linear-gradient(110deg, #fdcd3b 70%, #f0693e 35%); */
 }
 
@@ -94,11 +106,12 @@ body::-webkit-scrollbar-thumb {
 .order-summary-container {
   margin-top: 30px;
   display: flex;
-  justify-content: flex-end;
+  /* justify-content: flex-end; */
+  justify-content: center;
   align-items: stretch;
   flex-direction: column;
   /* width: 50%; */
-  align-content: flex-end;
+  align-content: center;
   flex-wrap: wrap;
 }
 
@@ -116,20 +129,13 @@ body::-webkit-scrollbar-thumb {
 
 .main-container {
   display: flex;
-  justify-content: space;
+  justify-content: space-around;
   align-items: center;
   /* flex-wrap: wrap; */
 }
 
 
-.header-container {
-  display: flex;
-  justify-content: space-between;
-  /* justify-content: flex-start; */
-  align-items: center;
-  height: 200px;
 
-}
 
 #logo-container img {
   /* width: 100%; */
@@ -165,7 +171,9 @@ body::-webkit-scrollbar-thumb {
 }
 
 .gradient {
-  background: linear-gradient(110deg, #fdcd3b 75%, #f0693e 30%);
+  /* background: linear-gradient(110deg, #fdcd3b 75%, #f0693e 30%); */
+  /* background: #fdcd3b; */
+  background: #ffd863;
 }
 
 #section1 {
@@ -177,6 +185,7 @@ body::-webkit-scrollbar-thumb {
 .header-title {
   font-size: 90px;
   margin-right: 30px;
+  color: rgb(255, 255, 255);
 }
 
 /* The Modal (background) */
