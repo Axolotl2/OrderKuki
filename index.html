@@ -39,7 +39,7 @@
 					<thead>
 						<tr class="table-dark">
 							<th style="display:none;">rowID</th>
-							<th>מזמין</th>
+							<th>שם</th>
 							<th>הגשה</th>
 							<th>מנה</th>
 							<th>תוספות</th>
@@ -62,7 +62,7 @@
 					   class="table table-bordered table-hover shadow p-3 mb-5 bg-white rounded">
 					<thead>
 						<tr class="table-dark">
-							<th>מזמין</th>
+							<th>שם</th>
 							<th>הגשה</th>
 							<th>מנה</th>
 							<th>תוספות</th>
@@ -83,19 +83,51 @@
 		<hr>
 		<div id="menu">
 			<h1>תפריט</h1>
-			<div class="collapsible">
+			<div id="type1" class="collapsible">
 				<h2>קוקי בחמגשית</h2>
 				<button class="btn btn btn-light" onclick="addMenuItemToOrder(this)" type="button">הוספה</button>
 			</div>
 			<div class="content">
 				<h3>סוג שניצל (עד 2)</h3>
+				<div id="meals">
+					<input type="checkbox" id="meal1" name="meal1" />
+					<label for="meal1">שניצל צ'ילי</label>
+					<input type="checkbox" id="meal2" name="meal2" />
+					<label for="meal2">שניצל שום</label>
+					<input type="checkbox" id="meal3" name="meal3" />
+					<label for="meal3">שניצל עשבי תיבול</label>
+					<input type="checkbox" id="meal4" name="meal4" />
+					<label for="meal4">שניצל פיקנטי</label>
+					<input type="checkbox" id="meal5" name="meal5" />
+					<label for="meal5">שניצל שומשום</label>
+					<input type="checkbox" id="meal6" name="meal6" />
+					<label for="meal6">חזה עוף</label>
+				</div>
 				<h3>תוספות (עד 2)</h3>
+				<div id="additions">
+					<input type="checkbox" id="addition1" name="addition1" />
+					<label for="addition1">תפו"א</label>
+					<input type="checkbox" id="addition2" name="addition2" />
+					<label for="addition2">אורז</label>
+					<input type="checkbox" id="addition3" name="addition3" />
+					<label for="addition3">צ'יפס</label>
+					<input type="checkbox" id="addition4" name="addition4" />
+					<label for="addition4">שעועית ירוקה</label>
+					<input type="checkbox" id="addition5" name="addition5" />
+					<label for="addition5">סלט ירקות</label>
+				</div>
 				<h3>רטבים בצד</h3>
-				<label for="name">שם:</label>
-				<input type="text" id="name" name="name" />
+				<div id="sauces">
+				</div>
+				<div id="name">
+					<label for="name">שם:</label>
+					<input type="text" id="name" name="name" />
+				</div>
 				<br>
-				<label for="notes">הערות:</label>
-				<input type="text" id="notes" name="notes" />
+				<div id="notes">
+					<label for="notes">הערות:</label>
+					<input type="text" id="notes" name="notes" />
+				</div>
 			</div>
 			<div class="collapsible">
 				<h2>קוקי בסנדוויץ'</h2>
@@ -180,7 +212,7 @@
 					<table id="olderOrders" class="table table-bordered">
 						<thead>
 							<tr class="table-dark">
-								<th>מזמין</th>
+								<th>שם</th>
 								<th>הגשה</th>
 								<th>מנה</th>
 								<th>תוספות</th>

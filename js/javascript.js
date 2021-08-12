@@ -112,20 +112,21 @@ function order(event) {
 function addLineToOrder(orderLine) {
 	var orderTableBody = document.getElementById("orderLines").children[1];
 	var tr = document.createElement("tr");
-	var typeDesc = oDB["types"][orderLine.type]; //data.types[object.type].description;
-	var mealDesc = oDB["meals"][orderLine.meal]; //data.meals[object.meal].description;
-	var additionsString = getArrayDescriptionAsString(oDB["additions"], orderLine.additions);
-	var drinksString = getArrayDescriptionAsString(oDB["drinks"], orderLine.drinks);
+	//var typeDesc = oDB["types"][orderLine.type]; //data.types[object.type].description;
+	//var mealDesc = oDB["meals"][orderLine.meal]; //data.meals[object.meal].description;
+	var mealsString = getArrayDescriptionAsString(orderLine.meals);
+	var additionsString = getArrayDescriptionAsString(orderLine.additions);
+	var drinksString = getArrayDescriptionAsString(orderLine.drinks);
 
 	tr.innerHTML =
 		"<td>" +
 		orderLine.name +
 		"</td>" +
 		"<td>" +
-		typeDesc +
+		orderLine.type +
 		"</td>" +
 		"<td>" +
-		mealDesc +
+		mealsString +
 		"</td>" +
 		"<td>" +
 		additionsString +
@@ -171,6 +172,96 @@ function removeLineFromOrder(event) {
 	row.remove();
 	delete oOrder[rowID];
 }
+function validateMenuItemSelection(event) {
+
+	return true;
+}
+function addMenuItemToOrder(event) {
+	debugger;
+	var typeFromMenu, mealsFromMenu = [], additionsFromMenu = [], drinksFromMenu = [], nameFromInput, notesFromInput;
+	var inputsToClear = [];
+
+	if (!validateMenuItemSelection(event)) return;
+
+	switch (event.parentElement.id) {
+		case "type1":
+			typeFromMenu = 'חמגשית';
+			break;
+		case "type2":
+			typeFromMenu = 'בגט';
+			break;
+		case "type3":
+			typeFromMenu = `צ'יפס`;
+			break;
+		default:
+			return;
+	}
+
+	for (menuIndex in event.parentElement.nextElementSibling.children) {
+		var element = event.parentElement.nextElementSibling.children[menuIndex];
+
+		switch (element.id) {
+			case "meals":
+				for (mealIndex in element.children) {
+					var meal = element.children[mealIndex];
+					inputsToClear.push(meal);
+					if (meal.tagName != "LABEL") continue;
+					if (meal.previousElementSibling.checked) mealsFromMenu.push(meal.innerText);
+				}
+				break;
+			case "additions":
+				for (additionIndex in element.children) {
+					var addition = element.children[additionIndex];
+					inputsToClear.push(addition);
+					if (addition.tagName != "LABEL") continue;
+					if (addition.previousElementSibling.checked) additionsFromMenu.push(addition.innerText);
+				}
+				break;
+			case "drinks":
+				for (drinkIndex in element.children) {
+					var drink = element.children[drinkIndex];
+					inputsToClear.push(drink);
+					if (drink.tagName != "LABEL") continue;
+					if (drink.previousElementSibling.checked) drinksFromMenu.push(meal.innerText);
+				}
+				break;
+			case "name":
+				var name = element.children[1];
+				inputsToClear.push(name);
+				nameFromInput = name.value;
+				break;
+			case "notes":
+				var notes = element.children[1];
+				inputsToClear.push(notes);
+				notesFromInput = notes.value;
+				break;
+			default:
+				break;
+		}
+	}
+
+	var orderLine = {
+		name: nameFromInput,
+		type: typeFromMenu,
+		meals: mealsFromMenu,
+		additions: additionsFromMenu,
+		drinks: drinksFromMenu,
+		notes: notesFromInput,
+	};
+
+	addLineToOrder(orderLine);
+
+	for (inputIndex in inputsToClear) {
+		var input = inputsToClear[inputIndex];
+		if (input.tagName != "INPUT") continue;
+
+		if (input.type === "checkbox") {
+			input.checked = false;
+		} else {
+			input.value = "";
+		}
+	}
+}
 function addRecentOrderLineToOrder(event) {
 	var rowID = event.parentElement.parentElement.cells[0].outerText;
 	var row = oDB["orders"][rowID];
@@ -178,7 +269,7 @@ function addRecentOrderLineToOrder(event) {
 	var orderLine = {
 		name: row.name,
 		type: row.type,
-		meal: row.meal,
+		meals: row.meals != null ? row.meals : [],
 		additions: row.additions != null ? row.additions : [],
 		drinks: row.drinks != null ? row.drinks : [],
 		notes: row.notes,
@@ -186,14 +277,14 @@ function addRecentOrderLineToOrder(event) {
 
 	addLineToOrder(orderLine);
 }
-function getArrayDescriptionAsString(descriptionList, keys) {
+function getArrayDescriptionAsString(array) {
 	var resultString = "";
 
-	if (keys == null) return resultString;
+	if (array == null) return resultString;
 
-	keys.forEach(function (object) {
+	array.forEach(function (value) {
 		if (resultString) resultString += ", ";
-		resultString += descriptionList[object];
+		resultString += value;
 	});
 
 	//firebase.database().ref().child(tableName).get().then((data) => {
@@ -404,10 +495,11 @@ function prepareOlderOrdersTable(orders) {
 
 	orders.forEach(function (object) {
 		var tr = document.createElement("tr");
-		var typeDesc = oDB["types"][object.type]; //data.types[object.type].description;
-		var mealDesc = oDB["meals"][object.meal]; //data.meals[object.meal].description;
-		var additionsString = getArrayDescriptionAsString(oDB["additions"], object.additions);
-		var drinksString = getArrayDescriptionAsString(oDB["drinks"], object.drinks);
+		//var typeDesc = oDB["types"][object.type]; //data.types[object.type].description;
+		//var mealDesc = oDB["meals"][object.meal]; //data.meals[object.meal].description;
+		var mealsString = getArrayDescriptionAsString(object.meals);
+		var additionsString = getArrayDescriptionAsString(object.additions);
+		var drinksString = getArrayDescriptionAsString(object.drinks);
 
 		tr.innerHTML =
 			'<td style="display:none;">' +
@@ -417,10 +509,10 @@ function prepareOlderOrdersTable(orders) {
 			object.name +
 			"</td>" +
 			"<td>" +
-			typeDesc +
+			object.type +
 			"</td>" +
 			"<td>" +
-			mealDesc +
+			mealsString +
 			"</td>" +
 			"<td>" +
 			additionsString +
@@ -444,16 +536,11 @@ function preparePeopleRecentOrdersTable(orders) {
 
 	orders.forEach(function (object) {
 		var tr = document.createElement("tr");
-		var typeDesc = oDB["types"][object.type]; //data.types[object.type].description;
-		var mealDesc = oDB["meals"][object.meal]; //data.meals[object.meal].description;
-		var additionsString = getArrayDescriptionAsString(
-			oDB["additions"],
-			object.additions
-		);
-		var drinksString = getArrayDescriptionAsString(
-			oDB["drinks"],
-			object.drinks
-		);
+		//var typeDesc = oDB["types"][object.type]; //data.types[object.type].description;
+		//var mealDesc = oDB["meals"][object.meal]; //data.meals[object.meal].description;
+		var mealsString = getArrayDescriptionAsString(object.meals);
+		var additionsString = getArrayDescriptionAsString(object.additions);
+		var drinksString = getArrayDescriptionAsString(object.drinks);
 
 		tr.innerHTML =
 			'<td style="display:none;">' +
@@ -463,10 +550,10 @@ function preparePeopleRecentOrdersTable(orders) {
 			`<button class="btn btn btn-light" id="removeLineFromOrder" onclick="showOlderOrdersForName(this)" type="button">${object.name}</button>` +
 			"</td>" +
 			"<td class='bg-light'>" +
-			typeDesc +
+			object.type +
 			"</td>" +
 			"<td class='bg-light'>" +
-			mealDesc +
+			mealsString +
 			"</td>" +
 			"<td class='bg-light'>" +
 			additionsString +
@@ -548,8 +635,26 @@ function fillPeopleRecentOrdersTable() {
 //  });
 //}
 function createCollapsibleMenu() {
-	var menuDiv = document.getElementById("menu");
+	debugger;
+	var collapsibles = document.getElementsByClassName("collapsible");
 
+	for (index in collapsibles) {
+		var collapsible = collapsibles[index];
+
+		collapsible.addEventListener("click", function () {
+			this.classList.toggle("active");
+			var content = this.nextElementSibling;
+			if (content.style.display === "block") {
+				content.style.display = "none";
+			} else {
+				content.style.display = "block";
+			}
+		});
+	}
+
+
+	//var menuDiv = document.getElementById("menu");
+	//
 	//for ( type in oDB["types"] ) {
 	//	var headerDiv = document.createElement("div");
 	//	headerDiv.class = "collapsible";
