@@ -541,7 +541,7 @@ function prepareOlderOrdersTable(orders) {
 			object.id +
 			"</td>" +
 			"<td>" +
-			object.name +
+			new Date(object.date).toLocaleDateString() +
 			"</td>" +
 			"<td>" +
 			object.type +
