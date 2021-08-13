@@ -161,8 +161,6 @@ function addLineToOrder(orderLine) {
 function showOlderOrdersForName(event) {
 	var modal = document.getElementById("myModal");
 	var orders = [];
-	debugger;
-	//popup with table
 	modal.style.display = "block";
 	// get unique flag from checkbox
 	orders = getOrdersForName(oDB["orders"], event.innerHTML, false);
@@ -186,7 +184,6 @@ function validateMenuItemSelection(event) {
 	return true;
 }
 function addMenuItemToOrder(event) {
-	debugger;
 	var typeFromMenu, mealsFromMenu = [], additionsFromMenu = [], saucesFromMenu = [], drinksFromMenu = [];
 	var nameFromInput, notesFromInput;
 	var inputsToClear = [];
@@ -677,20 +674,27 @@ function fillPeopleRecentOrdersTable() {
 //  });
 //}
 function createCollapsibleMenu() {
-	debugger;
 	var collapsibles = document.getElementsByClassName("collapsible");
 
 	for (index in collapsibles) {
 		var collapsible = collapsibles[index];
 
 		collapsible.addEventListener("click", function () {
-			this.classList.toggle("active");
-			var content = this.nextElementSibling;
-			if (content.style.display === "block") {
+			debugger;
+			var collapsibles = document.getElementsByClassName("collapsible");
+			for (var i = 0; i < collapsibles.length; i++) {
+				var collapsible = collapsibles[i];
+				if (collapsible === this) continue;
+				var button = collapsible.nextElementSibling;
+				var content = collapsible.parentElement.nextElementSibling;
+				button.style.display = "none";
 				content.style.display = "none";
-			} else {
-				content.style.display = "block";
 			}
+			this.classList.toggle("active");
+			button = this.nextElementSibling;
+			content = this.parentElement.nextElementSibling;
+			button.style.display = (button.style.display === "block") ? "none" : "block";
+			content.style.display = (content.style.display === "block") ? "none" : "block";
 		});
 	}
 
