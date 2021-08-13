@@ -103,6 +103,7 @@ function order(event) {
 	const sKukiPhone = "+972525585252",
 		sTestPhone = "+972526241919";
 
+	var sPhone = (location.hostname === "schnitzelkuki.web.app") ? sKukiPhone : sTestPhone;
 	sText = prepareOrderMessage();
 	saveOrderToDB();
 	var sUrl = `https://api.whatsapp.com/send?phone=${sTestPhone}&text=${sText}`;
