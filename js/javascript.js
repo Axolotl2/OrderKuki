@@ -199,7 +199,7 @@ function addMenuItemToOrder(event) {
 			typeFromMenu = 'חמגשית';
 			break;
 		case "type2":
-			typeFromMenu = 'בגט';
+			// get type from checkbox
 			break;
 		case "type3":
 			typeFromMenu = `צ'יפס`;
@@ -212,6 +212,14 @@ function addMenuItemToOrder(event) {
 		var element = header.nextElementSibling.children[menuIndex];
 
 		switch (element.id) {
+			case "types":
+				for (typeIndex in element.children) {
+					var type = element.children[typeIndex];
+					inputsToClear.push(type);
+					if (type.tagName != "LABEL") continue;
+					if (type.previousElementSibling.checked) typeFromMenu = type.innerText;
+				}
+				break;
 			case "meals":
 				for (mealIndex in element.children) {
 					var meal = element.children[mealIndex];
