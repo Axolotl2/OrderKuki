@@ -116,6 +116,7 @@ function addLineToOrder(orderLine) {
 	//var mealDesc = oDB["meals"][orderLine.meal]; //data.meals[object.meal].description;
 	var mealsString = getArrayDescriptionAsString(orderLine.meals);
 	var additionsString = getArrayDescriptionAsString(orderLine.additions);
+	var saucesString = getArrayDescriptionAsString(orderLine.sauces);
 	var drinksString = getArrayDescriptionAsString(orderLine.drinks);
 
 	tr.innerHTML =
@@ -130,6 +131,9 @@ function addLineToOrder(orderLine) {
 		"</td>" +
 		"<td>" +
 		additionsString +
+		"</td>" +
+		"<td>" +
+		saucesString +
 		"</td>" +
 		"<td>" +
 		drinksString +
@@ -155,14 +159,19 @@ function addLineToOrder(orderLine) {
 	oOrder[orderLine.name] = orderLine;
 }
 function showOlderOrdersForName(event) {
-	var orders = [];
 	var modal = document.getElementById("myModal");
+	var orders = [];
 	debugger;
 	//popup with table
 	modal.style.display = "block";
-	orders = getOrdersForName(oDB["orders"], event.innerHTML, true);
+	// get unique flag from checkbox
+	orders = getOrdersForName(oDB["orders"], event.innerHTML, false); 
 	prepareOlderOrdersTable(orders);
-	document.getElementById("olderOrders").deleteRow(1);
+}
+function closeOlderOrdersModal(event) {
+	var modal = document.getElementById("myModal");
+
+	modal.style.display = "none";
 }
 function removeLineFromOrder(event) {
 	var orderTable = document.getElementById("orderLines");
@@ -178,12 +187,14 @@ function validateMenuItemSelection(event) {
 }
 function addMenuItemToOrder(event) {
 	debugger;
-	var typeFromMenu, mealsFromMenu = [], additionsFromMenu = [], drinksFromMenu = [], nameFromInput, notesFromInput;
+	var typeFromMenu, mealsFromMenu = [], additionsFromMenu = [], saucesFromMenu = [], drinksFromMenu = [];
+	var nameFromInput, notesFromInput;
 	var inputsToClear = [];
+	var header = event.parentElement;
 
 	if (!validateMenuItemSelection(event)) return;
 
-	switch (event.parentElement.id) {
+	switch (header.id) {
 		case "type1":
 			typeFromMenu = 'חמגשית';
 			break;
@@ -197,8 +208,8 @@ function addMenuItemToOrder(event) {
 			return;
 	}
 
-	for (menuIndex in event.parentElement.nextElementSibling.children) {
-		var element = event.parentElement.nextElementSibling.children[menuIndex];
+	for (menuIndex in header.nextElementSibling.children) {
+		var element = header.nextElementSibling.children[menuIndex];
 
 		switch (element.id) {
 			case "meals":
@@ -217,12 +228,20 @@ function addMenuItemToOrder(event) {
 					if (addition.previousElementSibling.checked) additionsFromMenu.push(addition.innerText);
 				}
 				break;
+			case "sauces":
+				for (sauceIndex in element.children) {
+					var sauce = element.children[sauceIndex];
+					inputsToClear.push(drink);
+					if (sauce.tagName != "LABEL") continue;
+					if (sauce.previousElementSibling.checked) saucesFromMenu.push(sauce.innerText);
+				}
+				break;
 			case "drinks":
 				for (drinkIndex in element.children) {
 					var drink = element.children[drinkIndex];
 					inputsToClear.push(drink);
 					if (drink.tagName != "LABEL") continue;
-					if (drink.previousElementSibling.checked) drinksFromMenu.push(meal.innerText);
+					if (drink.previousElementSibling.checked) drinksFromMenu.push(drink.innerText);
 				}
 				break;
 			case "name":
@@ -245,6 +264,7 @@ function addMenuItemToOrder(event) {
 		type: typeFromMenu,
 		meals: mealsFromMenu,
 		additions: additionsFromMenu,
+		sauces: saucesFromMenu,
 		drinks: drinksFromMenu,
 		notes: notesFromInput,
 	};
@@ -271,6 +291,7 @@ function addRecentOrderLineToOrder(event) {
 		type: row.type,
 		meals: row.meals != null ? row.meals : [],
 		additions: row.additions != null ? row.additions : [],
+		sauces: row.sauces != null ? row.sauces : [],
 		drinks: row.drinks != null ? row.drinks : [],
 		notes: row.notes,
 	};
@@ -491,7 +512,12 @@ function getOrdersForName(ordersFromDB, name, uniqueFlag) {
 	return ordersOfName;
 }
 function prepareOlderOrdersTable(orders) {
-	var olderOrders = document.getElementById("olderOrders").children[1];
+	var olderOrdersTable = document.getElementById("olderOrders");
+	var olderOrders = olderOrdersTable.children[1];
+
+	for (var i = olderOrdersTable.rows.length - 1; i > 0; i--) {
+		olderOrdersTable.deleteRow(i);
+	}
 
 	orders.forEach(function (object) {
 		var tr = document.createElement("tr");
@@ -499,6 +525,7 @@ function prepareOlderOrdersTable(orders) {
 		//var mealDesc = oDB["meals"][object.meal]; //data.meals[object.meal].description;
 		var mealsString = getArrayDescriptionAsString(object.meals);
 		var additionsString = getArrayDescriptionAsString(object.additions);
+		var saucesString = getArrayDescriptionAsString(object.sauces);
 		var drinksString = getArrayDescriptionAsString(object.drinks);
 
 		tr.innerHTML =
@@ -516,6 +543,9 @@ function prepareOlderOrdersTable(orders) {
 			"</td>" +
 			"<td>" +
 			additionsString +
+			"</td>" +
+			"<td>" +
+			saucesString +
 			"</td>" +
 			"<td>" +
 			drinksString +

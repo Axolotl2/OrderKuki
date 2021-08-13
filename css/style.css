@@ -66,6 +66,14 @@ body {
 		margin: 2px;
 	}
 
+.content {
+	padding: 0 18px;
+	display: none;
+	overflow: hidden;
+	margin: 0 auto;
+	width: 50%;
+	background-color: #f1f1f1;
+}
 
 .imageContainer {
 	position: relative;
