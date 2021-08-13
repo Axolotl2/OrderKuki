@@ -1,89 +1,283 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
+<meta charset="utf-8" />
+<html dir="rtl">
+<head>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+		  crossorigin="anonymous">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Karantina:wght@700&display=swap" rel="stylesheet">
+	<title>קוקי - מה להשים לך</title>
+</head>
+<body>
+	<!-- The core Firebase JS SDK is always required and must be listed first -->
+	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.8.1/firebase.js"></script>
+	<!-- TODO: Add SDKs for Firebase products that you want to use https://firebase.google.com/docs/web/setup#available-libraries -->
+	<link rel="stylesheet" href="css/style.css">
+	<script type="text/javascript" src="js/javascript.js" charset="utf-8" class="json"></script>
+	<main>
+		<div class="header-container">
+			<!-- <div class="kukiLogo"></div> -->
+			<div id="logo-container">
+				<a href="http://www.zerocarbonfood.co.uk/test">
+					<img src="https://raw.githubusercontent.com/ggomaeng/react-native-svg-chicken/master/inspiration.gif"
+						 alt="" />
+				</a>
+			</div>
+			<h1 class="header-title">שניצל קוקי</h1>
+			<br>
+			<!-- </section> -->
+		</div>
+		<div class="main-container gradient">
+			<div class="recentOrdersContainer">
+				<h1 class="order-summary-title">הזמנות אחרונות</h1>
+				<table id="peopleRecentOrders"
+					   class="table table-bordered table-hover shadow p-3 mb-5 bg-white rounded">
+					<thead>
+						<tr class="table-dark">
+							<th style="display:none;">rowID</th>
+							<th>שם</th>
+							<th>הגשה</th>
+							<th>מנה</th>
+							<th>תוספות</th>
+							<th>רטבים</th>
+							<th>משקאות</th>
+							<th>הערות</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+				<!-- </div> -->
+			</div>
+			<br>
+			<br>
+			<div class="order-summary-container">
+				<h1 class="order-summary-title">סיכום הזמנה</h1>
+				<!-- <div id="container" name="orderLines" class=" buttonCenter outer"> -->
+				<table id="orderLines"
+					   class="table table-bordered table-hover shadow p-3 mb-5 bg-white rounded">
+					<thead>
+						<tr class="table-dark">
+							<th>שם</th>
+							<th>הגשה</th>
+							<th>מנה</th>
+							<th>תוספות</th>
+							<th>רטבים</th>
+							<th>משקאות</th>
+							<th>הערות</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+				<!-- <br> -->
+				<button class="btn btn-primary btn-lg" id="order" onclick="order(this)" type="button">
+					הזמן
+					קוקי
+				</button>
+			</div>
+		</div>
+		<hr>
+		<div id="menu">
+			<h1>תפריט</h1>
+			<div id="type1" class="collapsible outer">
+				<h2>קוקי בחמגשית</h2>
+				<button class="btn btn btn-light" onclick="addMenuItemToOrder(this)" type="button">הוספה</button>
+			</div>
+			<div class="content">
+				<h3>סוג שניצל (עד 2)</h3>
+				<div id="meals">
+					<input type="checkbox" id="meal1" name="meal1" />
+					<label for="meal1">שניצל צ'ילי</label>
+					<input type="checkbox" id="meal2" name="meal2" />
+					<label for="meal2">שניצל שום</label>
+					<input type="checkbox" id="meal3" name="meal3" />
+					<label for="meal3">שניצל עשבי תיבול</label>
+					<br />
+					<input type="checkbox" id="meal4" name="meal4" />
+					<label for="meal4">שניצל פיקנטי</label>
+					<input type="checkbox" id="meal5" name="meal5" />
+					<label for="meal5">שניצל שומשום</label>
+					<input type="checkbox" id="meal6" name="meal6" />
+					<label for="meal6">חזה עוף</label>
+				</div>
+				<h3>תוספות (עד 2)</h3>
+				<div id="additions">
+					<input type="checkbox" id="addition1" name="addition1" />
+					<label for="addition1">תפו"א</label>
+					<input type="checkbox" id="addition2" name="addition2" />
+					<label for="addition2">אורז</label>
+					<input type="checkbox" id="addition3" name="addition3" />
+					<label for="addition3">צ'יפס</label>
+					<input type="checkbox" id="addition4" name="addition4" />
+					<label for="addition4">שעועית ירוקה</label>
+					<input type="checkbox" id="addition5" name="addition5" />
+					<label for="addition5">סלט ירקות</label>
+				</div>
+				<h3>רטבים בצד</h3>
+				<div id="sauces">
+					<input type="checkbox" id="sauce1" name="sauce1" />
+					<label for="sauce1">טחינה</label>
+				</div>
+				<h3>משקאות</h3>
+				<div id="drinks">
+					<input type="checkbox" id="drink1" name="drink1" />
+					<label for="drink1">זירו</label>
+				</div>
+				<div id="name">
+					<label for="name">שם:</label>
+					<input type="text" id="name" name="name" />
+				</div>
+				<br>
+				<div id="notes">
+					<label for="notes">הערות:</label>
+					<input type="text" id="notes" name="notes" />
+				</div>
+			</div>
+			<div id="type2" class="collapsible outer">
+				<h2>קוקי בסנדוויץ'</h2>
+				<button class="btn btn btn-light" onclick="addMenuItemToOrder(this)" type="button">הוספה</button>
+			</div>
+			<div class="content">
+				<h3>סוג לחם (1 בלבד)</h3>
+				<div id="types">
+					<input type="checkbox" id="type1" name="type1" />
+					<label for="type1">בגט</label>
+					<input type="checkbox" id="type2" name="type2" />
+					<label for="type2">פיתה</label>
+					<input type="checkbox" id="type3" name="type3" />
+					<label for="type3">חלה</label>
+				</div>
+				<h3>סוג שניצל (עד 2)</h3>
+				<div id="meals">
+					<input type="checkbox" id="meal1" name="meal1" />
+					<label for="meal1">שניצל צ'ילי</label>
+					<input type="checkbox" id="meal2" name="meal2" />
+					<label for="meal2">שניצל שום</label>
+					<input type="checkbox" id="meal3" name="meal3" />
+					<label for="meal3">שניצל עשבי תיבול</label>
+					<br />
+					<input type="checkbox" id="meal4" name="meal4" />
+					<label for="meal4">שניצל פיקנטי</label>
+					<input type="checkbox" id="meal5" name="meal5" />
+					<label for="meal5">שניצל שומשום</label>
+					<input type="checkbox" id="meal6" name="meal6" />
+					<label for="meal6">חזה עוף</label>
+				</div>
+				<h3>תוספות (ללא הגבלה)</h3>
+				<div id="additions">
+					<input type="checkbox" id="addition1" name="addition1" />
+					<label for="addition1">סלט ירקות</label>
+					<input type="checkbox" id="addition2" name="addition2" />
+					<label for="addition2">חסה</label>
+					<input type="checkbox" id="addition3" name="addition3" />
+					<label for="addition3">חמוצים</label>
+					<input type="checkbox" id="addition4" name="addition4" />
+					<label for="addition4">בצל</label>
+					<input type="checkbox" id="addition5" name="addition5" />
+					<label for="addition5">חציל במיונז</label>
+					<input type="checkbox" id="addition6" name="addition6" />
+					<label for="addition6">כרוב סגול</label>
+				</div>
+				<h3>רטבים (ללא הגבלה)</h3>
+				<div id="sauces">
+					<input type="checkbox" id="sauce1" name="sauce1" />
+					<label for="sauce1">קטשופ</label>
+					<input type="checkbox" id="sauce2" name="sauce2" />
+					<label for="sauce2">טחינה</label>
+					<input type="checkbox" id="sauce3" name="sauce3" />
+					<label for="sauce3">חומוס</label>
+					<input type="checkbox" id="sauce4" name="sauce4" />
+					<label for="sauce4">פסטו</label>
+					<input type="checkbox" id="sauce5" name="sauce5" />
+					<label for="sauce5">מטבוחה</label>
+					<input type="checkbox" id="sauce6" name="sauce6" />
+					<label for="sauce6">רוטב שוב</label>
+				</div>
+				<h3>משקאות</h3>
+				<div id="drinks">
+					<input type="checkbox" id="drink1" name="drink1" />
+					<label for="drink1">זירו</label>
+				</div>
+				<div id="name">
+					<label for="name">שם:</label>
+					<input type="text" id="name" name="name" />
+				</div>
+				<br>
+				<div id="notes">
+					<label for="notes">הערות:</label>
+					<input type="text" id="notes" name="notes" />
+				</div>
+			</div>
+			<div id="type3" class="collapsible outer">
+				<h2>צ'יפס</h2>
+				<button class="btn btn btn-light" onclick="addMenuItemToOrder(this)" type="button">הוספה</button>
+			</div>
+			<div class="content">
+				<h3>גודל (1 בלבד)</h3>
+				<div id="meals">
+					<input type="checkbox" id="meal1" name="meal1" />
+					<label for="meal1">קטן</label>
+					<input type="checkbox" id="meal2" name="meal2" />
+					<label for="meal2">גדול</label>
+				</div>
+				<h3>משקאות</h3>
+				<div id="drinks">
+					<input type="checkbox" id="drink1" name="drink1" />
+					<label for="drink1">זירו</label>
+				</div>
+				<div id="name">
+					<label for="name">שם:</label>
+					<input type="text" id="name" name="name" />
+				</div>
+				<br>
+				<div id="notes">
+					<label for="notes">הערות:</label>
+					<input type="text" id="notes" name="notes" />
+				</div>
+			</div>
+		</div>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+				integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+		</script>
+		<!-- The Modal -->
+		<div id="myModal" class="modal">
+			<!-- Modal content -->
+			<div class="modal-content">
+				<span class="close" onclick="closeOlderOrdersModal(this)">&times;</span>
+				<div class="popuptext order-summary-container" id="myPopup">
+					<h1 class="order-summary-title">סיכום הזמנה</h1>
+					<!-- <div id="container" name="orderLines" class=" buttonCenter outer"> -->
+					<table id="olderOrders" class="table table-bordered">
+						<thead>
+							<tr class="table-dark">
+								<th>שם</th>
+								<th>הגשה</th>
+								<th>מנה</th>
+								<th>תוספות</th>
+								<th>רטבים</th>
+								<th>משקאות</th>
+								<th>הערות</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+					<br>
+					<button class="btn btn-outline-primary" id="order" onclick="order(this)" type="button">
+						הזמן
+						קוקי
+					</button>
+				</div>
+			</div>
 
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/8.9.1/firebase-app.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/8.9.1/firebase-auth.js"></script>
-    <script defer src="/__/firebase/8.9.1/firebase-database.js"></script>
-    <script defer src="/__/firebase/8.9.1/firebase-firestore.js"></script>
-    <script defer src="/__/firebase/8.9.1/firebase-functions.js"></script>
-    <script defer src="/__/firebase/8.9.1/firebase-messaging.js"></script>
-    <script defer src="/__/firebase/8.9.1/firebase-storage.js"></script>
-    <script defer src="/__/firebase/8.9.1/firebase-analytics.js"></script>
-    <script defer src="/__/firebase/8.9.1/firebase-remote-config.js"></script>
-    <script defer src="/__/firebase/8.9.1/firebase-performance.js"></script>
-    <!-- 
-      initialize the SDK after all desired features are loaded, set useEmulator to false
-      to avoid connecting the SDK to running emulators.
-    -->
-    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+		</div>
+	</main>
+</body>
 
-    <style media="screen">
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
-      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
-      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-      @media (max-width: 600px) {
-        body, #message { margin-top: 0; background: white; box-shadow: none; }
-        body { border-top: 16px solid #ffa100; }
-      }
-    </style>
-  </head>
-  <body>
-    <div id="message">
-      <h2>Welcome</h2>
-      <h1>Firebase Hosting Setup Complete</h1>
-      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
-      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
-    </div>
-    <p id="load">Firebase SDK Loading&hellip;</p>
-
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const loadEl = document.querySelector('#load');
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-        // firebase.auth().onAuthStateChanged(user => { });
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        // firebase.firestore().doc('/foo/bar').get().then(() => { });
-        // firebase.functions().httpsCallable('yourFunction')().then(() => { });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        // firebase.analytics(); // call to activate
-        // firebase.analytics().logEvent('tutorial_completed');
-        // firebase.performance(); // call to activate
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-
-        try {
-          let app = firebase.app();
-          let features = [
-            'auth', 
-            'database', 
-            'firestore',
-            'functions',
-            'messaging', 
-            'storage', 
-            'analytics', 
-            'remoteConfig',
-            'performance',
-          ].filter(feature => typeof app[feature] === 'function');
-          loadEl.textContent = `Firebase SDK loaded with ${features.join(', ')}`;
-        } catch (e) {
-          console.error(e);
-          loadEl.textContent = 'Error loading the Firebase SDK, check the console.';
-        }
-      });
-    </script>
-  </body>
 </html>
