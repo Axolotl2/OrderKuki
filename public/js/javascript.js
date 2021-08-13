@@ -21,14 +21,13 @@ async function loadJSONFromDB() {
 function initializeDB() {
 	// Your web app's Firebase configuration
 	var firebaseConfig = {
-		apiKey: "AIzaSyDdYpByfCXzQ6Kzn922r7mkCy-aCNAs6w4",
-		authDomain: "orderkuki-c5aea.firebaseapp.com",
-		databaseURL:
-			"https://orderkuki-c5aea-default-rtdb.europe-west1.firebasedatabase.app",
-		projectId: "orderkuki-c5aea",
-		storageBucket: "orderkuki-c5aea.appspot.com",
-		messagingSenderId: "31281277899",
-		appId: "1:31281277899:web:e7f3d1c4f15133a12a244e",
+		apiKey: "AIzaSyDIcfyhJ9f8ed8YCDBcrhgc1Jm3l7eJY64",
+		authDomain: "schnitzelkuki.firebaseapp.com",
+		databaseURL: "https://schnitzelkuki-default-rtdb.europe-west1.firebasedatabase.app",
+		projectId: "schnitzelkuki",
+		storageBucket: "schnitzelkuki.appspot.com",
+		messagingSenderId: "104128094690",
+		appId: "1:104128094690:web:6bf3269de17ec1a9f2d9bb"
 	};
 	// Initialize Firebase
 	firebase.initializeApp(firebaseConfig);
@@ -165,7 +164,7 @@ function showOlderOrdersForName(event) {
 	//popup with table
 	modal.style.display = "block";
 	// get unique flag from checkbox
-	orders = getOrdersForName(oDB["orders"], event.innerHTML, false); 
+	orders = getOrdersForName(oDB["orders"], event.innerHTML, false);
 	prepareOlderOrdersTable(orders);
 }
 function closeOlderOrdersModal(event) {
