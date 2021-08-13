@@ -42,19 +42,19 @@ function prepareOrderMessage() {
 	var oOrderRows = document.getElementById("orderLines").rows;
 
 	for (var i = 1; i < oOrderRows.length; i++) {
-		//var sChecked = oOrderRows[i].cells[0].children[0].checked;
 		var sName = oOrderRows[i].cells[0].innerText;
 		var sType = oOrderRows[i].cells[1].innerText;
 		var sMeal = oOrderRows[i].cells[2].innerText;
 		var sAdditions = oOrderRows[i].cells[3].innerText;
-		var sDrinks = oOrderRows[i].cells[4].innerText;
-		var sNotes = oOrderRows[i].cells[5].innerText;
+		var sSauces = oOrderRows[i].cells[4].innerText;
+		var sDrinks = oOrderRows[i].cells[5].innerText;
+		var sNotes = oOrderRows[i].cells[6].innerText;
 
+		if (sAdditions) sAdditions = `, ${sAdditions}`;
+		if (sSauces) sSauces = `, ${sSauces}`;
 		if (sDrinks) sDrinks = `, ${sDrinks}`;
 		if (sNotes) sNotes = `, ${sNotes}`;
-		if (sMeal) {
-			sText += `${sUrlNewLine} ${i}. *${sType}* ${sMeal}, ${sAdditions} ${sDrinks} ${sNotes} (${sName})`;
-		}
+		sText += `${sUrlNewLine} ${i}. *${sType}* ${sMeal}${sAdditions}${sSauces}${sDrinks}${sNotes} (${sName})`;
 	}
 
 	return sText;
@@ -577,6 +577,7 @@ function preparePeopleRecentOrdersTable(orders) {
 		//var mealDesc = oDB["meals"][object.meal]; //data.meals[object.meal].description;
 		var mealsString = getArrayDescriptionAsString(object.meals);
 		var additionsString = getArrayDescriptionAsString(object.additions);
+		var saucesString = getArrayDescriptionAsString(object.sauces);
 		var drinksString = getArrayDescriptionAsString(object.drinks);
 
 		tr.innerHTML =
@@ -594,6 +595,9 @@ function preparePeopleRecentOrdersTable(orders) {
 			"</td>" +
 			"<td class='bg-light'>" +
 			additionsString +
+			"</td>" +
+			"<td class='bg-light'>" +
+			saucesString +
 			"</td>" +
 			"<td class='bg-light'>" +
 			drinksString +
