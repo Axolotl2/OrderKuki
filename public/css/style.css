@@ -40,7 +40,7 @@ body {
 	/* justify-content: flex-start; */
 	align-items: center;
 	height: 400px;
-	background: linear-gradient(rgba(99, 99, 99, 0.5), rgba(20, 20, 20, 0.5)), url(https://cdn.wallpapersafari.com/49/21/Sjxz2Y.jpg);
+	background: linear-gradient(rgba(99, 99, 99, 0.5), rgba(20, 20, 20, 0.5));
 	background-size: cover;
 }
 
@@ -178,7 +178,6 @@ body {
 	background-size: cover;
 	background-position: center;
 	float: right;
-	background-image: url("https://raw.githubusercontent.com/ggomaeng/react-native-svg-chicken/master/inspiration.gif");
 }
 
 .gradient {
