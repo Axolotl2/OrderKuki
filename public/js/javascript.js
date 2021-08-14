@@ -1,4 +1,3 @@
-// separate js file and json file by this url: https://stackoverflow.com/questions/19706046/how-to-read-an-external-local-json-file-in-javascript
 var oDB = {};
 var oOrder = {};
 
@@ -35,10 +34,7 @@ function initializeDB() {
 function prepareOrderMessage() {
 	const sUrlNewLine = "%0A";
 	// var sText = '���, ��� ���� ������ �����:';
-	var sText = "מה קורה אבאלה אני רוצה להזמין:";
-	const iName = 0,
-		iMeal = 2,
-		iAdditions = 3;
+	var sText = "היי, אני רוצה להזמין בבקשה:";
 	var oOrderRows = document.getElementById("orderLines").rows;
 
 	for (var i = 1; i < oOrderRows.length; i++) {
