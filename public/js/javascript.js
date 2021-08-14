@@ -1,4 +1,3 @@
-// separate js file and json file by this url: https://stackoverflow.com/questions/19706046/how-to-read-an-external-local-json-file-in-javascript
 var oDB = {};
 var oOrder = {};
 
@@ -34,8 +33,7 @@ function initializeDB() {
 }
 function prepareOrderMessage() {
 	const sUrlNewLine = "%0A";
-	// var sText = '���, ��� ���� ������ �����:';
-	var sText = "מה קורה אבאלה אני רוצה להזמין:";
+	var sText = "היי, אני רוצה להזמין בבקשה:";
 	var index = 1;
 	//var oOrderRows = document.getElementById("orderLines").rows;
 	debugger;
@@ -179,7 +177,7 @@ function addLineToOrder(orderLine) {
 	return true;
 }
 function showOlderOrdersForName(event) {
-	var modal = document.getElementById("myModal");
+	var modal = document.getElementById("olderOrdersModal");
 	var orders = [];
 	var name = event.innerHTML;
 	modal.style.display = "block";

@@ -39,7 +39,7 @@ body {
 	justify-content: center;
 	/* justify-content: flex-start; */
 	align-items: center;
-	height: 400px;
+	height: 10%;
 	background: linear-gradient(rgba(99, 99, 99, 0.5), rgba(20, 20, 20, 0.5));
 	background-size: cover;
 }
