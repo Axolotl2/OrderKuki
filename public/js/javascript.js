@@ -33,25 +33,42 @@ function initializeDB() {
 }
 function prepareOrderMessage() {
 	const sUrlNewLine = "%0A";
-	// var sText = '���, ��� ���� ������ �����:';
 	var sText = "היי, אני רוצה להזמין בבקשה:";
-	var oOrderRows = document.getElementById("orderLines").rows;
+	var index = 1;
+	//var oOrderRows = document.getElementById("orderLines").rows;
 
-	for (var i = 1; i < oOrderRows.length; i++) {
-		var sName = oOrderRows[i].cells[0].innerText;
-		var sType = oOrderRows[i].cells[1].innerText;
-		var sMeal = oOrderRows[i].cells[2].innerText;
-		var sAdditions = oOrderRows[i].cells[3].innerText;
-		var sSauces = oOrderRows[i].cells[4].innerText;
-		var sDrinks = oOrderRows[i].cells[5].innerText;
-		var sNotes = oOrderRows[i].cells[6].innerText;
+	for (orderKey in oOrder) {
+		var orderLine = oOrder[orderKey];
+		var sName = orderLine.name;
+		var sType = orderLine.type;
+		var sMeal = getArrayDescriptionAsString(orderLine.meals);
+		var sAdditions = getArrayDescriptionAsString(orderLine.additions);
+		var sSauces = getArrayDescriptionAsString(orderLine.sauces);
+		var sDrinks = getArrayDescriptionAsString(orderLine.drinks);
+		var sNotes = orderLine.notes;
 
 		if (sAdditions) sAdditions = `, ${sAdditions}`;
 		if (sSauces) sSauces = `, ${sSauces}`;
 		if (sDrinks) sDrinks = `, ${sDrinks}`;
 		if (sNotes) sNotes = `, ${sNotes}`;
-		sText += `${sUrlNewLine} ${i}. *${sType}* ${sMeal}${sAdditions}${sSauces}${sDrinks}${sNotes} (${sName})`;
+		sText += `${sUrlNewLine} ${index++}. *${sType}* ${sMeal}${sAdditions}${sSauces}${sDrinks}${sNotes} (${sName})`;
 	}
+
+	//for (var i = 1; i < oOrderRows.length; i++) {
+	//	var sName = oOrderRows[i].cells[0].innerText;
+	//	var sType = oOrderRows[i].cells[1].innerText;
+	//	var sMeal = oOrderRows[i].cells[2].innerText;
+	//	var sAdditions = oOrderRows[i].cells[3].innerText;
+	//	var sSauces = oOrderRows[i].cells[4].innerText;
+	//	var sDrinks = oOrderRows[i].cells[5].innerText;
+	//	var sNotes = oOrderRows[i].cells[6].innerText;
+	//
+	//	if (sAdditions) sAdditions = `, ${sAdditions}`;
+	//	if (sSauces) sSauces = `, ${sSauces}`;
+	//	if (sDrinks) sDrinks = `, ${sDrinks}`;
+	//	if (sNotes) sNotes = `, ${sNotes}`;
+	//	sText += `${sUrlNewLine} ${i}. *${sType}* ${sMeal}${sAdditions}${sSauces}${sDrinks}${sNotes} (${sName})`;
+	//}
 
 	return sText;
 }
@@ -106,7 +123,7 @@ function order(event) {
 	window.open(sUrl);
 }
 function addLineToOrder(orderLine) {
-	var orderTableBody = document.getElementById("orderLines").children[1];
+	var orderTableBody = document.getElementById("orderLinesBody");
 	var tr = document.createElement("tr");
 	//var typeDesc = oDB["types"][orderLine.type]; //data.types[object.type].description;
 	//var mealDesc = oDB["meals"][orderLine.meal]; //data.meals[object.meal].description;
@@ -118,35 +135,36 @@ function addLineToOrder(orderLine) {
 	if (!confirmOrderOverwrite(orderLine)) return false;
 
 	tr.innerHTML =
-		"<td>" +
+		"<td id='name'>" +
 		orderLine.name +
 		"</td>" +
-		"<td>" +
+		"<td id='type'>" +
 		orderLine.type +
 		"</td>" +
-		"<td>" +
+		"<td id='meals'>" +
 		mealsString +
 		"</td>" +
-		"<td>" +
+		"<td id='additions'>" +
 		additionsString +
 		"</td>" +
-		"<td>" +
+		"<td id='sauces'>" +
 		saucesString +
 		"</td>" +
-		"<td>" +
+		"<td id='drinks'>" +
 		drinksString +
 		"</td>" +
-		"<td>" +
+		"<td id='notes'>" +
 		orderLine.notes +
 		"</td>" +
 		"<td>" +
 		'<button class="btn btn btn-outline-danger" id="removeLineFromOrder" onclick="removeLineFromOrder(this)" type="button">הסרה</button>' +
 		"</td>";
 
+	debugger;
 	// create\replace order line
 	if (oOrder[orderLine.name]) {
 		for (var i = 0; i < orderTableBody.children.length; i++) {
-			if (orderTableBody.children[i].children[0].innerHTML == orderLine.name) {
+			if (orderTableBody.children[i].querySelector("#name") == orderLine.name) {
 				orderTableBody.replaceChild(tr, orderTableBody.children[i]);
 				break;
 			}
@@ -526,6 +544,16 @@ function getOrdersForName(ordersFromDB, name, uniqueFlag) {
 
 	return ordersOfName;
 }
+function convertDateForOutput(date) {
+	var sDate = new Date(date);
+	var dd = String(sDate.getDate()).padStart(2, '0');
+	var mm = String(sDate.getMonth() + 1).padStart(2, '0'); //January is 0!
+	var yyyy = sDate.getFullYear();
+
+	sDate = `${dd}/${mm}/${yyyy}`
+
+	return sDate;
+}
 function prepareOlderOrdersTable(name, orders) {
 	var olderOrdersTable = document.getElementById("olderOrders");
 	var olderOrdersTableTitle = olderOrdersTable.previousElementSibling;
@@ -551,7 +579,8 @@ function prepareOlderOrdersTable(name, orders) {
 			object.id +
 			"</td>" +
 			"<td>" +
-			new Date(object.date).toLocaleDateString() +
+			//new Date(object.date).toLocaleDateString() +
+			convertDateForOutput(object.date) +
 			"</td>" +
 			"<td>" +
 			object.type +
@@ -698,14 +727,14 @@ function createCollapsibleMenu() {
 			for (var i = 0; i < collapsibles.length; i++) {
 				var collapsible = collapsibles[i];
 				if (collapsible === this) continue;
-				var button = collapsible.nextElementSibling;
-				var content = collapsible.parentElement.nextElementSibling;
+				var button = collapsible.parentElement.querySelector("#addMenuItemToOrder");
+				var content = collapsible.parentElement.parentElement.querySelector(".content");
 				button.style.display = "none";
 				content.style.display = "none";
 			}
 			this.classList.toggle("active");
-			button = this.nextElementSibling;
-			content = this.parentElement.nextElementSibling;
+			button = this.parentElement.querySelector("#addMenuItemToOrder");
+			content = this.parentElement.parentElement.querySelector(".content");
 			button.style.display = (button.style.display === "block") ? "none" : "block";
 			content.style.display = (content.style.display === "block") ? "none" : "block";
 		});

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <meta charset="utf-8" />
 <html dir="rtl">
+
 <head>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -11,6 +12,7 @@
 
 	<title>קוקי - מה להשים לך</title>
 </head>
+
 <body>
 	<!-- The core Firebase JS SDK is always required and must be listed first -->
 	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
@@ -24,37 +26,39 @@
 
 			<div class="header-container">
 				<div class="kukiLogo"></div>
-			<h1 class="header-title">שניצל קוקי</h1>
-			<br>
-		</div>
-		<div class="order-summary-container table-responsive">
-			<h1 class="order-summary-title">סיכום הזמנה</h1>
-			<button class="btn btn-primary btn-lg btn-order-kuki" id="order" onclick="order(this)" type="button">הזמן
-				קוקי</button>
+				<h1 class="header-title">שניצל קוקי</h1>
+				<br>
+			</div>
+			<div class="order-summary-container table-responsive">
+				<h1 class="order-summary-title">סיכום הזמנה</h1>
+				<button class="btn btn-primary btn-lg btn-order-kuki" id="order" onclick="order(this)"
+					type="button">הזמן
+					קוקי</button>
 
-			<table id="orderLines" class="table table-bordered table-hover shadow p-3 mb-5 bg-white rounded">
-				<thead>
-					<tr class="table-dark">
-						<th>שם</th>
-						<th>הגשה</th>
-						<th>מנה</th>
-						<th>תוספות</th>
-						<th>רטבים</th>
-						<th>משקאות</th>
-						<th>הערות</th>
-						<th></th>
+				<table id="orderLines" class="table table-bordered table-hover shadow p-3 mb-5 bg-white rounded">
+					<thead>
+						<tr class="table-dark">
+							<th>שם</th>
+							<th>הגשה</th>
+							<th>מנה</th>
+							<th>תוספות</th>
+							<th>רטבים</th>
+							<th>משקאות</th>
+							<th>הערות</th>
+							<th></th>
 						</tr>
-						</thead>
-						<tbody>
+					</thead>
+					<tbody>
 
-				</tbody>
+					</tbody>
 				</table>
-		</div>
+			</div>
 		</div>
 		<div class="main-container">
 			<div class="recentOrdersContainer table-responsive">
 				<h1 class="order-summary-title">הזמנות אחרונות</h1>
-				<table id="peopleRecentOrders" class="table table-bordered table-hover shadow p-3 mb-5 bg-white rounded">
+				<table id="peopleRecentOrders"
+					class="table table-bordered table-hover shadow p-3 mb-5 bg-white rounded">
 					<thead>
 						<tr class="table-dark">
 							<th style="display:none;">rowID</th>
@@ -81,161 +85,164 @@
 				<div id="type1" class="outer">
 					<!-- <h2 class="collapsible">קוקי בחמגשית</h2> -->
 					<h2 class="collapsible cbtn cbtn-dark cbtn-big">קוקי בחמגשית</h2>
-					<button class="contentButton btn btn btn-light" onclick="addMenuItemToOrder(this)" type="button">הוספה</button>
+					<button id="addMenuItemToOrder" class="contentButton btn btn btn-light"
+						onclick="addMenuItemToOrder(this)" type="button">הוספה</button>
+				</div>
+				<div class="content">
+					<h3>סוג שניצל (עד 2)</h3>
+					<div id="meals">
+						<input type="checkbox" id="meal1" name="meal1" />
+						<label for="meal1">שניצל צ'ילי</label>
+						<input type="checkbox" id="meal2" name="meal2" />
+						<label for="meal2">שניצל שום</label>
+						<input type="checkbox" id="meal3" name="meal3" />
+						<label for="meal3">שניצל עשבי תיבול</label>
+						<br />
+						<input type="checkbox" id="meal4" name="meal4" />
+						<label for="meal4">שניצל פיקנטי</label>
+						<input type="checkbox" id="meal5" name="meal5" />
+						<label for="meal5">שניצל שומשום</label>
+						<input type="checkbox" id="meal6" name="meal6" />
+						<label for="meal6">חזה עוף</label>
 					</div>
-					<div class="content">
-						<h3>סוג שניצל (עד 2)</h3>
-						<div id="meals">
-							<input type="checkbox" id="meal1" name="meal1" />
-							<label for="meal1">שניצל צ'ילי</label>
-							<input type="checkbox" id="meal2" name="meal2" />
-							<label for="meal2">שניצל שום</label>
-							<input type="checkbox" id="meal3" name="meal3" />
-							<label for="meal3">שניצל עשבי תיבול</label>
-							<br />
-							<input type="checkbox" id="meal4" name="meal4" />
-							<label for="meal4">שניצל פיקנטי</label>
-							<input type="checkbox" id="meal5" name="meal5" />
-							<label for="meal5">שניצל שומשום</label>
-							<input type="checkbox" id="meal6" name="meal6" />
-							<label for="meal6">חזה עוף</label>
-						</div>
-						<h3>תוספות (עד 2)</h3>
-						<div id="additions">
-							<input type="checkbox" id="addition1" name="addition1" />
-							<label for="addition1">תפו"א</label>
-							<input type="checkbox" id="addition2" name="addition2" />
-							<label for="addition2">אורז</label>
-							<input type="checkbox" id="addition3" name="addition3" />
-							<label for="addition3">צ'יפס</label>
-							<input type="checkbox" id="addition4" name="addition4" />
-							<label for="addition4">שעועית ירוקה</label>
-							<input type="checkbox" id="addition5" name="addition5" />
-							<label for="addition5">סלט ירקות</label>
-						</div>
-						<h3>רטבים בצד</h3>
-						<div id="sauces">
-							<input type="checkbox" id="sauce1" name="sauce1" />
-							<label for="sauce1">טחינה</label>
-						</div>
-						<h3>משקאות</h3>
-						<div id="drinks">
-							<input type="checkbox" id="drink1" name="drink1" />
-							<label for="drink1">זירו</label>
-						</div>
-						<div id="name">
-							<label for="name">שם:</label>
-							<input type="text" id="name" name="name" />
-						</div>
-						<br>
-						<div id="notes">
-							<label for="notes">הערות:</label>
-							<input type="text" id="notes" name="notes" />
-						</div>
+					<h3>תוספות (עד 2)</h3>
+					<div id="additions">
+						<input type="checkbox" id="addition1" name="addition1" />
+						<label for="addition1">תפו"א</label>
+						<input type="checkbox" id="addition2" name="addition2" />
+						<label for="addition2">אורז</label>
+						<input type="checkbox" id="addition3" name="addition3" />
+						<label for="addition3">צ'יפס</label>
+						<input type="checkbox" id="addition4" name="addition4" />
+						<label for="addition4">שעועית ירוקה</label>
+						<input type="checkbox" id="addition5" name="addition5" />
+						<label for="addition5">סלט ירקות</label>
 					</div>
-					<div id="type2" class="outer">
-						<h2 class="collapsible cbtn cbtn-dark cbtn-big">קוקי בסנדוויץ'</h2>
-						<button class="contentButton btn btn btn-light" onclick="addMenuItemToOrder(this)" type="button">הוספה</button>
-						</div>
-						<div class="content">
-							<h3>סוג לחם (1 בלבד)</h3>
-							<div id="types">
-								<input type="checkbox" id="type1" name="type1" />
-								<label for="type1">בגט</label>
-								<input type="checkbox" id="type2" name="type2" />
-								<label for="type2">פיתה</label>
-								<input type="checkbox" id="type3" name="type3" />
-								<label for="type3">חלה</label>
-							</div>
-							<h3>סוג שניצל (עד 2)</h3>
-							<div id="meals">
-								<input type="checkbox" id="meal1" name="meal1" />
-								<label for="meal1">שניצל צ'ילי</label>
-								<input type="checkbox" id="meal2" name="meal2" />
-								<label for="meal2">שניצל שום</label>
-								<input type="checkbox" id="meal3" name="meal3" />
-								<label for="meal3">שניצל עשבי תיבול</label>
-								<br />
-								<input type="checkbox" id="meal4" name="meal4" />
-								<label for="meal4">שניצל פיקנטי</label>
-								<input type="checkbox" id="meal5" name="meal5" />
-								<label for="meal5">שניצל שומשום</label>
-								<input type="checkbox" id="meal6" name="meal6" />
-								<label for="meal6">חזה עוף</label>
-							</div>
-							<h3>תוספות (ללא הגבלה)</h3>
-							<div id="additions">
-								<input type="checkbox" id="addition1" name="addition1" />
-								<label for="addition1">סלט ירקות</label>
-								<input type="checkbox" id="addition2" name="addition2" />
-								<label for="addition2">חסה</label>
-								<input type="checkbox" id="addition3" name="addition3" />
-								<label for="addition3">חמוצים</label>
-								<input type="checkbox" id="addition4" name="addition4" />
-								<label for="addition4">בצל</label>
-								<input type="checkbox" id="addition5" name="addition5" />
-								<label for="addition5">חציל במיונז</label>
-								<input type="checkbox" id="addition6" name="addition6" />
-								<label for="addition6">כרוב סגול</label>
-							</div>
-							<h3>רטבים (ללא הגבלה)</h3>
-							<div id="sauces">
-								<input type="checkbox" id="sauce1" name="sauce1" />
-								<label for="sauce1">קטשופ</label>
-								<input type="checkbox" id="sauce2" name="sauce2" />
-								<label for="sauce2">טחינה</label>
-								<input type="checkbox" id="sauce3" name="sauce3" />
-								<label for="sauce3">חומוס</label>
-								<input type="checkbox" id="sauce4" name="sauce4" />
-								<label for="sauce4">פסטו</label>
-								<input type="checkbox" id="sauce5" name="sauce5" />
-								<label for="sauce5">מטבוחה</label>
-								<input type="checkbox" id="sauce6" name="sauce6" />
-								<label for="sauce6">רוטב שוב</label>
-							</div>
-							<h3>משקאות</h3>
-							<div id="drinks">
-								<input type="checkbox" id="drink1" name="drink1" />
-								<label for="drink1">זירו</label>
-							</div>
-							<div id="name">
-								<label for="name">שם:</label>
-								<input type="text" id="name" name="name" />
-							</div>
-							<br>
-							<div id="notes">
-								<label for="notes">הערות:</label>
-								<input type="text" id="notes" name="notes" />
-							</div>
-						</div>
-						<div id="type3" class="outer">
-							<h2 class="collapsible cbtn cbtn-dark cbtn-big">צ'יפס</h2>
-							<button class="contentButton btn btn btn-light" onclick="addMenuItemToOrder(this)" type="button">הוספה</button>
-							</div>
-							<div class="content">
-								<h3>גודל (1 בלבד)</h3>
-								<div id="meals">
-									<input type="checkbox" id="meal1" name="meal1" />
-									<label for="meal1">קטן</label>
-									<input type="checkbox" id="meal2" name="meal2" />
-									<label for="meal2">גדול</label>
-								</div>
-								<h3>משקאות</h3>
-								<div id="drinks">
-									<input type="checkbox" id="drink1" name="drink1" />
-									<label for="drink1">זירו</label>
-								</div>
-								<div id="name">
-									<label for="name">שם:</label>
-									<input type="text" id="name" name="name" />
-								</div>
-								<br>
-								<div id="notes">
-									<label for="notes">הערות:</label>
-									<input type="text" id="notes" name="notes" />
-								</div>
-							</div>
+					<h3>רטבים בצד</h3>
+					<div id="sauces">
+						<input type="checkbox" id="sauce1" name="sauce1" />
+						<label for="sauce1">טחינה</label>
 					</div>
+					<h3>משקאות</h3>
+					<div id="drinks">
+						<input type="checkbox" id="drink1" name="drink1" />
+						<label for="drink1">זירו</label>
+					</div>
+					<div id="name">
+						<label for="name">שם:</label>
+						<input type="text" id="name" name="name" />
+					</div>
+					<br>
+					<div id="notes">
+						<label for="notes">הערות:</label>
+						<input type="text" id="notes" name="notes" />
+					</div>
+				</div>
+				<div id="type2" class="outer">
+					<h2 class="collapsible cbtn cbtn-dark cbtn-big">קוקי בסנדוויץ'</h2>
+					<button id="addMenuItemToOrder" class="contentButton btn btn btn-light"
+						onclick="addMenuItemToOrder(this)" type="button">הוספה</button>
+				</div>
+				<div class="content">
+					<h3>סוג לחם (1 בלבד)</h3>
+					<div id="types">
+						<input type="checkbox" id="type1" name="type1" />
+						<label for="type1">בגט</label>
+						<input type="checkbox" id="type2" name="type2" />
+						<label for="type2">פיתה</label>
+						<input type="checkbox" id="type3" name="type3" />
+						<label for="type3">חלה</label>
+					</div>
+					<h3>סוג שניצל (עד 2)</h3>
+					<div id="meals">
+						<input type="checkbox" id="meal1" name="meal1" />
+						<label for="meal1">שניצל צ'ילי</label>
+						<input type="checkbox" id="meal2" name="meal2" />
+						<label for="meal2">שניצל שום</label>
+						<input type="checkbox" id="meal3" name="meal3" />
+						<label for="meal3">שניצל עשבי תיבול</label>
+						<br />
+						<input type="checkbox" id="meal4" name="meal4" />
+						<label for="meal4">שניצל פיקנטי</label>
+						<input type="checkbox" id="meal5" name="meal5" />
+						<label for="meal5">שניצל שומשום</label>
+						<input type="checkbox" id="meal6" name="meal6" />
+						<label for="meal6">חזה עוף</label>
+					</div>
+					<h3>תוספות (ללא הגבלה)</h3>
+					<div id="additions">
+						<input type="checkbox" id="addition1" name="addition1" />
+						<label for="addition1">סלט ירקות</label>
+						<input type="checkbox" id="addition2" name="addition2" />
+						<label for="addition2">חסה</label>
+						<input type="checkbox" id="addition3" name="addition3" />
+						<label for="addition3">חמוצים</label>
+						<input type="checkbox" id="addition4" name="addition4" />
+						<label for="addition4">בצל</label>
+						<input type="checkbox" id="addition5" name="addition5" />
+						<label for="addition5">חציל במיונז</label>
+						<input type="checkbox" id="addition6" name="addition6" />
+						<label for="addition6">כרוב סגול</label>
+					</div>
+					<h3>רטבים (ללא הגבלה)</h3>
+					<div id="sauces">
+						<input type="checkbox" id="sauce1" name="sauce1" />
+						<label for="sauce1">קטשופ</label>
+						<input type="checkbox" id="sauce2" name="sauce2" />
+						<label for="sauce2">טחינה</label>
+						<input type="checkbox" id="sauce3" name="sauce3" />
+						<label for="sauce3">חומוס</label>
+						<input type="checkbox" id="sauce4" name="sauce4" />
+						<label for="sauce4">פסטו</label>
+						<input type="checkbox" id="sauce5" name="sauce5" />
+						<label for="sauce5">מטבוחה</label>
+						<input type="checkbox" id="sauce6" name="sauce6" />
+						<label for="sauce6">רוטב שוב</label>
+					</div>
+					<h3>משקאות</h3>
+					<div id="drinks">
+						<input type="checkbox" id="drink1" name="drink1" />
+						<label for="drink1">זירו</label>
+					</div>
+					<div id="name">
+						<label for="name">שם:</label>
+						<input type="text" id="name" name="name" />
+					</div>
+					<br>
+					<div id="notes">
+						<label for="notes">הערות:</label>
+						<input type="text" id="notes" name="notes" />
+					</div>
+				</div>
+				<div id="type3" class="outer">
+					<h2 class="collapsible cbtn cbtn-dark cbtn-big">צ'יפס</h2>
+					<button id="addMenuItemToOrder" class="contentButton btn btn btn-light"
+						onclick="addMenuItemToOrder(this)" type="button">הוספה</button>
+				</div>
+				<div class="content">
+					<h3>גודל (1 בלבד)</h3>
+					<div id="meals">
+						<input type="checkbox" id="meal1" name="meal1" />
+						<label for="meal1">קטן</label>
+						<input type="checkbox" id="meal2" name="meal2" />
+						<label for="meal2">גדול</label>
+					</div>
+					<h3>משקאות</h3>
+					<div id="drinks">
+						<input type="checkbox" id="drink1" name="drink1" />
+						<label for="drink1">זירו</label>
+					</div>
+					<div id="name">
+						<label for="name">שם:</label>
+						<input type="text" id="name" name="name" />
+					</div>
+					<br>
+					<div id="notes">
+						<label for="notes">הערות:</label>
+						<input type="text" id="notes" name="notes" />
+					</div>
+				</div>
+			</div>
 		</div>
 		<hr>
 
