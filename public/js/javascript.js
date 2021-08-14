@@ -186,13 +186,14 @@ function showOlderOrdersForName(event) {
 	prepareOlderOrdersTable(name, orders);
 }
 function closeOlderOrdersModal(event) {
-	var modal = document.getElementById("myModal");
+	var modal = document.getElementById("olderOrdersModal");
 
 	modal.style.display = "none";
 }
 function removeLineFromOrder(event) {
 	var orderTable = document.getElementById("orderLines");
 	var row = event.parentElement.parentElement;
+	var row = $(event).closest("tr").closest("#")
 	var rowID = row.cells[0].outerText;
 
 	row.remove();
@@ -715,26 +716,30 @@ function fillPeopleRecentOrdersTable() {
 //    drinksTable.appendChild(tr);
 //  });
 //}
+function changeCollapsibleState(event) {
+
+
+}
 function createCollapsibleMenu() {
 	var collapsibles = document.getElementsByClassName("collapsible");
 
 	for (index in collapsibles) {
 		var collapsible = collapsibles[index];
 
-		collapsible.addEventListener("click", function () {
+		collapsible.querySelector("#collapsible-title").addEventListener("click", function () {
 			debugger;
 			var collapsibles = document.getElementsByClassName("collapsible");
 			for (var i = 0; i < collapsibles.length; i++) {
 				var collapsible = collapsibles[i];
 				if (collapsible === this) continue;
-				var button = collapsible.parentElement.querySelector("#addMenuItemToOrder");
-				var content = collapsible.parentElement.parentElement.querySelector(".content");
+				var button = collapsible.querySelector("#addMenuItemToOrder");
+				var content = collapsible.querySelector("#content");
 				button.style.display = "none";
 				content.style.display = "none";
 			}
 			this.classList.toggle("active");
-			button = this.parentElement.querySelector("#addMenuItemToOrder");
-			content = this.parentElement.parentElement.querySelector(".content");
+			button = this.querySelector("#addMenuItemToOrder");
+			content = this.querySelector("#content");
 			button.style.display = (button.style.display === "block") ? "none" : "block";
 			content.style.display = (content.style.display === "block") ? "none" : "block";
 		});
