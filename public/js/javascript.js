@@ -143,7 +143,6 @@ function addLineToOrder(orderLine) {
 		'<button class="btn btn btn-outline-danger" id="removeLineFromOrder" onclick="removeLineFromOrder(this)" type="button">הסרה</button>' +
 		"</td>";
 
-	debugger;
 	// create\replace order line
 	if (oOrder[orderLine.name]) {
 		for (var i = 0; i < orderTableBody.children.length; i++) {

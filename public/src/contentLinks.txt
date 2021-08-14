@@ -1,0 +1,2 @@
+https://raw.githubusercontent.com/ggomaeng/react-native-svg-chicken/master/inspiration.gif
+file:///C:/Users/Idan/Documents/GitHub/OrderKuki/public/src/HeaderBackground.webp
