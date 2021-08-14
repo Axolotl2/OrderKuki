@@ -159,7 +159,7 @@ function addLineToOrder(orderLine) {
 	return true;
 }
 function showOlderOrdersForName(event) {
-	var modal = document.getElementById("myModal");
+	var modal = document.getElementById("olderOrdersModal");
 	var orders = [];
 	var name = event.innerHTML;
 	modal.style.display = "block";
