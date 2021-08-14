@@ -727,14 +727,14 @@ function createCollapsibleMenu() {
 			for (var i = 0; i < collapsibles.length; i++) {
 				var collapsible = collapsibles[i];
 				if (collapsible === this) continue;
-				var button = collapsible.nextElementSibling;
-				var content = collapsible.parentElement.nextElementSibling;
+				var button = collapsible.parentElement.querySelector("#addMenuItemToOrder");
+				var content = collapsible.parentElement.parentElement.querySelector(".content");
 				button.style.display = "none";
 				content.style.display = "none";
 			}
 			this.classList.toggle("active");
-			button = this.nextElementSibling;
-			content = this.parentElement.nextElementSibling;
+			button = this.parentElement.querySelector("#addMenuItemToOrder");
+			content = this.parentElement.parentElement.querySelector(".content");
 			button.style.display = (button.style.display === "block") ? "none" : "block";
 			content.style.display = (content.style.display === "block") ? "none" : "block";
 		});
