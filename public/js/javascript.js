@@ -119,6 +119,8 @@ function addLineToOrder(orderLine) {
 	var saucesString = getArrayDescriptionAsString(orderLine.sauces);
 	var drinksString = getArrayDescriptionAsString(orderLine.drinks);
 
+	if (!confirmOrderOverwrite(orderLine)) return false;
+
 	tr.innerHTML =
 		"<td>" +
 		orderLine.name +
@@ -145,9 +147,10 @@ function addLineToOrder(orderLine) {
 		'<button class="btn btn btn-outline-danger" id="removeLineFromOrder" onclick="removeLineFromOrder(this)" type="button">הסרה</button>' +
 		"</td>";
 
+	debugger;
 	// create\replace order line
 	if (oOrder[orderLine.name]) {
-		for (var i = 1; i < orderTableBody.children.length; i++) {
+		for (var i = 0; i < orderTableBody.children.length; i++) {
 			if (orderTableBody.children[i].children[0].innerHTML == orderLine.name) {
 				orderTableBody.replaceChild(tr, orderTableBody.children[i]);
 				break;
@@ -157,14 +160,17 @@ function addLineToOrder(orderLine) {
 		orderTableBody.appendChild(tr);
 	}
 	oOrder[orderLine.name] = orderLine;
+
+	return true;
 }
 function showOlderOrdersForName(event) {
 	var modal = document.getElementById("myModal");
 	var orders = [];
+	var name = event.innerHTML;
 	modal.style.display = "block";
 	// get unique flag from checkbox
-	orders = getOrdersForName(oDB["orders"], event.innerHTML, false);
-	prepareOlderOrdersTable(orders);
+	orders = getOrdersForName(oDB["orders"], name, false);
+	prepareOlderOrdersTable(name, orders);
 }
 function closeOlderOrdersModal(event) {
 	var modal = document.getElementById("myModal");
@@ -179,6 +185,12 @@ function removeLineFromOrder(event) {
 	row.remove();
 	delete oOrder[rowID];
 }
+function confirmOrderOverwrite(orderLine) {
+	debugger;
+	var lineAlreadyExists = oOrder[orderLine.name] != null;
+
+	return (lineAlreadyExists && confirm(`ל${orderLine.name} כבר קיימת הזמנה, לדרוס אותה?`)) || !lineAlreadyExists;
+}
 function validateMenuItemSelection(event) {
 
 	return true;
@@ -188,8 +200,6 @@ function addMenuItemToOrder(event) {
 	var nameFromInput, notesFromInput;
 	var inputsToClear = [];
 	var header = event.parentElement;
-
-	if (!validateMenuItemSelection(event)) return;
 
 	switch (header.id) {
 		case "type1":
@@ -274,6 +284,8 @@ function addMenuItemToOrder(event) {
 		notes: notesFromInput,
 	};
 
+	if (!validateMenuItemSelection(event)) return false;
+
 	addLineToOrder(orderLine);
 
 	for (inputIndex in inputsToClear) {
@@ -286,6 +298,9 @@ function addMenuItemToOrder(event) {
 			input.value = "";
 		}
 	}
+}
+function addOlderOrderLineToOrder(event) {
+	if (addRecentOrderLineToOrder(event)) closeOlderOrdersModal(event);
 }
 function addRecentOrderLineToOrder(event) {
 	var rowID = event.parentElement.parentElement.cells[0].outerText;
@@ -301,7 +316,7 @@ function addRecentOrderLineToOrder(event) {
 		notes: row.notes,
 	};
 
-	addLineToOrder(orderLine);
+	return addLineToOrder(orderLine);
 }
 function getArrayDescriptionAsString(array) {
 	var resultString = "";
@@ -516,9 +531,12 @@ function getOrdersForName(ordersFromDB, name, uniqueFlag) {
 
 	return ordersOfName;
 }
-function prepareOlderOrdersTable(orders) {
+function prepareOlderOrdersTable(name, orders) {
 	var olderOrdersTable = document.getElementById("olderOrders");
+	var olderOrdersTableTitle = olderOrdersTable.previousElementSibling;
 	var olderOrders = olderOrdersTable.children[1];
+
+	olderOrdersTableTitle.innerHTML = `הזמנות קודמות - ${name}`;
 
 	for (var i = olderOrdersTable.rows.length - 1; i > 0; i--) {
 		olderOrdersTable.deleteRow(i);
@@ -559,7 +577,7 @@ function prepareOlderOrdersTable(orders) {
 			object.notes +
 			"</td>" +
 			"<td>" +
-			'<button class="btn btn btn-light" id="addRecentOrderLineToOrder" onclick="addRecentOrderLineToOrder(this)" type="button">הוספה</button>' +
+			'<button class="btn btn btn-light" id="addOlderOrderLineToOrder" onclick="addOlderOrderLineToOrder(this)" type="button">הוספה</button>' +
 			"</td>";
 
 		olderOrders.appendChild(tr);
