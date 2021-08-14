@@ -36,7 +36,6 @@ function prepareOrderMessage() {
 	var sText = "היי, אני רוצה להזמין בבקשה:";
 	var index = 1;
 	//var oOrderRows = document.getElementById("orderLines").rows;
-	debugger;
 
 	for (orderKey in oOrder) {
 		var orderLine = oOrder[orderKey];
@@ -124,7 +123,7 @@ function order(event) {
 	window.open(sUrl);
 }
 function addLineToOrder(orderLine) {
-	var orderTableBody = document.getElementById("orderLines").children[1];
+	var orderTableBody = document.getElementById("orderLinesBody");
 	var tr = document.createElement("tr");
 	//var typeDesc = oDB["types"][orderLine.type]; //data.types[object.type].description;
 	//var mealDesc = oDB["meals"][orderLine.meal]; //data.meals[object.meal].description;
@@ -136,35 +135,36 @@ function addLineToOrder(orderLine) {
 	if (!confirmOrderOverwrite(orderLine)) return false;
 
 	tr.innerHTML =
-		"<td>" +
+		"<td id='name'>" +
 		orderLine.name +
 		"</td>" +
-		"<td>" +
+		"<td id='type'>" +
 		orderLine.type +
 		"</td>" +
-		"<td>" +
+		"<td id='meals'>" +
 		mealsString +
 		"</td>" +
-		"<td>" +
+		"<td id='additions'>" +
 		additionsString +
 		"</td>" +
-		"<td>" +
+		"<td id='sauces'>" +
 		saucesString +
 		"</td>" +
-		"<td>" +
+		"<td id='drinks'>" +
 		drinksString +
 		"</td>" +
-		"<td>" +
+		"<td id='notes'>" +
 		orderLine.notes +
 		"</td>" +
 		"<td>" +
 		'<button class="btn btn btn-outline-danger" id="removeLineFromOrder" onclick="removeLineFromOrder(this)" type="button">הסרה</button>' +
 		"</td>";
 
+	debugger;
 	// create\replace order line
 	if (oOrder[orderLine.name]) {
 		for (var i = 0; i < orderTableBody.children.length; i++) {
-			if (orderTableBody.children[i].children[0].innerHTML == orderLine.name) {
+			if (orderTableBody.children[i].querySelector("#name") == orderLine.name) {
 				orderTableBody.replaceChild(tr, orderTableBody.children[i]);
 				break;
 			}
