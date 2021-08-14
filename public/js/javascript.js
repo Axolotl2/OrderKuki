@@ -36,26 +36,42 @@ function prepareOrderMessage() {
 	const sUrlNewLine = "%0A";
 	// var sText = '���, ��� ���� ������ �����:';
 	var sText = "מה קורה אבאלה אני רוצה להזמין:";
-	const iName = 0,
-		iMeal = 2,
-		iAdditions = 3;
-	var oOrderRows = document.getElementById("orderLines").rows;
+	var index = 1;
+	//var oOrderRows = document.getElementById("orderLines").rows;
+	debugger;
 
-	for (var i = 1; i < oOrderRows.length; i++) {
-		var sName = oOrderRows[i].cells[0].innerText;
-		var sType = oOrderRows[i].cells[1].innerText;
-		var sMeal = oOrderRows[i].cells[2].innerText;
-		var sAdditions = oOrderRows[i].cells[3].innerText;
-		var sSauces = oOrderRows[i].cells[4].innerText;
-		var sDrinks = oOrderRows[i].cells[5].innerText;
-		var sNotes = oOrderRows[i].cells[6].innerText;
+	for (orderKey in oOrder) {
+		var orderLine = oOrder[orderKey];
+		var sName = orderLine.name;
+		var sType = orderLine.type;
+		var sMeal = getArrayDescriptionAsString(orderLine.meals);
+		var sAdditions = getArrayDescriptionAsString(orderLine.additions);
+		var sSauces = getArrayDescriptionAsString(orderLine.sauces);
+		var sDrinks = getArrayDescriptionAsString(orderLine.drinks);
+		var sNotes = orderLine.notes;
 
 		if (sAdditions) sAdditions = `, ${sAdditions}`;
 		if (sSauces) sSauces = `, ${sSauces}`;
 		if (sDrinks) sDrinks = `, ${sDrinks}`;
 		if (sNotes) sNotes = `, ${sNotes}`;
-		sText += `${sUrlNewLine} ${i}. *${sType}* ${sMeal}${sAdditions}${sSauces}${sDrinks}${sNotes} (${sName})`;
+		sText += `${sUrlNewLine} ${index++}. *${sType}* ${sMeal}${sAdditions}${sSauces}${sDrinks}${sNotes} (${sName})`;
 	}
+
+	//for (var i = 1; i < oOrderRows.length; i++) {
+	//	var sName = oOrderRows[i].cells[0].innerText;
+	//	var sType = oOrderRows[i].cells[1].innerText;
+	//	var sMeal = oOrderRows[i].cells[2].innerText;
+	//	var sAdditions = oOrderRows[i].cells[3].innerText;
+	//	var sSauces = oOrderRows[i].cells[4].innerText;
+	//	var sDrinks = oOrderRows[i].cells[5].innerText;
+	//	var sNotes = oOrderRows[i].cells[6].innerText;
+	//
+	//	if (sAdditions) sAdditions = `, ${sAdditions}`;
+	//	if (sSauces) sSauces = `, ${sSauces}`;
+	//	if (sDrinks) sDrinks = `, ${sDrinks}`;
+	//	if (sNotes) sNotes = `, ${sNotes}`;
+	//	sText += `${sUrlNewLine} ${i}. *${sType}* ${sMeal}${sAdditions}${sSauces}${sDrinks}${sNotes} (${sName})`;
+	//}
 
 	return sText;
 }
@@ -530,6 +546,16 @@ function getOrdersForName(ordersFromDB, name, uniqueFlag) {
 
 	return ordersOfName;
 }
+function convertDateForOutput(date) {
+	var sDate = new Date(date);
+	var dd = String(sDate.getDate()).padStart(2, '0');
+	var mm = String(sDate.getMonth() + 1).padStart(2, '0'); //January is 0!
+	var yyyy = sDate.getFullYear();
+
+	sDate = `${dd}/${mm}/${yyyy}`
+
+	return sDate;
+}
 function prepareOlderOrdersTable(name, orders) {
 	var olderOrdersTable = document.getElementById("olderOrders");
 	var olderOrdersTableTitle = olderOrdersTable.previousElementSibling;
@@ -555,7 +581,8 @@ function prepareOlderOrdersTable(name, orders) {
 			object.id +
 			"</td>" +
 			"<td>" +
-			new Date(object.date).toLocaleDateString() +
+			//new Date(object.date).toLocaleDateString() +
+			convertDateForOutput(object.date) +
 			"</td>" +
 			"<td>" +
 			object.type +
