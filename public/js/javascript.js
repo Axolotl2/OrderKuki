@@ -125,6 +125,7 @@ function order(event) {
 function addLineToOrder(orderLine) {
     var orderTableBody = document.getElementById("orderLinesBody");
     var tr = document.createElement("tr");
+    tr.id = "order";
     //var typeDesc = oDB["types"][orderLine.type]; //data.types[object.type].description;
     //var mealDesc = oDB["meals"][orderLine.meal]; //data.meals[object.meal].description;
     var mealsString = getArrayDescriptionAsString(orderLine.meals);
@@ -191,13 +192,13 @@ function closeOlderOrdersModal(event) {
     modal.style.display = "none";
 }
 function removeLineFromOrder(event) {
+    debugger;
     var orderTable = document.getElementById("orderLines");
-    var row = event.parentElement.parentElement;
-    var row = $(event).closest("tr").closest("#")
-    var rowID = row.cells[0].outerText;
+    var order = $(event).closest("#order")[0];
+    var orderID = order.querySelector("#name").outerText;
 
-    row.remove();
-    delete oOrder[rowID];
+    order.remove();
+    delete oOrder[orderID];
 }
 function confirmOrderOverwrite(orderLine) {
     debugger;
@@ -626,7 +627,7 @@ function preparePeopleRecentOrdersTable(orders) {
             object.id +
             "</td>" +
             "<td class='bg-light'>" +
-            `<button class="btn btn btn-light" id="removeLineFromOrder" onclick="showOlderOrdersForName(this)" type="button">${object.name}</button>` +
+            `<button class="btn btn btn-light" id="showOlderOrdersForName" onclick="showOlderOrdersForName(this)" type="button">${object.name}</button>` +
             "</td>" +
             "<td class='bg-light'>" +
             object.type +
@@ -794,7 +795,6 @@ async function initialize() {
     initializeDB();
     await loadJSONFromDB();
     fillPeopleRecentOrdersTable();
-    createCollapsibleMenu();
     //fillTableFromDB("types");
     //fillTableFromDB("meals");
     //fillTableFromDB("additions");
