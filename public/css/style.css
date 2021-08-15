@@ -345,7 +345,7 @@ input[type="submit"]:hover,
 	background-size: cover;
 	background-position: center;
 	float: right;
-	background-image: url("https://raw.githubusercontent.com/ggomaeng/react-native-svg-chicken/master/inspiration.gif");
+	background-image: url("/public/src/Logo.gif");
 }
 
 .gradient {
