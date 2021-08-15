@@ -77,6 +77,8 @@ function saveOrderToDB() {
     var updates = {};
     //var oOrderRows = document.getElementById("orderLines").rows;
 
+    if (!isProd()) return;
+
     for (orderKey in oOrder) {
         var orderLine = oOrder[orderKey];
         orderLine["date"] = new Date();
@@ -112,11 +114,14 @@ function saveOrderToDB() {
 
     return databaseRef.update(updates);
 }
+function isProd() {
+    return location.hostname === "schnitzelkuki.web.app";
+}
 function order(event) {
     const sKukiPhone = "+972525585252",
         sTestPhone = "+972526241919";
 
-    var sPhone = (location.hostname === "schnitzelkuki.web.app") ? sKukiPhone : sTestPhone;
+    var sPhone = isProd() ? sKukiPhone : sTestPhone;
     sText = prepareOrderMessage();
     saveOrderToDB();
     var sUrl = `https://api.whatsapp.com/send?phone=${sTestPhone}&text=${sText}`;
