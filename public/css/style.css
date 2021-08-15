@@ -331,7 +331,7 @@ input[type="submit"]:hover,
 		url('/public/src/HeaderBackground.jpg'); */
 
 			background: linear-gradient(rgba(99, 99, 99, 0.5), rgba(20, 20, 20, 0.5)),
-		url('schnitzelkuki.web.app/src/HeaderBackground.jpg');
+		url('/src/HeaderBackground.jpg');
 	background-size: cover;
 }
 
@@ -347,7 +347,7 @@ input[type="submit"]:hover,
 	background-size: cover;
 	background-position: center;
 	float: right;
-	background-image: url("/public/src/Logo.gif");
+	background-image: url("/src/Logo.gif");
 }
 
 .gradient {
