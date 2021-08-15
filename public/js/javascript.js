@@ -450,7 +450,8 @@ function addOlderOrderLineToOrder(event) {
 	if (addRecentOrderLineToOrder(event)) closeOlderOrdersModal(event);
 }
 function addRecentOrderLineToOrder(event) {
-	var rowID = event.parentElement.parentElement.cells[0].outerText;
+	//var rowID = event.parentElement.parentElement.cells[0].outerText;
+	var rowID = $(event).closest("#row").find("#id")[0].outerText;
 	var row = oDB["orders"][rowID];
 
 	var orderLine = {
@@ -754,29 +755,30 @@ function preparePeopleRecentOrdersTable(orders) {
 		var saucesString = getArrayDescriptionAsString(object.sauces);
 		var drinksString = getArrayDescriptionAsString(object.drinks);
 
+		tr.id = "row";
 		tr.innerHTML =
-			'<td style="display:none;">' +
+			'<td id="id" style="display:none;">' +
 			object.id +
 			"</td>" +
-			"<td class='bg-light'>" +
+			`<td id="name" class='bg-light'>` +
 			`<button class="btn btn btn-light" id="showOlderOrdersForName" onclick="showOlderOrdersForName(this)" type="button">${object.name}</button>` +
 			"</td>" +
-			"<td class='bg-light'>" +
+			`<td id="type" class='bg-light'>` +
 			object.type +
 			"</td>" +
-			"<td class='bg-light'>" +
+			`<td id="meals" class='bg-light'>` +
 			mealsString +
 			"</td>" +
-			"<td class='bg-light'>" +
+			`<td id="additions" class='bg-light'>` +
 			additionsString +
 			"</td>" +
-			"<td class='bg-light'>" +
+			`<td id="sauces" class='bg-light'>` +
 			saucesString +
 			"</td>" +
-			"<td class='bg-light'>" +
+			`<td id="drinks" class='bg-light'>` +
 			drinksString +
 			"</td>" +
-			"<td class='bg-light'>" +
+			`<td id="notes" class='bg-light'>` +
 			object.notes +
 			"</td>" +
 			"<td class='bg-light'>" +
