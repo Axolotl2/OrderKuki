@@ -855,8 +855,8 @@ function createCollapsibleMenu() {
 	debugger;
 	var collapsibles = document.getElementsByClassName("collapsible");
 
-	for (index in collapsibles) {
-		var collapsible = collapsibles[index];
+	for (var i = 0; i < collapsibles.length; i++) {
+		var collapsible = collapsibles[i];
 		var clickedCollapsible = $(this).closest(".collapsible")[0];
 
 		collapsible.querySelector("#collapsible-title").addEventListener("click", function () {
@@ -877,6 +877,7 @@ function createCollapsibleMenu() {
 			content = clickedCollapsible.querySelector("#content");
 			button.style.display = (button.style.display === "block") ? "none" : "block";
 			content.style.display = (content.style.display === "block") ? "none" : "block";
+			this.scrollIntoView();
 		});
 	}
 

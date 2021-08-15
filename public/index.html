@@ -83,16 +83,18 @@
 			<div class="menu-container" id="menu">
 				<h1>תפריט <i class="fas fa-utensils"></i></h1>
 
-				<div id="type1" class="collapsible outer">
+				<div id="type1" class="collapsible">
 					<!-- <h2 class="collapsible">קוקי בחמגשית</h2> -->
-					<h2 id="collapsible-title" class="cbtn cbtn-dark cbtn-big">קוקי בחמגשית</h2>
-					<button id="addMenuItemToOrder" class="contentButton btn btn btn-light"
-							onclick="addMenuItemToOrder(this)" type="button">
-						הוספה
-					</button>
+					<div class="outer">
+						<h2 id="collapsible-title" class="cbtn cbtn-dark cbtn-big">קוקי בחמגשית</h2>
+						<button id="addMenuItemToOrder" class="contentButton btn btn btn-light"
+								onclick="addMenuItemToOrder(this)" type="button">
+							הוספה
+						</button>
+					</div>
 					<div id="content" class="content">
 						<div id="types" style="display:none;">
-							<input type="checkbox" id="type1" name="type1" class="checked"/>
+							<input type="checkbox" id="type1" name="type1" class="checked" />
 							<label for="type1">חמגשית</label>
 						</div>
 						<h3>סוג שניצל (עד 2)</h3>
@@ -134,23 +136,26 @@
 							<input type="checkbox" id="drink1" name="drink1" />
 							<label for="drink1">זירו</label>
 						</div>
-						<div id="name">
-							<label for="name">שם:</label>
-							<input type="text" id="name" name="name" />
-						</div>
-						<br>
-						<div id="notes">
-							<label for="notes">הערות:</label>
-							<input type="text" id="notes" name="notes" />
+						<div class="outer">
+							<div id="name" class="outer">
+								<label for="name">שם:</label>
+								<input type="text" id="name" name="name" />
+							</div>
+							<div id="notes" class="outer">
+								<label for="notes">הערות:</label>
+								<input type="text" id="notes" name="notes" />
+							</div>
 						</div>
 					</div>
 				</div>
-				<div id="type2" class="collapsible outer">
-					<h2 id="collapsible-title" class="cbtn cbtn-dark cbtn-big">קוקי בסנדוויץ'</h2>
-					<button id="addMenuItemToOrder" class="contentButton btn btn btn-light"
-							onclick="addMenuItemToOrder(this)" type="button">
-						הוספה
-					</button>
+				<div id="type2" class="collapsible">
+					<div class="outer">
+						<h2 id="collapsible-title" class="cbtn cbtn-dark cbtn-big">קוקי בסנדוויץ'</h2>
+						<button id="addMenuItemToOrder" class="contentButton btn btn btn-light"
+								onclick="addMenuItemToOrder(this)" type="button">
+							הוספה
+						</button>
+					</div>
 					<div id="content" class="content">
 						<h3>סוג לחם (1 בלבד)</h3>
 						<div id="types">
@@ -212,26 +217,29 @@
 							<input type="checkbox" id="drink1" name="drink1" />
 							<label for="drink1">זירו</label>
 						</div>
-						<div id="name">
-							<label for="name">שם:</label>
-							<input type="text" id="name" name="name" />
-						</div>
-						<br>
-						<div id="notes">
-							<label for="notes">הערות:</label>
-							<input type="text" id="notes" name="notes" />
+						<div class="outer">
+							<div id="name" class="outer">
+								<label for="name">שם:</label>
+								<input type="text" id="name" name="name" />
+							</div>
+							<div id="notes" class="outer">
+								<label for="notes">הערות:</label>
+								<input type="text" id="notes" name="notes" />
+							</div>
 						</div>
 					</div>
 				</div>
-				<div id="type3" class="collapsible outer">
-					<h2 id="collapsible-title" class="cbtn cbtn-dark cbtn-big">צ'יפס</h2>
-					<button id="addMenuItemToOrder" class="contentButton btn btn btn-light"
-							onclick="addMenuItemToOrder(this)" type="button">
-						הוספה
-					</button>
+				<div id="type3" class="collapsible">
+					<div class="outer">
+						<h2 id="collapsible-title" class="cbtn cbtn-dark cbtn-big">צ'יפס</h2>
+						<button id="addMenuItemToOrder" class="contentButton btn btn btn-light"
+								onclick="addMenuItemToOrder(this)" type="button">
+							הוספה
+						</button>
+					</div>
 					<div id="content" class="content">
 						<div id="types" style="display:none;">
-							<input type="checkbox" id="type1" name="type1" class="checked"/>
+							<input type="checkbox" id="type1" name="type1" class="checked" />
 							<label for="type1">צ'יפס</label>
 						</div>
 						<h3>גודל (1 בלבד)</h3>
@@ -246,14 +254,15 @@
 							<input type="checkbox" id="drink1" name="drink1" />
 							<label for="drink1">זירו</label>
 						</div>
-						<div id="name">
-							<label for="name">שם:</label>
-							<input type="text" id="name" name="name" />
-						</div>
-						<br>
-						<div id="notes">
-							<label for="notes">הערות:</label>
-							<input type="text" id="notes" name="notes" />
+						<div class="outer">
+							<div id="name" class="outer">
+								<label for="name">שם:</label>
+								<input type="text" id="name" name="name" />
+							</div>
+							<div id="notes" class="outer">
+								<label for="notes">הערות:</label>
+								<input type="text" id="notes" name="notes" />
+							</div>
 						</div>
 					</div>
 				</div>
