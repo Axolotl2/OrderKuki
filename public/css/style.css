@@ -327,8 +327,11 @@ input[type="submit"]:hover,
 	align-items: center;
 	height: 10%;
 	/* background: linear-gradient(rgba(99, 99, 99, 0.5), rgba(20, 20, 20, 0.5)); */
-	background: linear-gradient(rgba(99, 99, 99, 0.5), rgba(20, 20, 20, 0.5)),
-		url('/public/src/HeaderBackground.jpg');
+	/* background: linear-gradient(rgba(99, 99, 99, 0.5), rgba(20, 20, 20, 0.5)),
+		url('/public/src/HeaderBackground.jpg'); */
+
+			background: linear-gradient(rgba(99, 99, 99, 0.5), rgba(20, 20, 20, 0.5)),
+		url('/src/HeaderBackground.jpg');
 	background-size: cover;
 }
 
@@ -344,7 +347,7 @@ input[type="submit"]:hover,
 	background-size: cover;
 	background-position: center;
 	float: right;
-	background-image: url("/public/src/Logo.gif");
+	background-image: url("/src/Logo.gif");
 }
 
 .gradient {
