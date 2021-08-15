@@ -717,26 +717,32 @@ function fillPeopleRecentOrdersTable() {
 //    drinksTable.appendChild(tr);
 //  });
 //}
-function changeCollapsibleState(event) {
+function createCollapsibleMenu() {
+    debugger;
     var collapsibles = document.getElementsByClassName("collapsible");
 
     for (index in collapsibles) {
         var collapsible = collapsibles[index];
-        var collapsibles = document.getElementsByClassName("collapsible");
-        for (var i = 0; i < collapsibles.length; i++) {
-            var collapsible = collapsibles[i];
-            if (collapsible === this.closest(".collapsible")) continue;
-            var button = collapsible.querySelector("#addMenuItemToOrder");
-            var content = collapsible.querySelector("#content");
-            button.style.display = "none";
-            content.style.display = "none";
-        }
-        this.classList.toggle("active");
-        button = this.querySelector("#addMenuItemToOrder");
-        content = this.querySelector("#content");
-        button.style.display = (button.style.display === "block") ? "none" : "block";
-        content.style.display = (content.style.display === "block") ? "none" : "block";
+        var clickedCollapsible = $(this).closest(".collapsible")[0];
 
+        collapsible.querySelector("#collapsible-title").addEventListener("click", function () {
+            var collapsibles = document.getElementsByClassName("collapsible");
+            var clickedCollapsible = $(this).closest(".collapsible")[0];
+
+            for (var i = 0; i < collapsibles.length; i++) {
+                var collapsible = collapsibles[i];
+                if (collapsible === clickedCollapsible) continue;
+                var button = collapsible.querySelector("#addMenuItemToOrder");
+                var content = collapsible.querySelector("#content");
+                button.style.display = "none";
+                content.style.display = "none";
+            }
+            this.classList.toggle("active");
+            button = clickedCollapsible.querySelector("#addMenuItemToOrder");
+            content = clickedCollapsible.querySelector("#content");
+            button.style.display = (button.style.display === "block") ? "none" : "block";
+            content.style.display = (content.style.display === "block") ? "none" : "block";
+        });
     }
 
     //	collapsible.querySelector("#collapsible-title").addEventListener("click", function () {
@@ -795,6 +801,7 @@ async function initialize() {
     initializeDB();
     await loadJSONFromDB();
     fillPeopleRecentOrdersTable();
+    createCollapsibleMenu();
     //fillTableFromDB("types");
     //fillTableFromDB("meals");
     //fillTableFromDB("additions");
