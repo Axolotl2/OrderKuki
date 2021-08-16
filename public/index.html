@@ -22,6 +22,8 @@
 	<link rel="stylesheet" href="css/style.css">
 	<script type="text/javascript" src="js/javascript.js" charset="utf-8" class="json"></script>
 	<main>
+<!-- Modal -->
+
 		<div class="upper-container">
 
 			<div class="header-container">
@@ -29,7 +31,7 @@
 				<h1 class="header-title">שניצל קוקי</h1>
 				<br>
 			</div>
-			<div class="order-summary-container table-responsive">
+			<div class="order-summary-container table-responsive shadow-sm p-3 mb-5 rounded">
 				<h1 class="order-summary-title">סיכום הזמנה <i class="fas fa-shopping-cart"></i> </h1>
 				<button class="btn btn-primary btn-lg btn-order-kuki" disabled id="order" onclick="order(this)"
 						type="button">
@@ -270,11 +272,29 @@
 		</div>
 		<hr>
 
+		<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">הודעת אישור</h5>
+						<!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+					</div>
+					<div class="modal-body">
+						דריסת נתונים
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ביטול</button>
+						<button type="button" class="btn btn-primary">אישור</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
 				integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
 		</script>
 		<!-- The Modal -->
-		<div id="olderOrdersModal" class="modal">
+		<div id="olderOrdersModal" class="old-orders-modal">
 			<!-- Modal content -->
 			<div class="modal-content">
 				<span class="close" onclick="closeOlderOrdersModal(this)">&times;</span>

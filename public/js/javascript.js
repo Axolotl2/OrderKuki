@@ -209,22 +209,22 @@ function removeLineFromOrder(event) {
 function confirmOrderOverwrite(orderLine) {
 	var lineAlreadyExists = oOrder[orderLine.name] != null;
 
-	return (
-		(lineAlreadyExists &&
-			confirm(`ל${orderLine.name} כבר קיימת הזמנה, לדרוס אותה?`)) ||
-		!lineAlreadyExists
-	);
+  return (
+    (lineAlreadyExists &&
+      confirm(`ל${orderLine.name} כבר קיימת הזמנה, לדרוס אותה?`)) ||
+    !lineAlreadyExists
+  );
 }
 function validateMenuItemSelection(event) {
-	var collapsible = $(event).closest(".collapsible")[0];
-	var content = collapsible.querySelector(".content");
-	var types = content.querySelector("#types");
-	var meals = content.querySelector("#meals");
-	var additions = content.querySelector("#additions");
-	//var sauces = content.querySelector("#sauces");
-	//var drinks = content.querySelector("#drinks");
-	var name = content.querySelector("#name");
-	//var notes = content.querySelector("#notes");
+  var collapsible = $(event).closest(".collapsible")[0];
+  var content = collapsible.querySelector(".content");
+  var types = content.querySelector("#types");
+  var meals = content.querySelector("#meals");
+  var additions = content.querySelector("#additions");
+  //var sauces = content.querySelector("#sauces");
+  //var drinks = content.querySelector("#drinks");
+  var name = content.querySelector("#name");
+  //var notes = content.querySelector("#notes");
 
 	switch (collapsible.id) {
 		case "type1":
@@ -242,287 +242,287 @@ function validateMenuItemSelection(event) {
 			break;
 	}
 
-	switch (collapsible.id) {
-		case "type1":
-			var checkBoxes = $(additions)
-				.find(`input[type="checkbox"]`)
-				.filter((index, checkbox) => checkbox.checked);
-			if (checkBoxes.length > 2) {
-				alert(`יש לבחור עד 2 תוספות`);
-				return false;
-			}
-			break;
-		case "type2":
-			var checkBoxes = $(types)
-				.find(`input[type="checkbox"]`)
-				.filter((index, checkbox) => checkbox.checked);
-			if (checkBoxes.length != 1) {
-				alert(`יש לבחור סוג לחם אחד`);
-				return false;
-			}
-			break;
-		case "type3":
-			checkBoxes = $(meals)
-				.find(`input[type="checkbox"]`)
-				.filter((index, checkbox) => checkbox.checked);
-			if (checkBoxes.length != 1) {
-				alert(`יש לבחור גודל אחד`);
-				return false;
-			}
-			break;
-	}
+  switch (collapsible.id) {
+    case "type1":
+      var checkBoxes = $(additions)
+        .find(`input[type="checkbox"]`)
+        .filter((index, checkbox) => checkbox.checked);
+      if (checkBoxes.length > 2) {
+        alert(`יש לבחור עד 2 תוספות`);
+        return false;
+      }
+      break;
+    case "type2":
+      var checkBoxes = $(types)
+        .find(`input[type="checkbox"]`)
+        .filter((index, checkbox) => checkbox.checked);
+      if (checkBoxes.length != 1) {
+        alert(`יש לבחור סוג לחם אחד`);
+        return false;
+      }
+      break;
+    case "type3":
+      checkBoxes = $(meals)
+        .find(`input[type="checkbox"]`)
+        .filter((index, checkbox) => checkbox.checked);
+      if (checkBoxes.length != 1) {
+        alert(`יש לבחור גודל אחד`);
+        return false;
+      }
+      break;
+  }
 
-	nameInput = $(name).find(`input[type="text"]`)[0];
-	if (nameInput.value === "") {
-		alert(`יש להזין שם`);
-		return false;
-	}
+  nameInput = $(name).find(`input[type="text"]`)[0];
+  if (nameInput.value === "") {
+    alert(`יש להזין שם`);
+    return false;
+  }
 
-	return true;
+  return true;
 }
 function clearCollapsiblesInputs() {
-	var collapsibles = document.getElementsByClassName("collapsible");
-	var inputsToClear = $(collapsibles).find(`input`);
+  var collapsibles = document.getElementsByClassName("collapsible");
+  var inputsToClear = $(collapsibles).find(`input`);
 
-	for (var i = 0; i < inputsToClear.length; i++) {
-		var input = inputsToClear[i];
+  for (var i = 0; i < inputsToClear.length; i++) {
+    var input = inputsToClear[i];
 
-		if (input.type === "checkbox") {
-			input.checked = false;
-		} else {
-			input.value = "";
-		}
-	}
+    if (input.type === "checkbox") {
+      input.checked = false;
+    } else {
+      input.value = "";
+    }
+  }
 
-	// set default checked checkboxes to checked
-	$(".checked").prop("checked", true);
+  // set default checked checkboxes to checked
+  $(".checked").prop("checked", true);
 }
 function addMenuItemToOrder(event) {
-	var typeFromMenu,
-		mealsFromMenu = [],
-		additionsFromMenu = [],
-		saucesFromMenu = [],
-		drinksFromMenu = [];
-	var nameFromInput, notesFromInput;
-	//var inputsToClear = [];
-	var collapsible = $(event).closest(".collapsible")[0];
-	var content = collapsible.querySelector(".content");
+  var typeFromMenu,
+    mealsFromMenu = [],
+    additionsFromMenu = [],
+    saucesFromMenu = [],
+    drinksFromMenu = [];
+  var nameFromInput, notesFromInput;
+  //var inputsToClear = [];
+  var collapsible = $(event).closest(".collapsible")[0];
+  var content = collapsible.querySelector(".content");
 
-	//switch (collapsible.id) {
-	//    case "type1":
-	//        typeFromMenu = 'חמגשית';
-	//        break;
-	//    case "type2":
-	//        // get type from checkbox
-	//        break;
-	//    case "type3":
-	//        typeFromMenu = `צ'יפס`;
-	//        break;
-	//    default:
-	//        return;
-	//}
+  //switch (collapsible.id) {
+  //    case "type1":
+  //        typeFromMenu = 'חמגשית';
+  //        break;
+  //    case "type2":
+  //        // get type from checkbox
+  //        break;
+  //    case "type3":
+  //        typeFromMenu = `צ'יפס`;
+  //        break;
+  //    default:
+  //        return;
+  //}
 
-	if (!validateMenuItemSelection(event)) return false;
+  if (!validateMenuItemSelection(event)) return false;
 
-	var types = content.querySelector("#types");
-	var meals = content.querySelector("#meals");
-	var additions = content.querySelector("#additions");
-	var sauces = content.querySelector("#sauces");
-	var drinks = content.querySelector("#drinks");
-	var name = content.querySelector("#name");
-	var notes = content.querySelector("#notes");
+  var types = content.querySelector("#types");
+  var meals = content.querySelector("#meals");
+  var additions = content.querySelector("#additions");
+  var sauces = content.querySelector("#sauces");
+  var drinks = content.querySelector("#drinks");
+  var name = content.querySelector("#name");
+  var notes = content.querySelector("#notes");
 
-	var checkBoxes = $(types).find(`input[type="checkbox"]`);
-	for (var i = 0; i < checkBoxes.length; i++) {
-		var checkBox = checkBoxes[i];
-		//inputsToClear.push(checkBox);
-		if (checkBox.checked)
-			typeFromMenu = $(types).find(`label[for='${checkBox.id}']`)[0].innerText;
-	}
+  var checkBoxes = $(types).find(`input[type="checkbox"]`);
+  for (var i = 0; i < checkBoxes.length; i++) {
+    var checkBox = checkBoxes[i];
+    //inputsToClear.push(checkBox);
+    if (checkBox.checked)
+      typeFromMenu = $(types).find(`label[for='${checkBox.id}']`)[0].innerText;
+  }
 
-	checkBoxes = $(meals).find(`input[type="checkbox"]`);
-	for (var i = 0; i < checkBoxes.length; i++) {
-		var checkBox = checkBoxes[i];
-		//inputsToClear.push(checkBox);
-		if (checkBox.checked)
-			mealsFromMenu.push(
-				$(meals).find(`label[for='${checkBox.id}']`)[0].innerText
-			);
-	}
+  checkBoxes = $(meals).find(`input[type="checkbox"]`);
+  for (var i = 0; i < checkBoxes.length; i++) {
+    var checkBox = checkBoxes[i];
+    //inputsToClear.push(checkBox);
+    if (checkBox.checked)
+      mealsFromMenu.push(
+        $(meals).find(`label[for='${checkBox.id}']`)[0].innerText
+      );
+  }
 
-	checkBoxes = $(additions).find(`input[type="checkbox"]`);
-	for (var i = 0; i < checkBoxes.length; i++) {
-		var checkBox = checkBoxes[i];
-		//inputsToClear.push(checkBox);
-		if (checkBox.checked)
-			additionsFromMenu.push(
-				$(additions).find(`label[for='${checkBox.id}']`)[0].innerText
-			);
-	}
+  checkBoxes = $(additions).find(`input[type="checkbox"]`);
+  for (var i = 0; i < checkBoxes.length; i++) {
+    var checkBox = checkBoxes[i];
+    //inputsToClear.push(checkBox);
+    if (checkBox.checked)
+      additionsFromMenu.push(
+        $(additions).find(`label[for='${checkBox.id}']`)[0].innerText
+      );
+  }
 
-	checkBoxes = $(sauces).find(`input[type="checkbox"]`);
-	for (var i = 0; i < checkBoxes.length; i++) {
-		var checkBox = checkBoxes[i];
-		//inputsToClear.push(checkBox);
-		if (checkBox.checked)
-			saucesFromMenu.push(
-				$(sauces).find(`label[for='${checkBox.id}']`)[0].innerText
-			);
-	}
+  checkBoxes = $(sauces).find(`input[type="checkbox"]`);
+  for (var i = 0; i < checkBoxes.length; i++) {
+    var checkBox = checkBoxes[i];
+    //inputsToClear.push(checkBox);
+    if (checkBox.checked)
+      saucesFromMenu.push(
+        $(sauces).find(`label[for='${checkBox.id}']`)[0].innerText
+      );
+  }
 
-	checkBoxes = $(drinks).find(`input[type="checkbox"]`);
-	for (var i = 0; i < checkBoxes.length; i++) {
-		var checkBox = checkBoxes[i];
-		//inputsToClear.push(checkBox);
-		if (checkBox.checked)
-			drinksFromMenu.push(
-				$(drinks).find(`label[for='${checkBox.id}']`)[0].innerText
-			);
-	}
+  checkBoxes = $(drinks).find(`input[type="checkbox"]`);
+  for (var i = 0; i < checkBoxes.length; i++) {
+    var checkBox = checkBoxes[i];
+    //inputsToClear.push(checkBox);
+    if (checkBox.checked)
+      drinksFromMenu.push(
+        $(drinks).find(`label[for='${checkBox.id}']`)[0].innerText
+      );
+  }
 
-	var input = $(name).find(`input[type="text"]`)[0];
-	//inputsToClear.push(input);
-	nameFromInput = input.value;
+  var input = $(name).find(`input[type="text"]`)[0];
+  //inputsToClear.push(input);
+  nameFromInput = input.value;
 
-	input = $(notes).find(`input[type="text"]`)[0];
-	//inputsToClear.push(input);
-	notesFromInput = input.value;
+  input = $(notes).find(`input[type="text"]`)[0];
+  //inputsToClear.push(input);
+  notesFromInput = input.value;
 
-	//for (menuIndex in content.children) {
-	//    var menu = content.children[menuIndex];
-	//
-	//    switch (element.id) {
-	//        case "types":
-	//            for (typeIndex in element.children) {
-	//                var type = element.children[typeIndex];
-	//                if (type.type != "checkbox") continue;
-	//                inputsToClear.push(type);
-	//                //if (type.tagName != "LABEL") continue;
-	//                if (type.checked) typeFromMenu = $(type).closest(`label[for='${type.for}']`)[0].innerText;
-	//                //if (type.previousElementSibling.checked) typeFromMenu = type.innerText;
-	//            }
-	//            break;
-	//        case "meals":
-	//            for (mealIndex in element.children) {
-	//                var meal = element.children[mealIndex];
-	//                inputsToClear.push(meal);
-	//                if (meal.tagName != "LABEL") continue;
-	//                if (meal.previousElementSibling.checked) mealsFromMenu.push(meal.innerText);
-	//            }
-	//            break;
-	//        case "additions":
-	//            for (additionIndex in element.children) {
-	//                var addition = element.children[additionIndex];
-	//                inputsToClear.push(addition);
-	//                if (addition.tagName != "LABEL") continue;
-	//                if (addition.previousElementSibling.checked) additionsFromMenu.push(addition.innerText);
-	//            }
-	//            break;
-	//        case "sauces":
-	//            for (sauceIndex in element.children) {
-	//                var sauce = element.children[sauceIndex];
-	//                inputsToClear.push(drink);
-	//                if (sauce.tagName != "LABEL") continue;
-	//                if (sauce.previousElementSibling.checked) saucesFromMenu.push(sauce.innerText);
-	//            }
-	//            break;
-	//        case "drinks":
-	//            for (drinkIndex in element.children) {
-	//                var drink = element.children[drinkIndex];
-	//                inputsToClear.push(drink);
-	//                if (drink.tagName != "LABEL") continue;
-	//                if (drink.previousElementSibling.checked) drinksFromMenu.push(drink.innerText);
-	//            }
-	//            break;
-	//        case "name":
-	//            var name = element.children[1];
-	//            inputsToClear.push(name);
-	//            nameFromInput = name.value;
-	//            break;
-	//        case "notes":
-	//            var notes = element.children[1];
-	//            inputsToClear.push(notes);
-	//            notesFromInput = notes.value;
-	//            break;
-	//        default:
-	//            break;
-	//    }
-	//}
+  //for (menuIndex in content.children) {
+  //    var menu = content.children[menuIndex];
+  //
+  //    switch (element.id) {
+  //        case "types":
+  //            for (typeIndex in element.children) {
+  //                var type = element.children[typeIndex];
+  //                if (type.type != "checkbox") continue;
+  //                inputsToClear.push(type);
+  //                //if (type.tagName != "LABEL") continue;
+  //                if (type.checked) typeFromMenu = $(type).closest(`label[for='${type.for}']`)[0].innerText;
+  //                //if (type.previousElementSibling.checked) typeFromMenu = type.innerText;
+  //            }
+  //            break;
+  //        case "meals":
+  //            for (mealIndex in element.children) {
+  //                var meal = element.children[mealIndex];
+  //                inputsToClear.push(meal);
+  //                if (meal.tagName != "LABEL") continue;
+  //                if (meal.previousElementSibling.checked) mealsFromMenu.push(meal.innerText);
+  //            }
+  //            break;
+  //        case "additions":
+  //            for (additionIndex in element.children) {
+  //                var addition = element.children[additionIndex];
+  //                inputsToClear.push(addition);
+  //                if (addition.tagName != "LABEL") continue;
+  //                if (addition.previousElementSibling.checked) additionsFromMenu.push(addition.innerText);
+  //            }
+  //            break;
+  //        case "sauces":
+  //            for (sauceIndex in element.children) {
+  //                var sauce = element.children[sauceIndex];
+  //                inputsToClear.push(drink);
+  //                if (sauce.tagName != "LABEL") continue;
+  //                if (sauce.previousElementSibling.checked) saucesFromMenu.push(sauce.innerText);
+  //            }
+  //            break;
+  //        case "drinks":
+  //            for (drinkIndex in element.children) {
+  //                var drink = element.children[drinkIndex];
+  //                inputsToClear.push(drink);
+  //                if (drink.tagName != "LABEL") continue;
+  //                if (drink.previousElementSibling.checked) drinksFromMenu.push(drink.innerText);
+  //            }
+  //            break;
+  //        case "name":
+  //            var name = element.children[1];
+  //            inputsToClear.push(name);
+  //            nameFromInput = name.value;
+  //            break;
+  //        case "notes":
+  //            var notes = element.children[1];
+  //            inputsToClear.push(notes);
+  //            notesFromInput = notes.value;
+  //            break;
+  //        default:
+  //            break;
+  //    }
+  //}
 
-	var orderLine = {
-		name: nameFromInput,
-		type: typeFromMenu,
-		meals: mealsFromMenu,
-		additions: additionsFromMenu,
-		sauces: saucesFromMenu,
-		drinks: drinksFromMenu,
-		notes: notesFromInput,
-	};
+  var orderLine = {
+    name: nameFromInput,
+    type: typeFromMenu,
+    meals: mealsFromMenu,
+    additions: additionsFromMenu,
+    sauces: saucesFromMenu,
+    drinks: drinksFromMenu,
+    notes: notesFromInput,
+  };
 
-	clearCollapsiblesInputs();
-	addLineToOrder(orderLine);
+  clearCollapsiblesInputs();
+  addLineToOrder(orderLine);
 
-	//for (inputIndex in inputsToClear) {
-	//    var input = inputsToClear[inputIndex];
-	//    if (input.tagName != "INPUT") continue;
-	//
-	//    if (input.type === "checkbox") {
-	//        input.checked = false;
-	//    } else {
-	//        input.value = "";
-	//    }
-	//}
+  //for (inputIndex in inputsToClear) {
+  //    var input = inputsToClear[inputIndex];
+  //    if (input.tagName != "INPUT") continue;
+  //
+  //    if (input.type === "checkbox") {
+  //        input.checked = false;
+  //    } else {
+  //        input.value = "";
+  //    }
+  //}
 }
 function addOlderOrderLineToOrder(event) {
-	if (addRecentOrderLineToOrder(event)) closeOlderOrdersModal(event);
+  if (addRecentOrderLineToOrder(event)) closeOlderOrdersModal(event);
 }
 function addRecentOrderLineToOrder(event) {
-	//var rowID = event.parentElement.parentElement.cells[0].outerText;
-	var rowID = $(event).closest("#row").find("#id")[0].outerText;
-	var row = oDB["orders"][rowID];
+  //var rowID = event.parentElement.parentElement.cells[0].outerText;
+  var rowID = $(event).closest("#row").find("#id")[0].outerText;
+  var row = oDB["orders"][rowID];
 
-	var orderLine = {
-		name: row.name,
-		type: row.type,
-		meals: row.meals != null ? row.meals : [],
-		additions: row.additions != null ? row.additions : [],
-		sauces: row.sauces != null ? row.sauces : [],
-		drinks: row.drinks != null ? row.drinks : [],
-		notes: row.notes,
-	};
+  var orderLine = {
+    name: row.name,
+    type: row.type,
+    meals: row.meals != null ? row.meals : [],
+    additions: row.additions != null ? row.additions : [],
+    sauces: row.sauces != null ? row.sauces : [],
+    drinks: row.drinks != null ? row.drinks : [],
+    notes: row.notes,
+  };
 
-	return addLineToOrder(orderLine);
+  return addLineToOrder(orderLine);
 }
 function getArrayDescriptionAsString(array) {
-	var resultString = "";
+  var resultString = "";
 
-	if (array == null) return resultString;
+  if (array == null) return resultString;
 
-	array.forEach(function (value) {
-		if (resultString) resultString += ", ";
-		resultString += value;
-	});
+  array.forEach(function (value) {
+    if (resultString) resultString += ", ";
+    resultString += value;
+  });
 
-	//firebase.database().ref().child(tableName).get().then((data) => {
-	//    if (data.exists()) {
-	//      var table = document.getElementById(tableName);
-	//      data.val().forEach(function (object, i) {
-	//          if (resultString) resultString += ", ";
-	//          resultString += data.val()[i].description;
-	//      });
-	//    } else {
-	//      console.log(`No ${tableName} available`);
-	//    }
-	//  }).catch((error) => {
-	//    console.error(error);
-	//  });
+  //firebase.database().ref().child(tableName).get().then((data) => {
+  //    if (data.exists()) {
+  //      var table = document.getElementById(tableName);
+  //      data.val().forEach(function (object, i) {
+  //          if (resultString) resultString += ", ";
+  //          resultString += data.val()[i].description;
+  //      });
+  //    } else {
+  //      console.log(`No ${tableName} available`);
+  //    }
+  //  }).catch((error) => {
+  //    console.error(error);
+  //  });
 
-	//keys.forEach(function (object, i) {
-	//  if (resultString) resultString += ", ";
-	//  resultString += json[i].description;
-	//});
+  //keys.forEach(function (object, i) {
+  //  if (resultString) resultString += ", ";
+  //  resultString += json[i].description;
+  //});
 
-	return resultString;
+  return resultString;
 }
 //function fillPeoplePreferencesTable() {
 //  var peoplePreferencesTable = document.getElementById("peoplePreferences");
@@ -591,28 +591,28 @@ function getArrayDescriptionAsString(array) {
 //  });
 //}
 function parseOrdersFromDBToArray(ordersFromDB) {
-	var orders = [];
+  var orders = [];
 
-	for (orderKey in ordersFromDB) {
-		var order = ordersFromDB[orderKey];
-		order["id"] = orderKey;
-		orders.push(order);
-	}
+  for (orderKey in ordersFromDB) {
+    var order = ordersFromDB[orderKey];
+    order["id"] = orderKey;
+    orders.push(order);
+  }
 
-	return orders;
+  return orders;
 }
 function sortOrdersByNameAndDate(orders) {
-	orders.sort((a, b) => {
-		if (a["name"] === b["name"] && a["date"] === b["date"]) {
-			return 0;
-		} else if (a["name"] === b["name"]) {
-			return a["date"] > b["date"] ? -1 : 1;
-		} else {
-			return a["name"] < b["name"] ? -1 : 1;
-		}
-	});
+  orders.sort((a, b) => {
+    if (a["name"] === b["name"] && a["date"] === b["date"]) {
+      return 0;
+    } else if (a["name"] === b["name"]) {
+      return a["date"] > b["date"] ? -1 : 1;
+    } else {
+      return a["name"] < b["name"] ? -1 : 1;
+    }
+  });
 
-	return orders;
+  return orders;
 }
 function isArraysEqual(array1, array2) {
 	return Array.isArray(array1) &&
@@ -621,8 +621,8 @@ function isArraysEqual(array1, array2) {
 		array1.every((val, index) => val === array2[index]);
 }
 function isObjectsEqualsByData(obj1, obj2) {
-	const obj1Length = Object.keys(obj1).length;
-	const obj2Length = Object.keys(obj2).length;
+  const obj1Length = Object.keys(obj1).length;
+  const obj2Length = Object.keys(obj2).length;
 
 	if (obj1Length === obj2Length) {
 		return Object.keys(obj1).every(
@@ -635,12 +635,12 @@ function isOrdersEqualsByData(order1, order2) {
 	var order1Data = JSON.parse(JSON.stringify(order1)),
 		order2Data = JSON.parse(JSON.stringify(order2));
 
-	delete order1Data.id;
-	delete order1Data.date;
-	delete order2Data.id;
-	delete order2Data.date;
+  delete order1Data.id;
+  delete order1Data.date;
+  delete order2Data.id;
+  delete order2Data.date;
 
-	return isObjectsEqualsByData(order1Data, order2Data);
+  return isObjectsEqualsByData(order1Data, order2Data);
 }
 //function isOrderMostRecentDuplicate(order1, order2) {
 //	var equals = isOrdersEqualsByData(order1, order2);
@@ -648,14 +648,14 @@ function isOrdersEqualsByData(order1, order2) {
 //	return (equals && order1.date > order2) || !equals;
 //}
 function groupOrdersByName(orders) {
-	orders = orders.reduce((order, val) => {
-		if (Object.keys(order).includes(val.name)) return order;
+  orders = orders.reduce((order, val) => {
+    if (Object.keys(order).includes(val.name)) return order;
 
-		order[val.name] = orders.filter((g) => g.name === val.name);
-		return order;
-	}, {});
+    order[val.name] = orders.filter((g) => g.name === val.name);
+    return order;
+  }, {});
 
-	return orders;
+  return orders;
 }
 //function groupOrdersByDataEquality(orders) {
 //	orders = orders.reduce((order, val) => {
@@ -688,36 +688,36 @@ function getUniqueOrders(orders) {
 	return uniqueOrders;
 }
 function getLastOrderPerName(ordersFromDB) {
-	var orders = [],
-		peopleLastOrders = [];
+  var orders = [],
+    peopleLastOrders = [];
 
-	orders = parseOrdersFromDBToArray(ordersFromDB);
-	orders = sortOrdersByNameAndDate(orders);
-	orders = groupOrdersByName(orders);
+  orders = parseOrdersFromDBToArray(ordersFromDB);
+  orders = sortOrdersByNameAndDate(orders);
+  orders = groupOrdersByName(orders);
 
-	for (name in orders) {
-		peopleLastOrders.push(orders[name][0]);
-	}
+  for (name in orders) {
+    peopleLastOrders.push(orders[name][0]);
+  }
 
-	return peopleLastOrders;
+  return peopleLastOrders;
 }
 function filterOrdersByName(orders, name) {
-	var filteredOrders = [];
+  var filteredOrders = [];
 
-	for (orderKey in orders) {
-		if (orders[orderKey]["name"] === name)
-			filteredOrders.push(orders[orderKey]);
-	}
+  for (orderKey in orders) {
+    if (orders[orderKey]["name"] === name)
+      filteredOrders.push(orders[orderKey]);
+  }
 
-	return filteredOrders;
+  return filteredOrders;
 }
 function getOrdersForName(ordersFromDB, name, uniqueFlag) {
 	var orders = [],
 		ordersOfName = [];
 
-	orders = parseOrdersFromDBToArray(ordersFromDB);
-	orders = filterOrdersByName(orders, name);
-	orders = sortOrdersByNameAndDate(orders);
+  orders = parseOrdersFromDBToArray(ordersFromDB);
+  orders = filterOrdersByName(orders, name);
+  orders = sortOrdersByNameAndDate(orders);
 
 	if (uniqueFlag) {
 		orders = getUniqueOrders(orders);
@@ -731,130 +731,130 @@ function getOrdersForName(ordersFromDB, name, uniqueFlag) {
 		ordersOfName = orders;
 	}
 
-	return ordersOfName;
+  return ordersOfName;
 }
 function convertDateForOutput(date) {
-	var sDate = new Date(date);
-	var dd = String(sDate.getDate()).padStart(2, "0");
-	var mm = String(sDate.getMonth() + 1).padStart(2, "0"); //January is 0!
-	var yyyy = sDate.getFullYear();
+  var sDate = new Date(date);
+  var dd = String(sDate.getDate()).padStart(2, "0");
+  var mm = String(sDate.getMonth() + 1).padStart(2, "0"); //January is 0!
+  var yyyy = sDate.getFullYear();
 
-	sDate = `${dd}/${mm}/${yyyy}`;
+  sDate = `${dd}/${mm}/${yyyy}`;
 
-	return sDate;
+  return sDate;
 }
 function prepareOlderOrdersTable(name, orders) {
-	var olderOrdersTable = document.getElementById("olderOrders");
-	var olderOrdersTableTitle = olderOrdersTable.previousElementSibling;
-	var olderOrders = olderOrdersTable.children[1];
+  var olderOrdersTable = document.getElementById("olderOrders");
+  var olderOrdersTableTitle = olderOrdersTable.previousElementSibling;
+  var olderOrders = olderOrdersTable.children[1];
 
-	olderOrdersTableTitle.innerHTML = `הזמנות קודמות - ${name}`;
+  olderOrdersTableTitle.innerHTML = `הזמנות קודמות - ${name}`;
 
-	for (var i = olderOrdersTable.rows.length - 1; i > 0; i--) {
-		olderOrdersTable.deleteRow(i);
-	}
+  for (var i = olderOrdersTable.rows.length - 1; i > 0; i--) {
+    olderOrdersTable.deleteRow(i);
+  }
 
-	orders.forEach(function (object) {
-		var tr = document.createElement("tr");
-		//var typeDesc = oDB["types"][object.type]; //data.types[object.type].description;
-		//var mealDesc = oDB["meals"][object.meal]; //data.meals[object.meal].description;
-		var mealsString = getArrayDescriptionAsString(object.meals);
-		var additionsString = getArrayDescriptionAsString(object.additions);
-		var saucesString = getArrayDescriptionAsString(object.sauces);
-		var drinksString = getArrayDescriptionAsString(object.drinks);
+  orders.forEach(function (object) {
+    var tr = document.createElement("tr");
+    //var typeDesc = oDB["types"][object.type]; //data.types[object.type].description;
+    //var mealDesc = oDB["meals"][object.meal]; //data.meals[object.meal].description;
+    var mealsString = getArrayDescriptionAsString(object.meals);
+    var additionsString = getArrayDescriptionAsString(object.additions);
+    var saucesString = getArrayDescriptionAsString(object.sauces);
+    var drinksString = getArrayDescriptionAsString(object.drinks);
 
-		tr.id = "row";
-		tr.innerHTML =
-			'<td id="id" style="display:none;">' +
-			object.id +
-			"</td>" +
-			`<td id="date">` +
-			//new Date(object.date).toLocaleDateString() +
-			convertDateForOutput(object.date) +
-			"</td>" +
-			`<td id="type">` +
-			object.type +
-			"</td>" +
-			`<td id="meals">` +
-			mealsString +
-			"</td>" +
-			`<td id="additions">` +
-			additionsString +
-			"</td>" +
-			`<td id="sauces">` +
-			saucesString +
-			"</td>" +
-			`<td id="drinks">` +
-			drinksString +
-			"</td>" +
-			`<td id="notes">` +
-			object.notes +
-			"</td>" +
-			"<td>" +
-			'<button class="btn btn btn-light" id="addOlderOrderLineToOrder" onclick="addOlderOrderLineToOrder(this)" type="button">הוספה</button>' +
-			"</td>";
+    tr.id = "row";
+    tr.innerHTML =
+      '<td id="id" style="display:none;">' +
+      object.id +
+      "</td>" +
+      `<td id="date">` +
+      //new Date(object.date).toLocaleDateString() +
+      convertDateForOutput(object.date) +
+      "</td>" +
+      `<td id="type">` +
+      object.type +
+      "</td>" +
+      `<td id="meals">` +
+      mealsString +
+      "</td>" +
+      `<td id="additions">` +
+      additionsString +
+      "</td>" +
+      `<td id="sauces">` +
+      saucesString +
+      "</td>" +
+      `<td id="drinks">` +
+      drinksString +
+      "</td>" +
+      `<td id="notes">` +
+      object.notes +
+      "</td>" +
+      "<td>" +
+      '<button class="btn btn btn-light" id="addOlderOrderLineToOrder" onclick="addOlderOrderLineToOrder(this)" type="button">הוספה</button>' +
+      "</td>";
 
-		olderOrders.appendChild(tr);
-	});
+    olderOrders.appendChild(tr);
+  });
 }
 function preparePeopleRecentOrdersTable(orders) {
-	var recentOrdersTableBody =
-		document.getElementById("peopleRecentOrders").children[1];
+  var recentOrdersTableBody =
+    document.getElementById("peopleRecentOrders").children[1];
 
-	orders.forEach(function (object) {
-		var tr = document.createElement("tr");
-		//var typeDesc = oDB["types"][object.type]; //data.types[object.type].description;
-		//var mealDesc = oDB["meals"][object.meal]; //data.meals[object.meal].description;
-		var mealsString = getArrayDescriptionAsString(object.meals);
-		var additionsString = getArrayDescriptionAsString(object.additions);
-		var saucesString = getArrayDescriptionAsString(object.sauces);
-		var drinksString = getArrayDescriptionAsString(object.drinks);
+  orders.forEach(function (object) {
+    var tr = document.createElement("tr");
+    //var typeDesc = oDB["types"][object.type]; //data.types[object.type].description;
+    //var mealDesc = oDB["meals"][object.meal]; //data.meals[object.meal].description;
+    var mealsString = getArrayDescriptionAsString(object.meals);
+    var additionsString = getArrayDescriptionAsString(object.additions);
+    var saucesString = getArrayDescriptionAsString(object.sauces);
+    var drinksString = getArrayDescriptionAsString(object.drinks);
 
-		tr.id = "row";
-		tr.innerHTML =
-			'<td id="id" style="display:none;">' +
-			object.id +
-			"</td>" +
-			`<td id="name" class='bg-light'>` +
-			`<button class="btn btn btn-light" id="showOlderOrdersForName" onclick="showOlderOrdersForName(this)" type="button">${object.name}</button>` +
-			"</td>" +
-			`<td id="type" class='bg-light'>` +
-			object.type +
-			"</td>" +
-			`<td id="meals" class='bg-light'>` +
-			mealsString +
-			"</td>" +
-			`<td id="additions" class='bg-light'>` +
-			additionsString +
-			"</td>" +
-			`<td id="sauces" class='bg-light'>` +
-			saucesString +
-			"</td>" +
-			`<td id="drinks" class='bg-light'>` +
-			drinksString +
-			"</td>" +
-			`<td id="notes" class='bg-light'>` +
-			object.notes +
-			"</td>" +
-			"<td class='bg-light'>" +
-			//'<input type="checkbox"/>' +
-			'<button class="btn btn btn-outline-primary" id="addRecentOrderLineToOrder" onclick="addRecentOrderLineToOrder(this)" type="button">הוספה</button>' +
-			"</td>";
+    tr.id = "row";
+    tr.innerHTML =
+      '<td id="id" style="display:none;">' +
+      object.id +
+      "</td>" +
+      `<td id="name" class='bg-light'>` +
+      `<button class="btn btn btn-light" id="showOlderOrdersForName" onclick="showOlderOrdersForName(this)" type="button">${object.name}</button>` +
+      "</td>" +
+      `<td id="type" class='bg-light'>` +
+      object.type +
+      "</td>" +
+      `<td id="meals" class='bg-light'>` +
+      mealsString +
+      "</td>" +
+      `<td id="additions" class='bg-light'>` +
+      additionsString +
+      "</td>" +
+      `<td id="sauces" class='bg-light'>` +
+      saucesString +
+      "</td>" +
+      `<td id="drinks" class='bg-light'>` +
+      drinksString +
+      "</td>" +
+      `<td id="notes" class='bg-light'>` +
+      object.notes +
+      "</td>" +
+      "<td class='bg-light'>" +
+      //'<input type="checkbox"/>' +
+      '<button class="btn btn btn-outline-primary" id="addRecentOrderLineToOrder" onclick="addRecentOrderLineToOrder(this)" type="button">הוספה</button>' +
+      "</td>";
 
-		recentOrdersTableBody.appendChild(tr);
-	});
+    recentOrdersTableBody.appendChild(tr);
+  });
 }
 function fillPeopleRecentOrdersTable() {
-	preparePeopleRecentOrdersTable(getLastOrderPerName(oDB["orders"]));
-	//firebase.database().ref().child("orders").get().then((data) => {
-	//    if (data.exists()) {
-	//      preparePeopleRecentOrdersTable(getRecentOrderPerName(data.toJSON()));
-	//    } else {
-	//      console.log(`No orders available`);
-	//    }
-	//  }).catch((error) => {
-	//    console.error(error);
-	//  });
+  preparePeopleRecentOrdersTable(getLastOrderPerName(oDB["orders"]));
+  //firebase.database().ref().child("orders").get().then((data) => {
+  //    if (data.exists()) {
+  //      preparePeopleRecentOrdersTable(getRecentOrderPerName(data.toJSON()));
+  //    } else {
+  //      console.log(`No orders available`);
+  //    }
+  //  }).catch((error) => {
+  //    console.error(error);
+  //  });
 }
 //function fillTypesTable() {
 //  firebase.database().ref().child("types").get().then((types) => {
@@ -909,99 +909,99 @@ function fillPeopleRecentOrdersTable() {
 function createCollapsibleMenu() {
 	var collapsibles = document.getElementsByClassName("collapsible");
 
-	for (var i = 0; i < collapsibles.length; i++) {
-		var collapsible = collapsibles[i];
-		var clickedCollapsible = $(this).closest(".collapsible")[0];
+  for (var i = 0; i < collapsibles.length; i++) {
+    var collapsible = collapsibles[i];
+    var clickedCollapsible = $(this).closest(".collapsible")[0];
 
-		collapsible
-			.querySelector("#collapsible-title")
-			.addEventListener("click", function () {
-				var collapsibles = document.getElementsByClassName("collapsible");
-				var clickedCollapsible = $(this).closest(".collapsible")[0];
-				clearCollapsiblesInputs();
+    collapsible
+      .querySelector("#collapsible-title")
+      .addEventListener("click", function () {
+        var collapsibles = document.getElementsByClassName("collapsible");
+        var clickedCollapsible = $(this).closest(".collapsible")[0];
+        clearCollapsiblesInputs();
 
-				for (var i = 0; i < collapsibles.length; i++) {
-					var collapsible = collapsibles[i];
-					if (collapsible === clickedCollapsible) continue;
-					var button = collapsible.querySelector("#addMenuItemToOrder");
-					var content = collapsible.querySelector("#content");
-					button.style.display = "none";
-					content.style.display = "none";
-				}
-				this.classList.toggle("active");
-				button = clickedCollapsible.querySelector("#addMenuItemToOrder");
-				content = clickedCollapsible.querySelector("#content");
-				button.style.display =
-					button.style.display === "block" ? "none" : "block";
-				content.style.display =
-					content.style.display === "block" ? "none" : "block";
-				this.scrollIntoView();
-			});
-	}
+        for (var i = 0; i < collapsibles.length; i++) {
+          var collapsible = collapsibles[i];
+          if (collapsible === clickedCollapsible) continue;
+          var button = collapsible.querySelector("#addMenuItemToOrder");
+          var content = collapsible.querySelector("#content");
+          button.style.display = "none";
+          content.style.display = "none";
+        }
+        this.classList.toggle("active");
+        button = clickedCollapsible.querySelector("#addMenuItemToOrder");
+        content = clickedCollapsible.querySelector("#content");
+        button.style.display =
+          button.style.display === "block" ? "none" : "block";
+        content.style.display =
+          content.style.display === "block" ? "none" : "block";
+        this.scrollIntoView();
+      });
+  }
 
-	//	collapsible.querySelector("#collapsible-title").addEventListener("click", function () {
-	//		debugger;
-	//		var collapsibles = document.getElementsByClassName("collapsible");
-	//		for (var i = 0; i < collapsibles.length; i++) {
-	//			var collapsible = collapsibles[i];
-	//			if (collapsible === this) continue;
-	//			var button = collapsible.querySelector("#addMenuItemToOrder");
-	//			var content = collapsible.querySelector("#content");
-	//			button.style.display = "none";
-	//			content.style.display = "none";
-	//		}
-	//		this.classList.toggle("active");
-	//		button = this.querySelector("#addMenuItemToOrder");
-	//		content = this.querySelector("#content");
-	//		button.style.display = (button.style.display === "block") ? "none" : "block";
-	//		content.style.display = (content.style.display === "block") ? "none" : "block";
-	//	});
-	//}
-	//var menuDiv = document.getElementById("menu");
-	//
-	//for ( type in oDB["types"] ) {
-	//	var headerDiv = document.createElement("div");
-	//	headerDiv.class = "collapsible";
-	//	var contentDiv = document.createElement("div");
-	//	contentDiv.class = "content";
-	//	var testH1 = document.createElement("h1");
-	//	testH1.textContent = oDB["types"][type];
-	//	var test2H1 = document.createElement("h2");
-	//	test2H1.textContent = "collapse me";
-	//	var button = document.createElement("button");
-	//	button.class = "btn btn btn-light";
-	//	button.onclick = "addMenuItemToOrder(button)";
-	//	button.type = "button";
-	//	button.textContent = "הוספה";
-	//
-	//	headerDiv.appendChild(testH1);
-	//	headerDiv.appendChild(button);
-	//	contentDiv.appendChild(test2H1);
-	//
-	//	headerDiv.addEventListener("click", function() {
-	//		this.classList.toggle("active");
-	//		var content = this.nextElementSibling;
-	//		if (content.style.display === "block") {
-	//		content.style.display = "none";
-	//		} else {
-	//		content.style.display = "block";
-	//		}
-	//	});
-	//	menuDiv.appendChild(headerDiv);
-	//	menuDiv.appendChild(contentDiv);
-	//}
+  //	collapsible.querySelector("#collapsible-title").addEventListener("click", function () {
+  //		debugger;
+  //		var collapsibles = document.getElementsByClassName("collapsible");
+  //		for (var i = 0; i < collapsibles.length; i++) {
+  //			var collapsible = collapsibles[i];
+  //			if (collapsible === this) continue;
+  //			var button = collapsible.querySelector("#addMenuItemToOrder");
+  //			var content = collapsible.querySelector("#content");
+  //			button.style.display = "none";
+  //			content.style.display = "none";
+  //		}
+  //		this.classList.toggle("active");
+  //		button = this.querySelector("#addMenuItemToOrder");
+  //		content = this.querySelector("#content");
+  //		button.style.display = (button.style.display === "block") ? "none" : "block";
+  //		content.style.display = (content.style.display === "block") ? "none" : "block";
+  //	});
+  //}
+  //var menuDiv = document.getElementById("menu");
+  //
+  //for ( type in oDB["types"] ) {
+  //	var headerDiv = document.createElement("div");
+  //	headerDiv.class = "collapsible";
+  //	var contentDiv = document.createElement("div");
+  //	contentDiv.class = "content";
+  //	var testH1 = document.createElement("h1");
+  //	testH1.textContent = oDB["types"][type];
+  //	var test2H1 = document.createElement("h2");
+  //	test2H1.textContent = "collapse me";
+  //	var button = document.createElement("button");
+  //	button.class = "btn btn btn-light";
+  //	button.onclick = "addMenuItemToOrder(button)";
+  //	button.type = "button";
+  //	button.textContent = "הוספה";
+  //
+  //	headerDiv.appendChild(testH1);
+  //	headerDiv.appendChild(button);
+  //	contentDiv.appendChild(test2H1);
+  //
+  //	headerDiv.addEventListener("click", function() {
+  //		this.classList.toggle("active");
+  //		var content = this.nextElementSibling;
+  //		if (content.style.display === "block") {
+  //		content.style.display = "none";
+  //		} else {
+  //		content.style.display = "block";
+  //		}
+  //	});
+  //	menuDiv.appendChild(headerDiv);
+  //	menuDiv.appendChild(contentDiv);
+  //}
 }
 
 function setOrderButtonState() {
-	let state;
+  let state;
 
-	if (Object.keys(oOrder).length > 0) {
-		state = false;
-	} else {
-		state = true;
-	}
+  if (Object.keys(oOrder).length > 0) {
+    state = false;
+  } else {
+    state = true;
+  }
 
-	document.getElementById("order").disabled = state;
+  document.getElementById("order").disabled = state;
 }
 function addRefreshAndExitHandler() {
 
@@ -1060,6 +1060,15 @@ function addRefreshAndExitHandler() {
 	//	};
 	//};
 }
+
+function messageToast(modalId) {
+	debugger;
+	var myModal = new bootstrap.Modal(document.getElementById(modalId), {
+	  keyboard: false
+	})
+	myModal.show();
+}
+
 async function initialize() {
 	initializeDB();
 	addRefreshAndExitHandler();
