@@ -124,7 +124,7 @@ function order(event) {
 	var sPhone = isProd() ? sKukiPhone : sTestPhone;
 	sText = prepareOrderMessage();
 	saveOrderToDB();
-	var sUrl = `https://api.whatsapp.com/send?phone=${sTestPhone}&text=${sText}`;
+	var sUrl = `https://api.whatsapp.com/send?phone=${sPhone}&text=${sText}`;
 	window.open(sUrl);
 }
 function addLineToOrder(orderLine) {
