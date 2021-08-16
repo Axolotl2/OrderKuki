@@ -166,7 +166,6 @@ function addLineToOrder(orderLine) {
 		'<button class="btn btn btn-outline-danger" id="removeLineFromOrder" onclick="removeLineFromOrder(this)" type="button">הסרה</button>' +
 		"</td>";
 
-	debugger;
 	// create\replace order line
 	if (oOrder[orderLine.name]) {
 		for (var i = 0; i < orderTableBody.children.length; i++) {
@@ -190,7 +189,7 @@ function showOlderOrdersForName(event) {
 	var name = event.innerHTML;
 	modal.style.display = "block";
 	// get unique flag from checkbox
-	orders = getOrdersForName(oDB["orders"], name, false);
+	orders = getOrdersForName(oDB["orders"], name, true);
 	prepareOlderOrdersTable(name, orders);
 }
 function closeOlderOrdersModal(event) {
@@ -199,7 +198,6 @@ function closeOlderOrdersModal(event) {
 	modal.style.display = "none";
 }
 function removeLineFromOrder(event) {
-	debugger;
 	var orderTable = document.getElementById("orderLines");
 	var order = $(event).closest("#order")[0];
 	var orderID = order.querySelector("#name").outerText;
@@ -209,7 +207,6 @@ function removeLineFromOrder(event) {
 	setOrderButtonState();
 }
 function confirmOrderOverwrite(orderLine) {
-	debugger;
 	var lineAlreadyExists = oOrder[orderLine.name] != null;
 
 	return (
@@ -228,8 +225,6 @@ function validateMenuItemSelection(event) {
 	//var drinks = content.querySelector("#drinks");
 	var name = content.querySelector("#name");
 	//var notes = content.querySelector("#notes");
-
-	debugger;
 
 	switch (collapsible.id) {
 		case "type1":
@@ -619,20 +614,26 @@ function sortOrdersByNameAndDate(orders) {
 
 	return orders;
 }
+function isArraysEqual(array1, array2) {
+	return Array.isArray(array1) &&
+		Array.isArray(array2) &&
+		array1.length === array2.length &&
+		array1.every((val, index) => val === array2[index]);
+}
 function isObjectsEqualsByData(obj1, obj2) {
 	const obj1Length = Object.keys(obj1).length;
 	const obj2Length = Object.keys(obj2).length;
 
 	if (obj1Length === obj2Length) {
 		return Object.keys(obj1).every(
-			(key) => obj2.hasOwnProperty(key) && obj2[key] === obj1[key]
+			(key) => obj2.hasOwnProperty(key) && ( isArraysEqual(obj2[key], obj1[key]) || obj2[key] === obj1[key] )
 		);
 	}
 	return false;
 }
 function isOrdersEqualsByData(order1, order2) {
-	var order1Data = order1,
-		order2Data = order2;
+	var order1Data = JSON.parse(JSON.stringify(order1)),
+		order2Data = JSON.parse(JSON.stringify(order2));
 
 	delete order1Data.id;
 	delete order1Data.date;
@@ -641,11 +642,11 @@ function isOrdersEqualsByData(order1, order2) {
 
 	return isObjectsEqualsByData(order1Data, order2Data);
 }
-function isOrderMostRecentDuplicate(order1, order2) {
-	var equals = isOrdersEqualsByData(order1, order2);
-
-	return (equals && order1.date > order2) || !equals;
-}
+//function isOrderMostRecentDuplicate(order1, order2) {
+//	var equals = isOrdersEqualsByData(order1, order2);
+//
+//	return (equals && order1.date > order2) || !equals;
+//}
 function groupOrdersByName(orders) {
 	orders = orders.reduce((order, val) => {
 		if (Object.keys(order).includes(val.name)) return order;
@@ -656,15 +657,35 @@ function groupOrdersByName(orders) {
 
 	return orders;
 }
-function groupOrdersByDataEquality(orders) {
-	orders = orders.reduce((order, val) => {
-		if (Object.keys(order).includes(val.name)) return order;
+//function groupOrdersByDataEquality(orders) {
+//	orders = orders.reduce((order, val) => {
+//		if (Object.keys(order).includes(val.name)) return order;
+//
+//		order[val.date] = orders.filter((g) => isOrderMostRecentDuplicate(g, val));
+//		return order;
+//	}, {});
+//
+//	return orders;
+//}
+function getUniqueOrders(orders) {
+	var uniqueOrders = [], ordersToFilter = [];
 
-		order[val.date] = orders.filter((g) => isOrderMostRecentDuplicate(g, val));
-		return order;
-	}, {});
+	ordersToFilter = orders;
+	//for (orderIndex in ordersToFilter) {
+	//	delete ordersToFilter[orderIndex].id;
+	//	delete ordersToFilter[orderIndex].date;
+	//}
 
-	return orders;
+	uniqueOrders = ordersToFilter.filter((value, index, self) => {
+		return self.findIndex(i => isOrdersEqualsByData(i, self[index])) === index;
+	})
+
+	////fill date back
+	//for (index in uniqueOrders) {
+	//
+	//}
+
+	return uniqueOrders;
 }
 function getLastOrderPerName(ordersFromDB) {
 	var orders = [],
@@ -693,18 +714,18 @@ function filterOrdersByName(orders, name) {
 function getOrdersForName(ordersFromDB, name, uniqueFlag) {
 	var orders = [],
 		ordersOfName = [];
-	debugger;
 
 	orders = parseOrdersFromDBToArray(ordersFromDB);
 	orders = filterOrdersByName(orders, name);
 	orders = sortOrdersByNameAndDate(orders);
 
 	if (uniqueFlag) {
-		orders = groupOrdersByDataEquality(orders);
-		delete orders.undefined;
+		orders = getUniqueOrders(orders);
+		//orders = groupOrdersByDataEquality(orders);
+		//delete orders.undefined;
 
 		for (date in orders) {
-			ordersOfName.push(orders[date][0]);
+			ordersOfName.push(orders[date]);
 		}
 	} else {
 		ordersOfName = orders;
@@ -886,7 +907,6 @@ function fillPeopleRecentOrdersTable() {
 //  });
 //}
 function createCollapsibleMenu() {
-	debugger;
 	var collapsibles = document.getElementsByClassName("collapsible");
 
 	for (var i = 0; i < collapsibles.length; i++) {
@@ -985,60 +1005,60 @@ function setOrderButtonState() {
 }
 function addRefreshAndExitHandler() {
 
-	/*handles backspace and refresh(F5) from keyboard */
-	window.manageBackRefresh = function (event) {
-		debugger;
-		var tag = event.target.tagName.toLowerCase();
-		if (event.keyCode == 8 && tag != 'input' && tag != 'textarea' && !(is_firefox)) {
-			var backOk = oOrder.keys.length == 0 || confirm(`יציאה תמחק את טבלת ההזמנות, להמשיך?`);
-			if (backOk) {
-				window.landg.innerDocClick = true;
-			} else {
-				event.preventDefault();
-			}
-		} else if (event.keyCode == 116) {
+	///*handles backspace and refresh(F5) from keyboard */
+	//window.manageBackRefresh = function (event) {
+	//	debugger;
+	//	var tag = event.target.tagName.toLowerCase();
+	//	if (event.keyCode == 8 && tag != 'input' && tag != 'textarea' && !(is_firefox)) {
+	//		var backOk = oOrder.keys.length == 0 || confirm(`יציאה תמחק את טבלת ההזמנות, להמשיך?`);
+	//		if (backOk) {
+	//			window.landg.innerDocClick = true;
+	//		} else {
+	//			event.preventDefault();
+	//		}
+	//	} else if (event.keyCode == 116) {
+	//
+	//		var refreshOk = Object.keys(oOrder).length == 0 || confirm(`ריענון ימחק את טבלת ההזמנות, להמשיך?`);
+	//		if (refreshOk) {
+	//			window.landg.innerDocClick = true;
+	//		} else {
+	//
+	//			event.preventDefault();
+	//		}
+	//
+	//	};
+	//};
+	//
+	//document.addEventListener("keydown", window.manageBackRefresh);
 
-			var refreshOk = Object.keys(oOrder).length == 0 || confirm(`ריענון ימחק את טבלת ההזמנות, להמשיך?`);
-			if (refreshOk) {
-				window.landg.innerDocClick = true;
-			} else {
-
-				event.preventDefault();
-			}
-
-		};
-	};
-
-	document.addEventListener("keydown", window.manageBackRefresh);
-
-	/* handles browser refresh or close event*/
-	window.onbeforeunload = function (event) {
-		debugger;
-		var ele = $(":focus");
-		if (!window.landg.innerDocClick && (($(ele) == undefined || $(ele).attr("href") == undefined) || ($(ele).attr("href") != undefined && $(ele).attr("href") != "#"))) {
-			if (typeof event == undefined) {
-				event = window.event;
-			}
-			if (event) {
-				event.returnValue = `ריענון\יציאה ימחקו את טבלת ההזמנות, להמשיך?`;
-			}
-			return `ריענון\יציאה ימחקו את טבלת ההזמנות, להמשיך?`;
-		}
-	};
-
-	/* handles browser back and forward event*/
-	window.onpopstate = function (event) {
-		debugger;
-		var ele = $(":focus");
-		if (!window.landg.innerDocClick && (($(ele) == undefined || $(ele).attr("href") == undefined) || ($(ele).attr("href") != undefined && $(ele).attr("href") != "#"))) {
-			var ok = confirm(`יציאה תמחק את טבלת ההזמנות, להמשיך?`);
-			if (ok) {
-
-			} else {
-				event.preventDfault();
-			}
-		};
-	};
+	///* handles browser refresh or close event*/
+	//window.onbeforeunload = function (event) {
+	//	debugger;
+	//	var ele = $(":focus");
+	//	if (!window.landg.innerDocClick && (($(ele) == undefined || $(ele).attr("href") == undefined) || ($(ele).attr("href") != undefined && $(ele).attr("href") != "#"))) {
+	//		if (typeof event == undefined) {
+	//			event = window.event;
+	//		}
+	//		if (event) {
+	//			event.returnValue = `ריענון\יציאה ימחקו את טבלת ההזמנות, להמשיך?`;
+	//		}
+	//		return `ריענון\יציאה ימחקו את טבלת ההזמנות, להמשיך?`;
+	//	}
+	//};
+	//
+	///* handles browser back and forward event*/
+	//window.onpopstate = function (event) {
+	//	debugger;
+	//	var ele = $(":focus");
+	//	if (!window.landg.innerDocClick && (($(ele) == undefined || $(ele).attr("href") == undefined) || ($(ele).attr("href") != undefined && $(ele).attr("href") != "#"))) {
+	//		var ok = confirm(`יציאה תמחק את טבלת ההזמנות, להמשיך?`);
+	//		if (ok) {
+	//
+	//		} else {
+	//			event.preventDfault();
+	//		}
+	//	};
+	//};
 }
 async function initialize() {
 	initializeDB();
